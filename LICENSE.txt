@@ -1,0 +1,6 @@
+LICENSE
+-------
+Game is released under the following license:
+http://www.binpress.com/license/view/l/736a2c378e1c1f3bd869264a532c7ad4
+
+Essentially, modification for personal use is allowed, but redistribution and/or commercial use is forbidden.

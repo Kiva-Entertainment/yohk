@@ -1,0 +1,9 @@
+# NOTE(kgeffen) The format of time is  100 entry array
+# with each entry representing a single tic (turn).
+# If a and b both act on turn 0, then array[0] = [a,b]
+# A given unit only has its entry in one turn at a time
+# but once that turn resolves, they are added to their
+# next turn.
+# For example ary = [[0],[],[1],...]
+# Once current turn concludes, assuming that 0 has max speed:
+# ary = [[0],[1],[],...]   then   ary = [[0,1],[],[],...]
