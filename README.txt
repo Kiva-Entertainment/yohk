@@ -5,7 +5,7 @@ This project is a grid-based SRPG videogame, similar to Chess/FFTactics/Disgaea.
 
 To play, you must have version 2.69 (current) of Blender, which can be found for free here:
 http://www.blender.org/download/
-Open “battlefield.blend” with Blender and press p to begin playing.
+Open battlefield.blend with Blender and press p to begin playing.
 
 This game is being produced by Kiva-Entertainment, and is free to download from GitHub.
 However, redistribution and/or commercial use is forbidden.
