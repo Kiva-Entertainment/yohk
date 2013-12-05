@@ -78,7 +78,6 @@ class predatorsDescent:
 		
 		# Hit units in sightline from actor that are not adjacent (to actor)
 		reach = generic.extentInfluence.polynomial(1, 1)
-		offset = 1 # Spaces adjacent to user (1 space from actor) should not be selectable
 		commandRange['range'] = generic.shapes.line(reach, offset)
 
 		# Space to move to
@@ -264,7 +263,7 @@ class psiStrike:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
-		generic.range.rigid(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -295,7 +294,8 @@ class flameBarrage:
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
 
-		commandRange['range'] = generic.shapes.emptyDiamond(2)
+		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
+		commandRange['range'] = generic.shapes.diamond(2, 1)
 
 		generic.range.free(commandRange)
 	
@@ -397,7 +397,8 @@ class galeCloak:
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
 
-		commandRange['range'] = generic.shapes.emptyDiamond(2)
+		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
+		commandRange['range'] = generic.shapes.diamond(2, 1)
 
 		generic.range.free(commandRange)
 	

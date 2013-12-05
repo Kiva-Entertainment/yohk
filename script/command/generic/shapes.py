@@ -24,19 +24,16 @@ def ring(length):
 # Diamond the includes all spaces within _length_ of center
 # 'length' = the max offset from the center
 # Ex: length = 2 describes a diamond with 13 spaces in it
-def diamond(length):
-	spaces = [[0,0]]
+# If _offset_ is provided, exclude that many rings
+def diamond(length, offset = 0):
+	spaces = []
 	
 	# Describes space in rings of radius r
-	for r in range(1, length + 1):
+	for r in range(offset, length + 1):
 		for space in ring(r):
 			spaces.append(space)
 	
 	return spaces
-
-# A diamond minus the center space
-def emptyDiamond(length):
-	return removeCenter(diamond(length))
 
 # Straight line going out from center _length_ spaces
 # If _offset_ is provided, put that many empty spaces before the line begins
@@ -60,11 +57,3 @@ def flatLine(length):
 		spaces.append([-l, 0])
 	
 	return spaces
-
-
-'Utility'
-# Remove the center space from a list of spaces
-CENTER_SPACE = [0,0]
-def removeCenter(spaces):
-	# Retain only space that do not equal CENTER_SPACE, return result
-	return list(filter((CENTER_SPACE).__ne__, spaces))
