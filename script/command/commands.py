@@ -62,8 +62,7 @@ class gloryStrike:
 	def icon():
 		return 'S_Sword_06.png'
 class predatorsDescent:
-	# Move actor forward to space in front of unit in sightline
-	# attack that unit
+	# Move actor forward to space in front of unit in sightline, attack that unit
 	# Important counter to mudshot/aeroblast
 	def perform(actor, target):
 		factors = generic.commandFactors.sword(actor, target)
@@ -77,7 +76,9 @@ class predatorsDescent:
 	def displayRange():
 		commandRange = generic.rangeFactors.sword()
 		
-		commandRange['reach'] = generic.extentInfluence.polynomial(2, 1)
+		# Hit units in sightline from actor that are not adjacent (to actor)
+		reach = generic.extentInfluence.polynomial(1, 1)
+		commandRange['range'] = generic.shapes.line(reach, offset)
 
 		# Space to move to
 		commandRange['specialSpaces'] = [[0,-1]]
@@ -146,7 +147,7 @@ class ribbonDash:
 		
 		length = logic.globalDict['extent'] + 1
 		
-		commandRange['aoe'] = generic.areaOfEffect.sightLine(length)
+		commandRange['aoe'] = generic.shapes.line(length)
 		commandRange['specialSpaces'] = [[0,length]]
 		
 		generic.range.rigid(commandRange)
@@ -175,7 +176,7 @@ class frontlineSlash:
 	def displayRange():
 		commandRange = generic.rangeFactors.sword()
 		
-		commandRange['aoe'] = generic.areaOfEffect.line(1)
+		commandRange['aoe'] = generic.shapes.flatLine(1)
 		
 		generic.range.rigid(commandRange)
 	
@@ -262,7 +263,7 @@ class psiStrike:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
-		generic.range.basic(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -293,9 +294,10 @@ class flameBarrage:
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
 
-		commandRange['reach'] = 2
+		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
+		commandRange['range'] = generic.shapes.diamond(2, 1)
 
-		generic.range.basic(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return generic.extentInfluence.polynomial(12, 36, 27)
@@ -329,7 +331,7 @@ class mudshot:
 		
 		# Hit all units in actors sightline of length = _extent_
 		length = 1 + logic.globalDict['extent']
-		commandRange['aoe'] = generic.areaOfEffect.sightLine(length)
+		commandRange['aoe'] = generic.shapes.line(length)
 		
 		generic.range.rigid(commandRange)
 	
@@ -395,9 +397,10 @@ class galeCloak:
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
 
-		commandRange['reach'] = 2
+		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
+		commandRange['range'] = generic.shapes.diamond(2, 1)
 
-		generic.range.basic(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 60
@@ -428,14 +431,14 @@ class meteor:
 		commandRange = generic.rangeFactors.standard()
 		
 		# How far from caster spell command can be target meteor's center
-		commandRange['reach'] = generic.extentInfluence.polynomial(2, 1)
+		reach = generic.extentInfluence.polynomial(2, 1)
+		commandRange['range'] = generic.shapes.diamond(reach)
 		
 		# How large the meteor is
 		length = generic.extentInfluence.polynomial(0, 1)
-
-		commandRange['aoe'] = generic.areaOfEffect.diamond(length)
+		commandRange['aoe'] = generic.shapes.diamond(length)
 		
-		generic.range.basic(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return generic.extentInfluence.polynomial(12, 45, 34, 15)
@@ -462,7 +465,7 @@ class study:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -487,7 +490,7 @@ class tutor:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
-		generic.range.basic(commandRange)
+		generic.range.rigid(commandRange)
 	
 	def cost():
 		return 0
@@ -509,7 +512,7 @@ class dash:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -531,7 +534,7 @@ class strengthen:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -551,7 +554,7 @@ class smarten:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -571,7 +574,7 @@ class focus:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -592,7 +595,7 @@ class dualSharpen:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
-		generic.range.basic(commandRange)
+		generic.range.rigid(commandRange)
 	
 	def cost():
 		return 0
@@ -606,377 +609,3 @@ class dualSharpen:
 	
 	def icon():
 		return 'S_Dagger_01.png'
-	
-
-
-'''Rough draft material'''
-class arrowheadSlash:
-	def perform(actor, target):
-		factors = generic.commandFactors.sword(actor, target)
-		
-		factors['force'] *= 0.9
-		
-		if generic.command.hitCheck(target['number'], factors):
-			generic.command.standardAttack(target['number'], factors)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.sword()
-		commandRange['range'] = 2
-		
-		generic.range.basic(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return 'Slash a unit up to 2 spaces away with your sword. Damage based on strength.'
-	
-	def name():
-		return 'Arrowhead Slash'
-	
-	def icon():
-		return 'W_Sword_001.png'
-
-'Axe'
-class swing:
-	def perform(actor, target):
-		factors = generic.commandFactors.axe(actor, target)
-		
-		if generic.command.hitCheck(target['number'], factors):
-			generic.command.standardAttack(target['number'], factors)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.axe()
-		generic.range.basic(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return 'Swing your axe at adjacent unit. Damage based on strength. Hard to hit with,'
-	
-	def name():
-		return 'Swing'
-	
-	def icon():
-		return 'W_Axe_001.png'
-
-'Spear'
-class thrust:
-	def perform(actor, target):
-		factors = generic.commandFactors.spear(actor, target)
-		
-		if generic.command.hitCheck(target['number'], factors):
-			generic.command.standardAttack(target['number'], factors)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.spear()
-		generic.range.basic(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return 'Thrust your spear at a unit up to 2 spaces away. Damage based on focus and strength.'
-	
-	def name():
-		return 'Thrust'
-	
-	def icon():
-		return 'W_Spear_001.png'
-class pinpointBarrage:
-	def perform(actor, target):
-		factors = generic.commandFactors.spear(actor, target)
-		
-		factors['force'] *= 0.7
-		
-		for i in range(0,3):
-			if generic.command.hitCheck(target['number'], factors):
-				generic.command.standardAttack(target['number'], factors)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.spear()
-		generic.range.basic(commandRange)
-	
-	def cost():
-		return 30
-	
-	def description():
-		return 'Stab a unit thrice with your spear.'
-	
-	def name():
-		return 'Pinpoint Barrage'
-	
-	def icon():
-		return 'W_Spear_001.png'
-	
-
-
-
-
-'''Magic'''
-'Offensive'
-class solarPing:
-	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-		
-		if generic.command.hitCheck(target['number'], factors):
-			generic.command.standardAttack(target['number'], factors)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.standard()
-		
-		commandRange['reach'] *= generic.extentInfluence.polynomial(1, 1)
-		
-		generic.range.basic(commandRange)
-	
-	def cost():
-		return 20 * logic.globalDict['extent']
-	
-	def description():
-		return 'Deal standard magic damage to a unit. Range based on how much sp spent.'
-	
-	def name():
-		return 'Solar Ping'
-	
-	def icon():
-		return 'S_Light_01.png'
-class darkestShadow:
-	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-		factors['force'] *= 2
-		
-		if generic.command.hitCheck(target['number'], factors):
-			generic.command.standardAttack(target['number'], factors)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.standard()
-		commandRange['reach'] = 2
-		
-		generic.range.cardinal(commandRange)
-	
-	def cost():
-		return 120
-	
-	def description():
-		return 'The darkest shadow tears at the flesh of your foe.'
-	
-	def name():
-		return 'Darkest Shadow'
-	
-	def icon():
-		return 'S_Shadow_01.png'
-class electraPulse:
-	# Hits self and adjacent units
-	def perform(actor, *targets):
-		for target in targets:
-			factors = generic.commandFactors.magic(actor, target)
-			
-			factors['force']  *= generic.extentInfluence.polynomial(1, 1/4)
-			
-			if generic.command.hitCheck(target['number'], factors):
-				generic.command.standardAttack(target['number'], factors)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.self()
-		
-		commandRange['aoe'] = generic.areaOfEffect.diamond(1)
-		
-		generic.range.self(commandRange)
-	
-	def cost():
-		return generic.extentInfluence.polynomial(3, 20, 1)
-	
-	def description():
-		return 'Hit adjacent units and self. Very powerful.'
-	
-	def name():
-		return 'Electra-Pulse'
-	
-	def icon():
-		return 'S_Thunder_03.png'
-class flameSlash:
-	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-		
-		factors['force']  *= generic.extentInfluence.polynomial(1, 1/6)
-		
-		if generic.command.hitCheck(target['number'], factors):
-			generic.command.standardAttack(target['number'], factors)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.standard()
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return generic.extentInfluence.polynomial(10, 20)
-	
-	def description():
-		return 'Deal standard magic damage to an adjacent unit. If you raise the sp cost, you can deal even more damage.'
-	
-	def name():
-		return 'Flame Slash'
-	
-	def icon():
-		return 'S_Fire_07.png'
-
-
-'Control'
-class icePrison:
-	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-		
-		factors['accuracy']  = generic.extentInfluence.logarithmic(factors['accuracy'])
-		
-		if generic.command.hitCheck(target['number'], factors):
-			generic.command.raiseStat(target['number'], 'move', -1)
-			generic.command.raiseStat(target['number'], 'mv', -1)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.standard()
-		commandRange['reach'] = 3
-		
-		generic.range.basic(commandRange)
-	
-	def cost():
-		return 50 + logic.globalDict['extent'] * 8
-	
-	def description():
-		return "Lower the target's movement. Eventually rendering them immobile. Better chances of hitting if extent is higher."
-	
-	def name():
-		return 'Ice Prison'
-	
-	def icon():
-		return 'S_Ice_07.png'
-	
-'''Items'''
-'Shields'
-class defend:
-	def perform(actor, target):
-		generic.command.raiseStat(actor['number'], 'toughness', 5)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return 'Raise your toughness slightly.'
-	
-	def name():
-		return 'Defend'
-	
-	def icon():
-		return 'E_Shield_10.png'
-
-'Other'
-class strategize:
-	def perform(actor, *targets):
-		for target in targets:
-			amount = 2 * len(targets) + 7
-			
-			generic.command.raiseStat(target['number'], 'focus', amount)
-			generic.command.raiseStat(target['number'], 'willpower', amount)
-			generic.command.raiseStat(target['number'], 'intelligence', amount)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.self()
-		
-		commandRange['aoe'] = generic.areaOfEffect.diamond(1)
-		
-		generic.range.self(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return 'Hold off on this until group testing'
-	
-	def name():
-		return 'Strategize'
-	
-	def icon():
-		return 'I_Map.png'
-
-'''Skill'''
-class toughen:
-	def perform(actor, target):
-		generic.command.raiseStat(actor['number'], 'toughness', 10)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
-	
-	def cost():
-		return 10
-	
-	def description():
-		return 'Raise your toughness.'
-	
-	def name():
-		return 'Toughen'
-	
-	def icon():
-		return 'S_Buff_02.png'
-class persevere:
-	def perform(actor, target):
-		generic.command.raiseStat(actor['number'], 'willpower', 10)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
-	
-	def cost():
-		return 10
-	
-	def description():
-		return 'Raise your willpower.'
-	
-	def name():
-		return 'Persevere'
-	
-	def icon():
-		return 'S_Buff_04.png'
-class quicken:
-	def perform(actor, target):
-		generic.command.raiseStat(actor['number'], 'agility', 10)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
-	
-	def cost():
-		return 10
-	
-	def description():
-		return 'Raise your agility.'
-	
-	def name():
-		return 'Quicken'
-	
-	def icon():
-		return 'S_Buff_05.png'
-
-class swordsDance:
-	def perform(actor, target):
-		generic.command.raiseStat(actor['number'], 'strength', 12)
-		generic.command.raiseStat(actor['number'], 'agility', 12)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
-	
-	def cost():
-		return 22
-	
-	def description():
-		return 'Raise your strength and agility.'
-	
-	def name():
-		return 'Swords Dance'
-	
-	def icon():
-		return 'S_Sword_02.png'

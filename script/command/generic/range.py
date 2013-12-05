@@ -4,83 +4,49 @@ from bge import logic
 from script.command import markSpaceValid
 from script import getPosition
 
-# TODO(kgeffen) Duplicate code exists between this script and generic.areaOfEffect
-# Change aoe to be list of spaces, and these methods should use those lists instead of generating their own
-# Many methods here will become unnecessary - Probably only rigid/no will remain
-
-'Common types of range'
-# self is only valid target
-def self(rng):
+# Range is free - It is not bound by actor's rotation
+# Ex: Fireball which hits a unit within 2 spaces of actor
+def free(rng):
 	actorPosition = getPosition.actor()
-	targetPosition = actorPosition
-	
-	# NOTE(kgeffen) Command is centered on self, but could be larger than 1 space
-	# Ex: Plus sign centered on space
-	markSpaceValid.attempt(actorPosition, targetPosition, rng)
 
-# Single target within _reach_ spaces of actor
-# Actor is not valid target
-def basic(rng):
-	actorPosition = getPosition.actor()
-	
-	# Describes space in rings of radius r
-	for r in range(1, rng['reach'] + 1):
-		
-		# mag(dx) + mag(dy) = r
-		for dx in range(-r, r + 1):
-			dyMag = r - abs(dx)
-			
-			# Do for positive and negative dy
-			# NOTE(kgeffen) negative dx already covered in above loop
-			for dy in set([-dyMag, dyMag]):
-				x = actorPosition[0] + dx
-				y = actorPosition[1] + dy
-				targetSpace = [x,y]
-				
-				markSpaceValid.attempt(actorPosition, targetSpace, rng)
+	# targetOffset - Offset from actor in form [x,y]
+	for targetOffset in rng['range']:
+		targetX = actorPosition[0] + targetOffset[0]
+		targetY = actorPosition[1] + targetOffset[1]
+		targetSpace = [targetX, targetY]
 
-# Single target within _reach_ spaces along actor's viewline (cardinal)
-# Actor is not valid target
-def cardinal(rng):
-	actorPosition = getPosition.actor()
-	
-	# Describe space in lines of length between 1 and range
-	for l in range(1, rng['reach'] + 1):
-		
-		# Point in each of 4 cardinal directions
-		for dv in ([0, l], [0, -l], [l, 0], [-l, 0]):
-			x = actorPosition[0] + dv[0]
-			y = actorPosition[1] + dv[1]
-			targetSpace = [x,y]
-			
-			markSpaceValid.attempt(actorPosition, targetSpace, rng)
+		markSpaceValid.attempt(actorPosition, targetSpace, rng)
 
-# Spaces in 4 cardinal directions, up to _length_ spaces away
-# Aoe rotates around actor
+# Range is rigid - It rotates in each of 4 cardinal directions
+# Ex: Large sword slash which hits units up to 3 spaces away in line from actor
 def rigid(rng):
 	actorPosition = getPosition.actor()
 	
-	# Describe each adjacent space with cardinal unit vector
+	# Point in each of 4 cardinal directions
 	# NOTE(kgeffen) Start with space rotated by quarter circle from front,
 	# go to space rotated by half circle, etc.
 	# Order matters!
 	for dv in ([1, 0], [0, -1], [-1, 0], [0, 1]):
+
+		# Rotate range by 90 degrees
+		# Ex: special space [2,0] becomes [0,-2]
+		rotateRange(rng)
 		
-		# Rotate all aoe spaces by 90 degrees
-		# Ex: [2,0] becomes [0,-2]
-		rng['aoe'] = rotateEachBy90(rng['aoe'])
-		rng['specialSpaces'] = rotateEachBy90(rng['specialSpaces'])
-		
-		# Describe each magnitude between 1 and _reach_
-		for mag in range(1, rng['reach'] + 1):
-			x = actorPosition[0] + mag * dv[0]
-			y = actorPosition[1] + mag * dv[1]
-			targetSpace = [x,y]
-			
+		# targetOffset - Offset from space on given side of actor (space = actorPosition + dv)
+		for targetOffset in rng['range']:
+			targetX = actorPosition[0] + targetOffset[0] + dv[0]
+			targetY = actorPosition[1] + targetOffset[1] + dv[1]
+			targetSpace = [targetX, targetY]
+
 			markSpaceValid.attempt(actorPosition, targetSpace, rng)
 
-
 'Utilities'
+# Rotate each space in command's range (aoe, specials, range) by 90
+def rotateRange(rng):
+	rng['range'] = rotateEachBy90(rng['range'])
+	rng['aoe'] = rotateEachBy90(rng['aoe'])
+	rng['specialSpaces'] = rotateEachBy90(rng['specialSpaces'])
+
 from mathutils import Matrix, Vector
 from math import radians
 
@@ -102,4 +68,3 @@ def rotateEachBy90(spaces):
 		newSpaces.append(newSpace)
 	
 	return newSpaces
-
