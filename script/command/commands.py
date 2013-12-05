@@ -146,7 +146,7 @@ class ribbonDash:
 		
 		length = logic.globalDict['extent'] + 1
 		
-		commandRange['aoe'] = generic.areaOfEffect.sightLine(length)
+		commandRange['aoe'] = generic.shapes.line(length)
 		commandRange['specialSpaces'] = [[0,length]]
 		
 		generic.range.rigid(commandRange)
@@ -175,7 +175,7 @@ class frontlineSlash:
 	def displayRange():
 		commandRange = generic.rangeFactors.sword()
 		
-		commandRange['aoe'] = generic.areaOfEffect.line(1)
+		commandRange['aoe'] = generic.shapes.flatLine(1)
 		
 		generic.range.rigid(commandRange)
 	
@@ -329,7 +329,7 @@ class mudshot:
 		
 		# Hit all units in actors sightline of length = _extent_
 		length = 1 + logic.globalDict['extent']
-		commandRange['aoe'] = generic.areaOfEffect.sightLine(length)
+		commandRange['aoe'] = generic.shapes.line(length)
 		
 		generic.range.rigid(commandRange)
 	
@@ -433,7 +433,7 @@ class meteor:
 		# How large the meteor is
 		length = generic.extentInfluence.polynomial(0, 1)
 
-		commandRange['aoe'] = generic.areaOfEffect.diamond(length)
+		commandRange['aoe'] = generic.shapes.diamond(length)
 		
 		generic.range.basic(commandRange)
 	
@@ -780,7 +780,7 @@ class electraPulse:
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
 		
-		commandRange['aoe'] = generic.areaOfEffect.diamond(1)
+		commandRange['aoe'] = generic.shapes.diamond(1)
 		
 		generic.range.self(commandRange)
 	
@@ -885,7 +885,7 @@ class strategize:
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
 		
-		commandRange['aoe'] = generic.areaOfEffect.diamond(1)
+		commandRange['aoe'] = generic.shapes.diamond(1)
 		
 		generic.range.self(commandRange)
 	
