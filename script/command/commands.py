@@ -293,9 +293,9 @@ class flameBarrage:
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
 
-		commandRange['reach'] = 2
+		commandRange['range'] = generic.shapes.emptyDiamond(2)
 
-		generic.range.basic(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return generic.extentInfluence.polynomial(12, 36, 27)
@@ -395,9 +395,9 @@ class galeCloak:
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
 
-		commandRange['reach'] = 2
+		commandRange['range'] = generic.shapes.emptyDiamond(2)
 
-		generic.range.basic(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 60
@@ -428,14 +428,14 @@ class meteor:
 		commandRange = generic.rangeFactors.standard()
 		
 		# How far from caster spell command can be target meteor's center
-		commandRange['reach'] = generic.extentInfluence.polynomial(2, 1)
+		reach = generic.extentInfluence.polynomial(2, 1)
+		commandRange['range'] = generic.shapes.diamond(reach)
 		
 		# How large the meteor is
 		length = generic.extentInfluence.polynomial(0, 1)
-
 		commandRange['aoe'] = generic.shapes.diamond(length)
 		
-		generic.range.basic(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return generic.extentInfluence.polynomial(12, 45, 34, 15)
