@@ -462,7 +462,7 @@ class study:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -509,7 +509,7 @@ class dash:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -531,7 +531,7 @@ class strengthen:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -551,7 +551,7 @@ class smarten:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -571,7 +571,7 @@ class focus:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -782,7 +782,7 @@ class electraPulse:
 		
 		commandRange['aoe'] = generic.shapes.diamond(1)
 		
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return generic.extentInfluence.polynomial(3, 20, 1)
@@ -858,7 +858,7 @@ class defend:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -887,7 +887,7 @@ class strategize:
 		
 		commandRange['aoe'] = generic.shapes.diamond(1)
 		
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
@@ -908,7 +908,7 @@ class toughen:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 10
@@ -927,7 +927,7 @@ class persevere:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 10
@@ -946,7 +946,7 @@ class quicken:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 10
@@ -967,7 +967,7 @@ class swordsDance:
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
-		generic.range.self(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 22

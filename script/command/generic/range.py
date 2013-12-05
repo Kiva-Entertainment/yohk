@@ -8,53 +8,19 @@ from script import getPosition
 # Change aoe to be list of spaces, and these methods should use those lists instead of generating their own
 # Many methods here will become unnecessary - Probably only rigid/no will remain
 
-'Common types of range'
-# self is only valid target
-def self(rng):
+# TODO(kgeffen) Describe
+def free(rng):
 	actorPosition = getPosition.actor()
-	targetPosition = actorPosition
-	
-	# NOTE(kgeffen) Command is centered on self, but could be larger than 1 space
-	# Ex: Plus sign centered on space
-	markSpaceValid.attempt(actorPosition, targetPosition, rng)
 
-# Single target within _reach_ spaces of actor
-# Actor is not valid target
-def basic(rng):
-	actorPosition = getPosition.actor()
-	
-	# Describes space in rings of radius r
-	for r in range(1, rng['reach'] + 1):
-		
-		# mag(dx) + mag(dy) = r
-		for dx in range(-r, r + 1):
-			dyMag = r - abs(dx)
-			
-			# Do for positive and negative dy
-			# NOTE(kgeffen) negative dx already covered in above loop
-			for dy in set([-dyMag, dyMag]):
-				x = actorPosition[0] + dx
-				y = actorPosition[1] + dy
-				targetSpace = [x,y]
-				
-				markSpaceValid.attempt(actorPosition, targetSpace, rng)
+	# targetOffset - Offset from actor in form [x,y]
+	for targetOffset in rng['range']:
+		targetX = actorPosition[0] + targetOffset[0]
+		targetY = actorPosition[1] + targetOffset[1]
+		targetSpace = [targetX, targetY]
 
-# Single target within _reach_ spaces along actor's viewline (cardinal)
-# Actor is not valid target
-def cardinal(rng):
-	actorPosition = getPosition.actor()
-	
-	# Describe space in lines of length between 1 and range
-	for l in range(1, rng['reach'] + 1):
-		
-		# Point in each of 4 cardinal directions
-		for dv in ([0, l], [0, -l], [l, 0], [-l, 0]):
-			x = actorPosition[0] + dv[0]
-			y = actorPosition[1] + dv[1]
-			targetSpace = [x,y]
-			
-			markSpaceValid.attempt(actorPosition, targetSpace, rng)
+		markSpaceValid.attempt(actorPosition, targetSpace, rng)
 
+# TODO(kgeffen) Describe
 # Spaces in 4 cardinal directions, up to _length_ spaces away
 # Aoe rotates around actor
 def rigid(rng):
