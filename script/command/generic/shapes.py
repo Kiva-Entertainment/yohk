@@ -39,10 +39,11 @@ def emptyDiamond(length):
 	return removeCenter(diamond(length))
 
 # Straight line going out from center _length_ spaces
-def line(length):
+# If _offset_ is provided, put that many empty spaces before the line begins
+def line(length, offset = 0):
 	spaces = []
 	
-	for l in range(0, length):
+	for l in range(offset, length + offset):
 		spaces.append([0, l])
 	
 	return spaces

@@ -5,7 +5,7 @@ from script.command.generic import shapes
 # The overall standard for any command that doesn't fit into any of the below
 def standard():
 	return {'okDz' : {'max' : 1.2, 'min' : -1.2},
-			'range' : shapes.ring(1),
+			'range' : shapes.single(),
 			'aoe' : shapes.single(),
 			'specialSpaces' : []}
 
@@ -25,19 +25,19 @@ def spear():
 
 def sword():
 	return {'okDz' : {'max' : 1.2, 'min' : -1.2},
-			'range' : shapes.ring(1),
+			'range' : shapes.single(),
 			'aoe' : shapes.single(),
 			'specialSpaces' : []}
 
 def axe():
 	return {'okDz' : {'max' : 1.2, 'min' : -1.2},
-			'range' : shapes.ring(1),
+			'range' : shapes.single(),
 			'aoe' : shapes.single(),
 			'specialSpaces' : []}
 
 def dagger():
 	return {'okDz' : {'max' : 1.2, 'min' : -1.2},
-			'range' : shapes.ring(1),
+			'range' : shapes.single(),
 			'aoe' : shapes.single(),
 			'specialSpaces' : []}
 
