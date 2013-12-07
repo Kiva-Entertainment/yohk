@@ -13,7 +13,7 @@ def attempt():
 	# Check each unit, if its position matches cursor position, select that unit
 	# TODO(kgeffen) Unit lookup should be standardized and more intuitive
 	for unit in unitControl.get.allUnits():
-		unitPosition = unit['data']['position']
+		unitPosition = unit['position']
 		
 		if check.eq2D(cursorPosition, unitPosition):
 			do(unit)
@@ -27,7 +27,7 @@ def do(unit):
 	logic.globalDict['selected'] = unit
 	
 	# Display and store list of spaces unit can move to
-	moveRange.determine.do(unit['data'])
+	moveRange.determine.do(unit)
 	moveRange.display.do()
 	
 	# Display basic info about unit
@@ -43,7 +43,7 @@ def unitActsThisTurn(unit):
 	actorsThisTurn = logic.globalDict['time'][0]
 	
 	# Return true if unit is one of the actors this turn
-	unitActsThisTurn = actorsThisTurn.count(unit['number']) == 1
+	unitActsThisTurn = actorsThisTurn.count(unit) == 1
 	if unitActsThisTurn:
 		return True
 
