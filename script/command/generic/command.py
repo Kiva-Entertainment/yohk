@@ -87,7 +87,7 @@ def addObjects(*units):
 		unit['position'] = logic.globalDict['commandSpecialSpaces'][i]
 
 		# Add game object
-		unitControl.object.add(units[i])
+		unitControl.object.add(unit)
 
 		storeResult.storeText(unit['position'], 'poof!')
 
