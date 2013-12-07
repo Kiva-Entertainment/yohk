@@ -3,11 +3,13 @@ from bge import logic
 
 from script import unitControl
 
+# TODO(kgeffen) Unit loading will change drastically (Probably in version 0.5)
+# Until then, scaffolding is acceptable
 def do():
 	filepath = logic.globalDict['stageFilepath']
 	
 	unitData = getUnitData(filepath)
-	
+
 	for unit in unitData:
 		unitControl.object.add(unit)
 
