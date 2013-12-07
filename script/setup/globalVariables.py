@@ -7,7 +7,7 @@ from bge import logic
 def do():
 	logic.texture = {}
 	logic.globalDict['infoLists'] = [[],[],[]]
-	logic.globalDict['selected'] = None
+	logic.globalDict['actor'] = None
 	logic.globalDict['cursor'] = 'selecting'
 	logic.globalDict['spaceTarget'] = []
 	logic.globalDict['validMove'] = [] # Dictionary of spaces and dMv for current unit

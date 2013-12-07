@@ -45,7 +45,7 @@ def ofUnit(unit):
 
 # Returns the position, including z, of the acting unit
 def actor():
-	unit = logic.globalDict['selected']
+	unit = logic.globalDict['actor']
 	
 	# Return the position of the unit that is the actor 
 	return ofUnit(unit)

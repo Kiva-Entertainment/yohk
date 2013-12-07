@@ -12,7 +12,7 @@ def do():
 	logic.globalDict['spaceTarget'] = []
 	
 	# Modify the actor's stats
-	actor = logic.globalDict['selected']
+	actor = logic.globalDict['actor']
 	actor['act'] -= 1
 	consumeSp(actor)
 	

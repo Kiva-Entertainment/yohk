@@ -65,7 +65,7 @@ def costText():
 		cost = commandControl.cost(commands[0])
 		
 		# Get actor's current sp
-		unit = logic.globalDict['selected']
+		unit = logic.globalDict['actor']
 		currentSp = unit['sp']
 		
 		text = 'Cost: ' + str(cost) + '/' + str(currentSp)
@@ -91,7 +91,7 @@ def descriptionText():
 
 
 def getCommandsList():
-	unit = logic.globalDict['selected']
+	unit = logic.globalDict['actor']
 	commandsList = unit['commands']
 	
 	return commandsList

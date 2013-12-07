@@ -14,7 +14,7 @@ from script.scene.commandSelect import setup
 # Ex: cycle from ['slash','smack'] to ['defend','dash']
 def commandLists(cont):
 	# Get list of command
-	unit = logic.globalDict['selected']
+	unit = logic.globalDict['actor']
 	commandsList = unit['commands']
 	
 	leftKey = cont.sensors['leftKey'].positive
@@ -38,7 +38,7 @@ def commandLists(cont):
 # Ex: Cycle ['slash','smack','defend'] to ['defend','slash','smack']
 def commands(cont):
 	# Get the first list of commands (The one onscreen)
-	unit = logic.globalDict['selected']
+	unit = logic.globalDict['actor']
 	commandsList = unit['commands']
 	commands = commandsList[0]
 	

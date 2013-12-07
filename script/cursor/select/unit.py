@@ -3,7 +3,7 @@
 # If it acts this turn, display unit menu
 from bge import logic
 
-from script import check, sceneControl, moveRange, objectControl, unitControl
+from script import check, sceneControl, moveRange, objectControl
 
 # If a unit is in the same space as cursor, select it
 def attempt():
@@ -12,7 +12,7 @@ def attempt():
 	
 	# Check each unit, if its position matches cursor position, select that unit
 	# TODO(kgeffen) Unit lookup should be standardized and more intuitive
-	for unit in unitControl.get.allUnits():
+	for unit in logic.globalDict['units']:
 		unitPosition = unit['position']
 		
 		if check.eq2D(cursorPosition, unitPosition):
@@ -24,7 +24,7 @@ def do(unit):
 	logic.globalDict['cursor'] = 'wait'
 	
 	# Set 'selected unit' to the number of the unit being selected
-	logic.globalDict['selected'] = unit
+	logic.globalDict['actor'] = unit
 	
 	# Display and store list of spaces unit can move to
 	moveRange.determine.do(unit)

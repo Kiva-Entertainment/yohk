@@ -3,7 +3,6 @@
 # Called from setup.py
 from bge import logic
 
-from script import unitControl
 from script.time import addNext, churn, displayTurnOrder
 
 # Number of entries in time array
@@ -31,7 +30,7 @@ def createStartingTimeArray():
 		timeArray.append([])
 	
 	# Add each unit's first action to timeArray
-	for unit in unitControl.get.allUnits():
+	for unit in logic.globalDict['units']:
 		addNext.unitAction(unit, timeArray)
 	
 	return timeArray

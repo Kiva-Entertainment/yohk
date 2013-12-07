@@ -16,7 +16,7 @@ def attempt():
 		#utility.playSound('negative')
 
 def do(position):
-	unit = logic.globalDict['selected']
+	unit = logic.globalDict['actor']
 
 	# Remove markers which display unit's range of motion
 	marker.clear()

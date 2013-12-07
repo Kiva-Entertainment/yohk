@@ -1,7 +1,7 @@
 # Setup the graphical aspects of the basicInfo scene
 from bge import logic
 
-from script import unitControl, dynamicMaterial, objectControl
+from script import dynamicMaterial, objectControl
 
 TEXT_OBJECT_NAME = 'basicInfo_text'
 FACE_OBJECT_NAME = 'basicInfo_face'
@@ -11,7 +11,7 @@ def attempt(cont):
 		do()
 
 def do():
-	unit = unitControl.get.actor()
+	unit = logic.globalDict['actor']
 	
 	statsText(unit)
 	faceImage(unit)

@@ -24,7 +24,7 @@ def do():
 
 # Get command selected in commandSelect
 def getSelectedCommand():
-	unit = logic.globalDict['selected']
+	unit = logic.globalDict['actor']
 	
 	# List of commands displayed on screen
 	# NOTE(kgeffen) Has multiple lists of commands, get the first one
@@ -46,7 +46,7 @@ def selectCommand(command):
 	sendMessageToBattlefield(MESSAGE_TO_BATTLEFIELD)
 
 def commandIsAllowed(command):
-	unit = logic.globalDict['selected']
+	unit = logic.globalDict['actor']
 	
 	# Not allowed if unit has no more actions left
 	if unit['act'] == 0:

@@ -78,7 +78,7 @@ def setup(cont):
 
 class Setup:
 	def do():
-		unitNumber = logic.globalDict['selected']
+		unitNumber = logic.globalDict['actor']
 		unitData = logic.globalDict['units'][unitNumber]
 		
 		for i in range(0, 4):

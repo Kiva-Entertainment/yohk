@@ -1,7 +1,7 @@
 # Create all units that start on the field and store their data in globalDict['units']
 from bge import logic
 
-from script import sceneControl, unitControl, getPosition
+from script import sceneControl, getPosition
 
 def do():
 	filepath = logic.globalDict['stageFilepath']
@@ -17,7 +17,7 @@ def setupUnitData(filepath):
 
 # Create all of the unit objects that exist on battlefield
 def createUnits():
-	for unit in unitControl.get.allUnits():
+	for unit in logic.globalDict['units']:
 		
 		# Create unit in correct position
 		obj = addUnitObject(unit)

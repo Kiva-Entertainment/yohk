@@ -40,7 +40,7 @@ def do():
 # Return to selecting a unit (Close unit menu)
 def fromUnitSelected():
 	logic.globalDict['cursor'] = 'selecting'
-	logic.globalDict['selected'] = None
+	logic.globalDict['actor'] = None
 	logic.globalDict['extent'] = 0
 	
 	# Clear movement range markers
