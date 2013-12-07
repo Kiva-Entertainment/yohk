@@ -6,17 +6,14 @@ from script import unitControl
 def do():
 	filepath = logic.globalDict['stageFilepath']
 	
-	setupUnitData(filepath)
-	createUnits()
+	unitData = getUnitData(filepath)
+	
+	for unit in unitData:
+		unitControl.object.add(unit)
 
 # Store unit data loaded from file in stage's dir
-def setupUnitData(filepath):
+def getUnitData(filepath):
 	with open(filepath + 'unitData.py') as unitsFile:
 		# TODO(kgeffen) This is tamperable, improve means of loading/storing data
-		logic.globalDict['units'] = eval(unitsFile.read())
-
-# Create all of the unit objects that exist on battlefield
-def createUnits():
-	for unit in logic.globalDict['units']:
-		unitControl.object.add(unit)
+		return eval(unitsFile.read())
 

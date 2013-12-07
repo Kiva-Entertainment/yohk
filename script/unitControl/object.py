@@ -16,8 +16,12 @@ def get(unit):
 			if check.eq2D(objPosition, unit['position']):
 				return obj
 
-# Add the unit specified by given unit to battlefield
+# Add the unit specified by given unit to battlefield and store its data in gd
 def add(unit):
+	# Add data for unit to globalDict
+	logic.globalDict['units'].append(unit)
+
+	# Create game object
 	obj = createGameObject(unit)
 	switchMesh(obj, unit['model'])
 

@@ -7,6 +7,7 @@ from bge import logic
 def do():
 	logic.texture = {}
 	logic.globalDict['infoLists'] = [[],[],[]]
+	logic.globalDict['units'] = []
 	logic.globalDict['actor'] = None
 	logic.globalDict['cursor'] = 'selecting'
 	logic.globalDict['spaceTarget'] = []
