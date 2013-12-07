@@ -27,11 +27,8 @@ def formDisplayedText():
 		if turnHasActors:
 
 			# Add name of each actor in turn
-			for actorNumber in turn:
-				# Get actor's name
-				name = logic.globalDict['units'][actorNumber]['name']
-				
-				text += name + '\n'
+			for actor in turn:
+				text += actor['name'] + '\n'
 			
 			# Follow (turn with actors) with a blank line
 			text += '\n'

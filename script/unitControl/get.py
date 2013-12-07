@@ -1,35 +1,25 @@
-# Get various kinds of active units and return in format:
-# {'number' : c, 'data' : {DATA}}
+# Get unit data for unit(s) based on various conditions
 from bge import logic
 
 from script import check
 
 # The unit currently performing a command
 def actor():
-	unitNumber = logic.globalDict['selected']
-	data = logic.globalDict['units'][unitNumber]
-	
-	actor = {'number' : unitNumber,
-			 'data' : data}
-	
-	return actor
+	unit = logic.globalDict['selected']
+	return unit
 
 # The unit in a given space
 def inSpace(space):
 	for unit in allUnits():
 		
-		if check.eq2D(unit['data']['position'], space):
+		if check.eq2D(unit['position'], space):
 			return unit
 
 # List of all units
 def allUnits():
 	unitList = []
 	
-	for unit in logic.globalDict['units'].items():
-		
-		formattedUnit = {'number' : unit[0],
-						'data' : unit[1]}
-						
-		unitList.append(formattedUnit)
+	for unit in logic.globalDict['units']:
+		unitList.append(unit)
 	
 	return unitList

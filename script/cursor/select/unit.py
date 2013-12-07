@@ -24,7 +24,7 @@ def do(unit):
 	logic.globalDict['cursor'] = 'wait'
 	
 	# Set 'selected unit' to the number of the unit being selected
-	logic.globalDict['selected'] = unit['number']
+	logic.globalDict['selected'] = unit
 	
 	# Display and store list of spaces unit can move to
 	moveRange.determine.do(unit['data'])

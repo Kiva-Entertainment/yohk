@@ -9,9 +9,9 @@ def do():
 	setupUnitData(filepath)
 	createUnits()
 
-# Store unit data loaded from txt in stage's dir
+# Store unit data loaded from file in stage's dir
 def setupUnitData(filepath):
-	with open(filepath + 'unitData.txt') as unitsFile:
+	with open(filepath + 'unitData.py') as unitsFile:
 		# TODO(kgeffen) This is tamperable, improve means of loading/storing data
 		logic.globalDict['units'] = eval(unitsFile.read())
 
@@ -23,7 +23,7 @@ def createUnits():
 		obj = addUnitObject(unit)
 		
 		# Change units mesh to correct value
-		modelType = unit['data']['model']
+		modelType = unit['model']
 		
 		loadUnitMesh(modelType)
 		
@@ -34,12 +34,11 @@ def createUnits():
 def addUnitObject(unit):
 	battlefield = sceneControl.get('battlefield')
 	
-	# Add the unit as an instance of the object with name = unitNumber
-	# Ex: unitNumber 3 adds a preexisting object named 3
-	obj = battlefield.addObject(str(unit['number']), 'ground')
+	# Add a unit object to field
+	obj = battlefield.addObject('unit', 'ground')
 	
 	# Move unit to correct position based on its data
-	position = getPosition.onGround(unit['data']['position'])
+	position = getPosition.onGround(unit['position'])
 	obj.worldPosition = position
 	
 	return obj
