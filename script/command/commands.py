@@ -667,7 +667,7 @@ class dualSharpen:
 
 class craft:
 	def perform(actor):
-		unit = generic.objects.barrel
+		unit = generic.objects.barrel()
 
 		generic.command.addObjects(unit)
 	
