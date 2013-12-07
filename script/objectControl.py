@@ -8,7 +8,9 @@ INACTIVE_STATE = logic.KX_STATE2
 
 # Get the game object for a given unit
 def getUnit(unit):
-	from script import check, sceneControl
+	# NOTE(kgeffen) Must import here (not above) so circular importing doesn't happen
+	from script import sceneControl, check
+	
 	scene = sceneControl.get('battlefield')
 
 	# Get the object that is a 'unit' and has matching position

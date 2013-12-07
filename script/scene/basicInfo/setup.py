@@ -11,20 +11,20 @@ def attempt(cont):
 		do()
 
 def do():
-	actorData = unitControl.get.actor()['data']
+	unit = unitControl.get.actor()
 	
-	statsText(actorData)
-	faceImage(actorData)
+	statsText(unit)
+	faceImage(unit)
 
 
 # Display the correct text about the selected unit
-def statsText(unitData):
+def statsText(unit):
 	# <unitName>
 	# hp: <hp>/<health>
 	# sp: <sp>/<spirit>
-	text = unitData['name'] + '\n'
-	text += 'hp: ' + str(unitData['hp']) + '/' + str(unitData['health']) + '\n'
-	text += 'sp: ' + str(unitData['sp']) + '/' + str(unitData['spirit'])
+	text = unit['name'] + '\n'
+	text += 'hp: ' + str(unit['hp']) + '/' + str(unit['health']) + '\n'
+	text += 'sp: ' + str(unit['sp']) + '/' + str(unit['spirit'])
 	
 	textObject = objectControl.getFromScene(TEXT_OBJECT_NAME, 'basicInfo')
 	textObject['Text'] = text
