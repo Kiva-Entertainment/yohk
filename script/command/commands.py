@@ -664,3 +664,30 @@ class dualSharpen:
 	
 	def icon():
 		return 'S_Dagger_01.png'
+
+class craft:
+	def perform(actor):
+		unit = generic.objects.barrel()
+
+		generic.command.addObjects(unit)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['specialSpaces'] = generic.shapes.single()
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Make a barrel like pow!\n\n'
+			'TODO.')
+	
+	def name():
+		return 'Craft'
+	
+	def icon():
+		return 'I_Rock_01.png'
+

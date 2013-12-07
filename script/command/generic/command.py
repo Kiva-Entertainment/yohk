@@ -76,3 +76,18 @@ def hitCheck(target, factors):
 		storeResult.storeText(space, 'miss')
 	
 	return hit
+
+# Create the given objects
+# Objects are added based on special spaces, in order
+def addObjects(*units):
+	for i in range(0, len(units)):
+		unit = units[i]
+
+		# Change its position before adding
+		unit['position'] = logic.globalDict['commandSpecialSpaces'][i]
+
+		# Add game object
+		unitControl.object.add(unit)
+
+		storeResult.storeText(unit['position'], 'poof!')
+
