@@ -35,23 +35,32 @@ def consumeSp(unit):
 
 # Remove any units that have hp <= 0
 def killDeadUnits():
+	# A list of all units that will be deleted
+	# NOTE(kgeffen) Wait until after iteration to remove units
+	# so that dictionary does not change while being iterated over
+	doomedList = []
 	for unit in logic.globalDict['units']:
 		if unit['hp'] <= 0:
-			killUnit(unit)
-def killUnit(unit):
-	# Remove unit from list of units (Set its entry to 'None')
-	unitList = logic.globalDict['units']
-	for i in range(0, unitList):
-		if unitList[i] == unit:
-			unitList[i] = None
-
-	# Update the time data and display to account for deaths
-	updateTime(unitNumber)
-	displayTurnOrder.do()
+			doomedList.append(unit)
 	
+	for unit in doomedList:
+		killUnit(unit)
+
+# Delete the units entry from all its locations and delete the game object for unit
+def killUnit(unit):
 	# Delete unit object
 	unitObject = objectControl.getUnit(unit)
 	unitObject.endObject()
+
+	# Remove unit from list of units
+	unitList = logic.globalDict['units']
+	unitList = list(filter((unit).__ne__, unitList))
+	logic.globalDict['units'] = unitList
+
+	# Update the time data and display to account for deaths
+	updateTime(unit)
+	displayTurnOrder.do()
+	
 
 # Update the time array to account for units dying
 def updateTime(unit):
@@ -59,7 +68,7 @@ def updateTime(unit):
 	newTime = []
 	
 	for tic in logic.globalDict['time']:
-		# NOTE(kgeffen) This retains all entries in the array that are != unitNumber
+		# NOTE(kgeffen) This retains all entries in the array that are != unit
 		# Remove unit's existance from current tic
 		newTic = list(filter((unit).__ne__, tic))
 		

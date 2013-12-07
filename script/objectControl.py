@@ -16,7 +16,7 @@ def getUnit(unit):
 	# Get the object that is a 'unit' and has matching position
 	for obj in scene.objects:
 		if obj.name == 'unit':
-
+			
 			objPosition = obj.worldPosition
 			if check.eq2D(objPosition, unit['position']):
 				return obj

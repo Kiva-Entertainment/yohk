@@ -12,7 +12,7 @@ class slash:
 	# The most basic attack
 	def perform(actor, target):
 		factors = generic.commandFactors.sword(actor, target)
-		
+		factors['force'] *= 100000
 		if generic.command.hitCheck(target, factors):
 			generic.command.standardAttack(target, factors)
 	
@@ -253,6 +253,38 @@ class cleave:
 	
 	def icon():
 		return 'W_Sword_011.png'
+
+class megalash:
+	# Basic powerful attack
+	def perform(actor, *targets):
+		factors = generic.commandFactors.sword(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.sword()
+
+		length = generic.extentInfluence.polynomial(1, 1)
+		commandRange['range'] = generic.shapes.triangle(length)
+
+		commandRange['aoe'] = generic.shapes.line(length)
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(1, 1)
+	
+	def description():
+		return ('Lines of pain.' + '\n\n'
+		 		'TODO.')
+	
+	def name():
+		return 'Megalash'
+	
+	def icon():
+		return 'W_Sword_014.png'
+
 
 'Wand'
 class psiStrike:
@@ -527,6 +559,28 @@ class dash:
 	
 	def icon():
 		return 'E_Shoes_01.png'
+
+class rush:
+	def perform(actor, target):
+		generic.command.raiseStat(actor, 'speed', 10)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.self()
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Raise your speed.\n\n'
+			'TODO')
+	
+	def name():
+		return 'Rush'
+	
+	def icon():
+		return 'E_Shoes_06.png'
+
 
 '''Skill'''
 class strengthen:

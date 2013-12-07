@@ -57,3 +57,15 @@ def flatLine(length):
 		spaces.append([-l, 0])
 	
 	return spaces
+
+# A triangle extending outwards
+# _length_ equals distance it extends
+def triangle(length):
+	spaces = []
+	
+	for x in range(0, length):
+		for y in range(-x, x + 1):
+			spaces.append([y, x])
+	
+	return spaces
+
