@@ -6,6 +6,23 @@ from bge import logic
 ACTIVE_STATE = logic.KX_STATE1
 INACTIVE_STATE = logic.KX_STATE2
 
+def addUnit(unit):
+	'Create unit game object in correct place'
+	battlefield = sceneControl.get('battlefield')
+
+	# Add game object, adjust its position
+	obj = battlefield.addObject('unit', 'ground')
+	obj.worldPosition = getPosition.onGround(unit['position'])
+
+	'Change its mesh based on what model unit is'
+	# Load mesh into memory only if it isn't already loaded
+	filepath = logic.expandPath('//models/') + unit['model'] + '.blend'
+	if filepath not in logic.LibList():
+		logic.LibLoad(filepath, 'Mesh')
+	
+	# Switch objects mesh
+	obj.replaceMesh(unit['model'])
+
 # Get the game object for a given unit
 def getUnit(unit):
 	# NOTE(kgeffen) Must import here (not above) so circular importing doesn't happen

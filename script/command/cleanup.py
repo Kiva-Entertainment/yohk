@@ -1,7 +1,7 @@
 # Perform any cleanup necessary after command resolves
 from bge import logic
 
-from script import commandControl, objectControl
+from script import commandControl, objectControl, unitControl
 from script.time import displayTurnOrder 
 
 # The message sent which causes command results to be displayed
@@ -49,7 +49,7 @@ def killDeadUnits():
 # Delete the units entry from all its locations and delete the game object for unit
 def killUnit(unit):
 	# Delete unit object
-	unitObject = objectControl.getUnit(unit)
+	unitObject = unitControl.object.get(unit)
 	unitObject.endObject()
 
 	# Remove unit from list of units
