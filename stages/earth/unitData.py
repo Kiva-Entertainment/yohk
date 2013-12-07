@@ -1,4 +1,27 @@
-[{	'position' : [1,0],
+[
+{	'position' : [3,3],
+	'model' : 'barrel',
+	'name' : 'Barrel',
+	'health' : 200,
+	'hp' : 200,
+	'spirit' : 0,
+	'sp' : 0,
+	'move' : 0,
+	'mv' : 0,
+	'actions' : 0,
+	'act' : 0,
+	'strength' : 0,
+	'intelligence' : 0,
+	'toughness' : 10,
+	'willpower' : 0,
+	'focus' : 0,
+	'agility' : 0,
+	'speed' : 0,
+	'jump' : 0,
+	'regen' : 0,
+	'commands' : [[]]
+},
+{	'position' : [1,0],
 	'model' : 'soldier',
 	'name' : 'Shino',
 	'health' : 1100,
@@ -18,9 +41,9 @@
 	'speed' : 19,
 	'jump' : 12,
 	'regen' : 5,
-	'commands' :	[['rush', 'megalash'],
-					['slash', 'gloryStrike', 'frontlineSlash', 'doubleSlash', 'ribbonDash', 'predatorsDescent', 'ebber', 'cleave'],
-					['strengthen', 'focus', 'dualSharpen', 'dash']]},
+	'commands' :	[['slash', 'gloryStrike', 'frontlineSlash', 'doubleSlash', 'ribbonDash', 'predatorsDescent', 'ebber', 'cleave'],
+					['strengthen', 'focus', 'dualSharpen', 'dash']]
+},
 { 	'position' : [3,0],
 	'model' : 'soldier',
 	'name' : 'Haro',
@@ -42,7 +65,8 @@
 	'jump' : 12,
 	'regen' : 5,
 	'commands' : 	[['slash', 'gloryStrike', 'frontlineSlash', 'doubleSlash', 'ribbonDash', 'predatorsDescent', 'ebber', 'cleave'],
-					['strengthen', 'focus', 'dualSharpen', 'dash']]},
+					['strengthen', 'focus', 'dualSharpen', 'dash']]
+},
 {	'position' : [1,1],
 	'model' : 'devoted',
 	'name' : 'Urchin',
@@ -64,7 +88,8 @@
 	'jump' : 10,
 	'regen' : 7,
 	'commands' : 	[['psiStrike', 'flameBarrage', 'mudshot', 'aeroImpact', 'meteor', 'galeCloak'],
-					['smarten', 'tutor', 'study', 'dash']]},
+					['smarten', 'tutor', 'study', 'dash']]
+},
 {	'position' : [2,1],
 	'model' : 'devoted',
 	'name' : 'Lish',
@@ -86,4 +111,6 @@
 	'jump' : 10,
 	'regen' : 7,
 	'commands' : 	[['psiStrike', 'flameBarrage', 'mudshot', 'aeroImpact', 'meteor', 'galeCloak'],
-					['smarten', 'tutor', 'study', 'dash']]}]
+					['smarten', 'tutor', 'study', 'dash']]
+}
+]

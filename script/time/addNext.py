@@ -3,6 +3,7 @@
 from bge import logic
 
 def unitAction(unit, timeArray):
-	firstTurn = 100 - unit['speed']
-	
-	timeArray[firstTurn].append(unit)
+	if unit['speed'] > 0:
+		firstTurn = 100 - unit['speed']
+
+		timeArray[firstTurn].append(unit)

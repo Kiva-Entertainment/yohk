@@ -45,7 +45,7 @@ def addUnitObject(unit):
 
 # Load the given unit model into bge memory so that it can be used
 def loadUnitMesh(model):
-	filepath = logic.expandPath('//models/characters/') + model + '.blend'
+	filepath = logic.expandPath('//models/') + model + '.blend'
 	
 	# Don't add the library if it exists already!
 	if filepath not in logic.LibList():
