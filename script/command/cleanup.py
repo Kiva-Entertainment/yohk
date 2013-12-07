@@ -1,7 +1,7 @@
 # Perform any cleanup necessary after command resolves
 from bge import logic
 
-from script import unitControl, commandControl, objectControl
+from script import commandControl, objectControl
 from script.time import displayTurnOrder 
 
 # The message sent which causes command results to be displayed
@@ -12,65 +12,65 @@ def do():
 	logic.globalDict['spaceTarget'] = []
 	
 	# Modify the actor's stats
-	actor = unitControl.get.actor()
-	consumeAction(actor)
+	actor = logic.globalDict['actor']
+	actor['act'] -= 1
 	consumeSp(actor)
 	
 	# Kill any units with hp <= 0
 	killDeadUnits()
 	
 	# Ensure all units stats are within acceptable bounds
-	for unitNumber in logic.globalDict['units'].keys():
-		ensureStatsWithinBounds(unitNumber)
+	for unit in logic.globalDict['units']:
+		ensureStatsWithinBounds(unit)
 	
 	# Display the results of the command that just resolved
 	displayCommandResults()
-
-# Lower unit's remaining actions by 1
-def consumeAction(unit):
-	logic.globalDict['units'][unit['number']]['act'] -= 1
 
 # Lower unit's sp by cost of command that just resolved
 def consumeSp(unit):
 	command = logic.globalDict['cursor']
 	cost = commandControl.cost(command)
 	
-	logic.globalDict['units'][unit['number']]['sp'] -= cost
+	unit['sp'] -= cost
 
 # Remove any units that have hp <= 0
 def killDeadUnits():
+	# A list of all units that will be deleted
 	# NOTE(kgeffen) Wait until after iteration to remove units
 	# so that dictionary does not change while being iterated over
+	doomedList = []
+	for unit in logic.globalDict['units']:
+		if unit['hp'] <= 0:
+			doomedList.append(unit)
 	
-	unitsToKill = [] # list of unitNumbers
-	for unit in logic.globalDict['units'].items():
-		if unit[1]['hp'] <= 0:
-			unitsToKill.append(unit[0])
-	
-	for unitNumber in unitsToKill:
-		killUnit(unitNumber)
+	for unit in doomedList:
+		killUnit(unit)
 
-def killUnit(unitNumber):
-	# Delete unit from dictionary
-	del logic.globalDict['units'][unitNumber]
-	
-	# Update the time data and display to account for deaths
-	updateTime(unitNumber)
-	displayTurnOrder.do()
-	
+# Delete the units entry from all its locations and delete the game object for unit
+def killUnit(unit):
 	# Delete unit object
-	unitObject = objectControl.getFromScene(str(unitNumber), 'battlefield')	
+	unitObject = objectControl.getUnit(unit)
 	unitObject.endObject()
 
+	# Remove unit from list of units
+	unitList = logic.globalDict['units']
+	unitList = list(filter((unit).__ne__, unitList))
+	logic.globalDict['units'] = unitList
+
+	# Update the time data and display to account for deaths
+	updateTime(unit)
+	displayTurnOrder.do()
+	
+
 # Update the time array to account for units dying
-def updateTime(unitNumber):
+def updateTime(unit):
 	# Remove unit from timeline
 	newTime = []
 	
 	for tic in logic.globalDict['time']:
-		# NOTE(kgeffen) This retains all entries in the array that are != unitNumber
+		# NOTE(kgeffen) This retains all entries in the array that are != unit
 		# Remove unit's existance from current tic
-		newTic = list(filter((unitNumber).__ne__, tic))
+		newTic = list(filter((unit).__ne__, tic))
 		
 		# Add new tic to new time
 		newTime.append(newTic)
@@ -85,13 +85,11 @@ def displayCommandResults():
 	ground.sendMessage(DISPLAY_COMMAND_RESULTS_MESSAGE)
 
 # Ensure hp/sp are not larger than health/spirit
-def ensureStatsWithinBounds(unitNumber):
-	sp = logic.globalDict['units'][unitNumber]['sp']
-	maxSp = logic.globalDict['units'][unitNumber]['spirit']
-	if sp > maxSp:
-		logic.globalDict['units'][unitNumber]['sp'] = maxSp
+def ensureStatsWithinBounds(unit):
+	maxSp = unit['spirit']
+	if unit['sp'] > maxSp:
+		unit['sp'] = maxSP
 	
-	hp = logic.globalDict['units'][unitNumber]['hp']
-	maxHp = logic.globalDict['units'][unitNumber]['health']
-	if hp > maxHp:
-		logic.globalDict['units'][unitNumber]['hp'] = maxHp
+	maxHp = unit['health']
+	if unit['hp'] > maxHp:
+		unit['hp'] = maxHp

@@ -2,7 +2,7 @@
 # Called by cursor.select.target.py
 from bge import logic
 
-from script import check, objectControl, commandControl, unitControl
+from script import check, objectControl, commandControl
 from script.command import cleanup
 
 def attempt():
@@ -13,7 +13,7 @@ def attempt():
 	
 	if effectedUnits is not None:
 		
-		actor = unitControl.get.actor()
+		actor = logic.globalDict['actor']
 		targets = effectedUnits
 		command = logic.globalDict['cursor']
 		

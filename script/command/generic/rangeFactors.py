@@ -19,7 +19,7 @@ def self():
 'Weapons'
 def spear():
 	return {'okDz' : {'max' : 1.2, 'min' : -1.2},
-			'range' : shapes.emptyDiamond(2),
+			'range' : shapes.diamond(2, 1),
 			'aoe' : shapes.single(),
 			'specialSpaces' : []}
 

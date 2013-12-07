@@ -18,9 +18,9 @@ def do():
 	
 	# Units that just acted must be added to time again
 	# Also, they each have an upkeep
-	for unitNumber in lastTurn:
-		upkeep.unit(unitNumber)
-		addNext.unitAction(unitNumber, time)
+	for unit in lastTurn:
+		upkeep.unit(unit)
+		addNext.unitAction(unit, time)
 	
 	churnUntilTurnWithActor(time)
 	

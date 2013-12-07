@@ -11,14 +11,14 @@ from bge import logic
 import math
 import random
 
-from script import objectControl, getPosition
+from script import unitControl
 from script.command import storeResult
 
 # How random calculations are
 RANDOMNESS = 0.1
 
 'Basic commands'
-def standardAttack(targetNumber, factors):
+def standardAttack(target, factors):
 	force = 2 * random.gauss(factors['force'], factors['force'] * RANDOMNESS)
 	resist = random.gauss(factors['resist'], factors['resist'] * RANDOMNESS)
 	
@@ -26,43 +26,41 @@ def standardAttack(targetNumber, factors):
 	if damage < 1:
 		damage = 1
 	
-	raiseStat(targetNumber, 'hp', -damage)
+	raiseStat(target, 'hp', -damage)
 	
 	return damage
 
 'Basic results of commands'
 # Raise one of unit's stats by an amount
-def raiseStat(unitNumber, stat, amount):
-	logic.globalDict['units'][unitNumber][stat] += round(amount)
+def raiseStat(unit, stat, amount):
+	unit[stat] += round(amount)
 	
-	storeResult.statChange(stat, amount, unitNumber)
+	storeResult.statChange(stat, amount, unit)
 
 # Multiply a stat by an amount
-def scaleStat(unitNumber, stat, factor):
-	v1 = logic.globalDict['units'][unitNumber][stat]
+def scaleStat(unit, stat, factor):
+	v1 = unit[stat]
 	v2 = round(v1 * factor)
 	
-	logic.globalDict['units'][unitNumber][stat] = v2
+	unit[stat] = v2
 	
 	# Calculate and store the change in the affected stat
 	amount = v2 - v1
-	storeResult.statChange(stat, amount, unitNumber)
+	storeResult.statChange(stat, amount, unit)
 
 'Movement'
-def move(unitNumber):
+def move(unit):
 	# First special space
 	position = logic.globalDict['commandSpecialSpaces'][0]
 	
-	logic.globalDict['units'][unitNumber]['position'] = position
+	unitControl.move.toSpace(unit, position)
 	
-	# Move actual object
-	obj = objectControl.getFromScene(str(unitNumber), 'battlefield')
-	obj.worldPosition = getPosition.onGround(position)
+	
 
 'Other'
 # Determine if command hits
 # If command misses, store 'miss' in commandResults
-def hitCheck(targetNumber, factors):
+def hitCheck(target, factors):
 	accuracy = random.gauss(factors['accuracy'], factors['accuracy'] * RANDOMNESS)
 	
 	evasion = random.gauss(factors['evasion'], factors['evasion'] * RANDOMNESS)
@@ -74,7 +72,7 @@ def hitCheck(targetNumber, factors):
 	
 	# Store result 'miss'
 	if not hit:
-		space = logic.globalDict['units'][targetNumber]['position']
+		space = target['position']
 		storeResult.storeText(space, 'miss')
 	
 	return hit

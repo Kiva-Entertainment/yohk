@@ -33,20 +33,3 @@ def onMap(position):
 		position[1] = 0
 	
 	return position
-
-# Returns the position, including z, of the unit given
-def ofUnit(unitNumber):
-	data = logic.globalDict['units'][unitNumber]
-	position2D = data['position']
-	
-	# Position is only x and y, get z also
-	position = onGround(position2D)
-	
-	return position
-
-# Returns the position, including z, of the acting unit
-def actor():
-	unitNumber = int(logic.globalDict['selected'])
-	
-	# Return the position of the unit that is the actor 
-	return ofUnit(unitNumber)

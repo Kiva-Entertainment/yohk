@@ -65,8 +65,8 @@ def costText():
 		cost = commandControl.cost(commands[0])
 		
 		# Get actor's current sp
-		unitNumber = logic.globalDict['selected']
-		currentSp = logic.globalDict['units'][unitNumber]['sp']
+		unit = logic.globalDict['actor']
+		currentSp = unit['sp']
 		
 		text = 'Cost: ' + str(cost) + '/' + str(currentSp)
 	
@@ -91,10 +91,8 @@ def descriptionText():
 
 
 def getCommandsList():
-	# NOTE(kgeffen) In some places, selected is stored as an int, and in others, a string
-	# TODO(kgeffen) Standardize storage type
-	unitNumber = int(logic.globalDict['selected'])
-	commandsList = logic.globalDict['units'][unitNumber]['commands']
+	unit = logic.globalDict['actor']
+	commandsList = unit['commands']
 	
 	return commandsList
 

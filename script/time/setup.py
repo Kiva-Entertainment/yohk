@@ -30,7 +30,7 @@ def createStartingTimeArray():
 		timeArray.append([])
 	
 	# Add each unit's first action to timeArray
-	for unitNumber in logic.globalDict['units'].keys():
-		addNext.unitAction(unitNumber, timeArray)
+	for unit in logic.globalDict['units']:
+		addNext.unitAction(unit, timeArray)
 	
 	return timeArray

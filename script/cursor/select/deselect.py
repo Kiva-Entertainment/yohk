@@ -40,7 +40,7 @@ def do():
 # Return to selecting a unit (Close unit menu)
 def fromUnitSelected():
 	logic.globalDict['cursor'] = 'selecting'
-	logic.globalDict['selected'] = ''
+	logic.globalDict['actor'] = None
 	logic.globalDict['extent'] = 0
 	
 	# Clear movement range markers
@@ -83,5 +83,7 @@ def fromUnitActing():
 
 def moveCursorToActor():
 	cursor = objectControl.getFromScene('cursor', 'battlefield')
-	
-	cursor.worldPosition = getPosition.actor()
+
+	actor = logic.globalDict['actor']
+
+	cursor.worldPosition = getPosition.onGround(actor['position'])

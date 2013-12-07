@@ -12,9 +12,9 @@ class slash:
 	# The most basic attack
 	def perform(actor, target):
 		factors = generic.commandFactors.sword(actor, target)
-		
-		if generic.command.hitCheck(target['number'], factors):
-			generic.command.standardAttack(target['number'], factors)
+		factors['force'] *= 100000
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.sword()
@@ -37,12 +37,12 @@ class gloryStrike:
 	def perform(actor, target):
 		factors = generic.commandFactors.sword(actor, target)
 		
-		if generic.command.hitCheck(target['number'], factors):
+		if generic.command.hitCheck(target, factors):
 			# Attack (Don't take altered attack into consideration)
-			generic.command.standardAttack(target['number'], factors)
+			generic.command.standardAttack(target, factors)
 			
 			# Raise strength
-			generic.command.raiseStat(actor['number'], 'strength', 8)
+			generic.command.raiseStat(actor, 'strength', 8)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.sword()
@@ -67,17 +67,18 @@ class predatorsDescent:
 	def perform(actor, target):
 		factors = generic.commandFactors.sword(actor, target)
 		
-		if generic.command.hitCheck(target['number'], factors):
-			generic.command.standardAttack(target['number'], factors)
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
 		
 		# Move actor forward to space in front of target
-		generic.command.move(actor['number'])
+		generic.command.move(actor)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.sword()
 		
 		# Hit units in sightline from actor that are not adjacent (to actor)
 		reach = generic.extentInfluence.polynomial(1, 1)
+		offset = 1 # Spaces adjacent to (1 space away from) actor is not valid target
 		commandRange['range'] = generic.shapes.line(reach, offset)
 
 		# Space to move to
@@ -105,8 +106,8 @@ class doubleSlash:
 		factors = generic.commandFactors.sword(actor, target)
 		
 		for i in range(0,2):
-			if generic.command.hitCheck(target['number'], factors):
-				generic.command.standardAttack(target['number'], factors)
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.sword()
@@ -136,11 +137,11 @@ class ribbonDash:
 			
 			factors['force'] *= generic.extentInfluence.polynomial(1, 1/12)
 			
-			if generic.command.hitCheck(target['number'], factors):
-				generic.command.standardAttack(target['number'], factors)
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
 		
 		# Move forward
-		generic.command.move(actor['number'])
+		generic.command.move(actor)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.sword()
@@ -170,8 +171,8 @@ class frontlineSlash:
 		for target in targets:
 			factors = generic.commandFactors.sword(actor, target)
 			
-			if generic.command.hitCheck(target['number'], factors):
-				generic.command.standardAttack(target['number'], factors)
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.sword()
@@ -196,11 +197,11 @@ class ebber:
 	def perform(actor, target):
 		factors = generic.commandFactors.sword(actor, target)
 		
-		if generic.command.hitCheck(target['number'], factors):
-			generic.command.standardAttack(target['number'], factors)
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
 		
 		# Step backwards 1 space
-		generic.command.move(actor['number'])
+		generic.command.move(actor)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.sword()
@@ -233,8 +234,8 @@ class cleave:
 		factors['accuracy'] *= 1.5
 		factors['force'] *= 2
 
-		if generic.command.hitCheck(target['number'], factors):
-			generic.command.standardAttack(target['number'], factors)
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.sword()
@@ -253,17 +254,49 @@ class cleave:
 	def icon():
 		return 'W_Sword_011.png'
 
+class megalash:
+	# Basic powerful attack
+	def perform(actor, *targets):
+		factors = generic.commandFactors.sword(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.sword()
+
+		length = generic.extentInfluence.polynomial(1, 1)
+		commandRange['range'] = generic.shapes.triangle(length)
+
+		commandRange['aoe'] = generic.shapes.line(length)
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(1, 1)
+	
+	def description():
+		return ('Lines of pain.' + '\n\n'
+		 		'TODO.')
+	
+	def name():
+		return 'Megalash'
+	
+	def icon():
+		return 'W_Sword_014.png'
+
+
 'Wand'
 class psiStrike:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
 		
-		if generic.command.hitCheck(target['number'], factors):
-			generic.command.standardAttack(target['number'], factors)
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
-		generic.range.free(commandRange)
+		generic.range.rigid(commandRange)
 	
 	def cost():
 		return 0
@@ -288,8 +321,8 @@ class flameBarrage:
 		for i in range(0, numberTimes):
 
 			# Attack target
-			if generic.command.hitCheck(target['number'], factors):
-				generic.command.standardAttack(target['number'], factors)
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
@@ -316,14 +349,14 @@ class mudshot:
 		for target in targets:
 			factors = generic.commandFactors.magic(actor, target)
 			
-			if generic.command.hitCheck(target['number'], factors):
+			if generic.command.hitCheck(target, factors):
 				
 				# Lower mv
 				amount = generic.extentInfluence.polynomial(1, 1)
-				generic.command.raiseStat(target['number'], 'mv', -amount)
+				generic.command.raiseStat(target, 'mv', -amount)
 
 				# Deal damage
-				generic.command.standardAttack(target['number'], factors)
+				generic.command.standardAttack(target, factors)
 				
 	
 	def displayRange():
@@ -354,11 +387,11 @@ class aeroImpact:
 		factors = generic.commandFactors.magic(actor, target)
 		
 		# move target
-		generic.command.move(target['number'])
+		generic.command.move(target)
 		
-		if generic.command.hitCheck(target['number'], factors):
+		if generic.command.hitCheck(target, factors):
 			# Deal damage
-			generic.command.standardAttack(target['number'], factors)				
+			generic.command.standardAttack(target, factors)				
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
@@ -389,10 +422,10 @@ class aeroImpact:
 		return 'S_Physic_02.png'
 class galeCloak:
 	def perform(actor, target):
-		generic.command.raiseStat(target['number'], 'toughness', 10)
-		generic.command.raiseStat(target['number'], 'willpower', 10)
-		generic.command.raiseStat(target['number'], 'agility', 10)
-		generic.command.raiseStat(target['number'], 'mv', 3)
+		generic.command.raiseStat(target, 'toughness', 10)
+		generic.command.raiseStat(target, 'willpower', 10)
+		generic.command.raiseStat(target, 'agility', 10)
+		generic.command.raiseStat(target, 'mv', 3)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
@@ -423,8 +456,8 @@ class meteor:
 			factors['force'] *= generic.extentInfluence.polynomial(1, 1/2)
 			factors['accuracy'] *= generic.extentInfluence.polynomial(1, 1/2)
 			
-			if generic.command.hitCheck(target['number'], factors):
-				generic.command.standardAttack(target['number'], factors)
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
 		
 	
 	def displayRange():
@@ -459,9 +492,9 @@ class meteor:
 class study:
 	def perform(actor, target):
 		# Increase sp by same amount as at upkeep
-		dSp = actor['data']['regen']/100 * actor['data']['spirit']
+		dSp = actor['regen']/100 * actor['spirit']
 		dSp = round(dSp)
-		generic.command.raiseStat(actor['number'], 'sp', dSp)
+		generic.command.raiseStat(actor, 'sp', dSp)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
@@ -482,11 +515,11 @@ class study:
 class tutor:
 	def perform(actor, target):
 		# Increase sp by same amount as at upkeep
-		amount = actor['data']['regen']/100 * actor['data']['spirit']
+		amount = actor['regen']/100 * actor['spirit']
 		amount = round(amount)
 		
-		generic.command.raiseStat(actor['number'], 'sp', amount)
-		generic.command.raiseStat(target['number'], 'sp', amount)
+		generic.command.raiseStat(actor, 'sp', amount)
+		generic.command.raiseStat(target, 'sp', amount)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
@@ -508,7 +541,7 @@ class tutor:
 'Boots'
 class dash:
 	def perform(actor, target):
-		generic.command.raiseStat(actor['number'], 'mv', 2)
+		generic.command.raiseStat(actor, 'mv', 2)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
@@ -527,10 +560,32 @@ class dash:
 	def icon():
 		return 'E_Shoes_01.png'
 
+class rush:
+	def perform(actor, target):
+		generic.command.raiseStat(actor, 'speed', 10)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.self()
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Raise your speed.\n\n'
+			'TODO')
+	
+	def name():
+		return 'Rush'
+	
+	def icon():
+		return 'E_Shoes_06.png'
+
+
 '''Skill'''
 class strengthen:
 	def perform(actor, target):
-		generic.command.raiseStat(actor['number'], 'strength', 10)
+		generic.command.raiseStat(actor, 'strength', 10)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
@@ -550,7 +605,7 @@ class strengthen:
 		return 'S_Buff_01.png'
 class smarten:
 	def perform(actor, target):
-		generic.command.raiseStat(actor['number'], 'intelligence', 10)
+		generic.command.raiseStat(actor, 'intelligence', 10)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
@@ -570,7 +625,7 @@ class smarten:
 		return 'S_Buff_03.png'
 class focus:
 	def perform(actor, target):
-		generic.command.raiseStat(actor['number'], 'focus', 10)
+		generic.command.raiseStat(actor, 'focus', 10)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
@@ -590,8 +645,8 @@ class focus:
 		return 'S_Buff_06.png'
 class dualSharpen:
 	def perform(actor, target):
-		generic.command.raiseStat(actor['number'], 'strength', 8)
-		generic.command.raiseStat(target['number'], 'strength', 8)
+		generic.command.raiseStat(actor, 'strength', 8)
+		generic.command.raiseStat(target, 'strength', 8)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()

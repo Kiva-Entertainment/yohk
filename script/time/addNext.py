@@ -1,11 +1,8 @@
-# Add unit's number to timeArray at next turn when unit acts
+# Add unit to timeArray at next turn when unit acts
 # Units act sooner/more often if they have higher speed
 from bge import logic
 
-def unitAction(unitNumber, timeArray):
-	unitData = logic.globalDict['units'][unitNumber]
-	speed = unitData['speed']
+def unitAction(unit, timeArray):
+	firstTurn = 100 - unit['speed']
 	
-	firstTurn = 100 - speed
-	
-	timeArray[firstTurn].append(unitNumber)
+	timeArray[firstTurn].append(unit)
