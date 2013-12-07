@@ -83,5 +83,7 @@ def fromUnitActing():
 
 def moveCursorToActor():
 	cursor = objectControl.getFromScene('cursor', 'battlefield')
-	
-	cursor.worldPosition = getPosition.actor()
+
+	actor = logic.globalDict['actor']
+
+	cursor.worldPosition = getPosition.onGround(actor['position'])

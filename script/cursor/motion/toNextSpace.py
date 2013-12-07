@@ -29,7 +29,7 @@ def toNextActor():
 	
 	if actors != []:
 		# Position that cursor will move to
-		position = getPosition.ofUnit(actors[0])
+		position = getPosition.onGround(actors[0]['position'])
 		
 		# Cursor moved (Wasn't already in position)
 		cursorMoved = moveToPosition(position)
@@ -40,7 +40,7 @@ def toNextActor():
 			cycleEntries(actors)
 			
 			# This is the position of the newly cycled list of actors
-			position = getPosition.ofUnit(actors[0])
+			position = getPosition.onGround(actors[0]['position'])
 			
 			moveToPosition(position)
 
