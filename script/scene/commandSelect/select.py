@@ -24,15 +24,11 @@ def do():
 
 # Get command selected in commandSelect
 def getSelectedCommand():
-	# unitNumber of actor
-	unitNumber = logic.globalDict['selected']
-	
-	# Actor's data
-	unitData = logic.globalDict['units'][unitNumber]
+	unit = logic.globalDict['selected']
 	
 	# List of commands displayed on screen
 	# NOTE(kgeffen) Has multiple lists of commands, get the first one
-	commands = unitData['commands'][0]
+	commands = unit['commands'][0]
 	
 	# Assuming that current list of commands is not empty
 	if len(commands) != 0:
@@ -50,19 +46,15 @@ def selectCommand(command):
 	sendMessageToBattlefield(MESSAGE_TO_BATTLEFIELD)
 
 def commandIsAllowed(command):
-	# Number of actor
-	unitNumber = logic.globalDict['selected']
-	
-	# Actor's data
-	unitData = logic.globalDict['units'][unitNumber]
+	unit = logic.globalDict['selected']
 	
 	# Not allowed if unit has no more actions left
-	if unitData['act'] == 0:
+	if unit['act'] == 0:
 		return False
 	
 	# Not allowed if unit can't afford it (In sp)
 	cost = commandControl.cost(command)
-	if cost > unitData['sp']:
+	if cost > unit['sp']:
 		return False
 	
 	return True

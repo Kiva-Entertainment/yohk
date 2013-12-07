@@ -24,7 +24,7 @@ def markTargetableSpace(actorPosition, targetSpace, rng):
 	# Get a list of all spaces within area of effect
 	effectedSpaces = getEffectedSpaces(actorPosition, targetSpace, rng)
 	
-	# List of all unitNumbers/data for units effected by command
+	# List of all units effected by command
 	effectedUnits = getEffectedUnits(effectedSpaces)
 	
 	# Record all spaces that have special meaning for command
@@ -101,7 +101,7 @@ def attemptGetSpecialSpaces(actorPosition, targetSpace, rng):
 	
 	return effectedSpaces
 
-# Return a list of unitNumber/data for all units in the given spaces
+# Return a list of units in the given spaces
 def getEffectedUnits(effectedSpaces):
 	effectedUnits = []
 	
@@ -110,8 +110,6 @@ def getEffectedUnits(effectedSpaces):
 		
 		unit = unitControl.get.inSpace(space)
 		if unit is not None:
-			
-			# NOTE(kgeffen) unit is appended, not just unitNumber (Also has unitData)
 			effectedUnits.append(unit)
 	
 	return effectedUnits

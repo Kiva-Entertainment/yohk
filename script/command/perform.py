@@ -13,7 +13,7 @@ def attempt():
 	
 	if effectedUnits is not None:
 		
-		actor = unitControl.get.actor()
+		actor = logic.globalDict['selected']
 		targets = effectedUnits
 		command = logic.globalDict['cursor']
 		
