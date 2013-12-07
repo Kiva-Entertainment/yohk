@@ -9,6 +9,7 @@ def do():
 	logic.globalDict['infoLists'] = [[],[],[]]
 	logic.globalDict['units'] = []
 	logic.globalDict['actor'] = None
+	logic.globalDict['described'] = None
 	logic.globalDict['cursor'] = 'selecting'
 	logic.globalDict['spaceTarget'] = []
 	logic.globalDict['validMove'] = [] # Dictionary of spaces and dMv for current unit

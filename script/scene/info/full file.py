@@ -23,55 +23,6 @@ FACE_OBJECT_NAME = 'info_face'
 TEXT_NAME_BASE = 'info_text'
 ICON_NAME_BASE = 'info_icon'
 
-# Cycle through the entries in the list currently viewed
-def cycle(cont):
-	screenNumber = cont.owner['currentScreen']
-	if screenNumber != 0: # First screen doesn't change
-		
-		# List of stats displayed on current screen ex: [smack, defend, slash]
-		statList = logic.globalDict['infoLists'][screenNumber - 1]
-		if len(statList) != 0:
-			
-			upKey = cont.sensors['upKey'].positive
-			downKey = cont.sensors['downKey'].positive
-			
-			if upKey:
-				entry = statList.pop()
-				statList.insert(0, entry)
-			elif downKey:
-				entry = statList.pop(0)
-				statList.append(entry)
-			else:
-				# Setup doesn't need to happen if no cycling happened
-				# This else: return could be removed, but optimization...
-				return
-			
-			Setup.setupStandardScreenObjects(screenNumber)
-
-# Rotate the camera and record which screen is being viewed
-def rotate(cont):
-	own = cont.owner
-	leftKey = cont.sensors['leftKey'].positive
-	rightKey = cont.sensors['rightKey'].positive
-	currentScreen = own['currentScreen']
-	
-	if leftKey:
-		own.applyRotation([0.0, 0.0, pi/2])
-		
-		if currentScreen == 0:
-			currentScreen = MAX_LIST_NUMBER
-		else:
-			currentScreen -= 1
-	elif rightKey:
-		own.applyRotation([0.0, 0.0, -pi/2])
-		
-		if currentScreen == MAX_LIST_NUMBER:
-			currentScreen = 0
-		else:
-			currentScreen += 1
-	
-	own['currentScreen'] = currentScreen
-
 def setup(cont):
 	if cont.sensors['setup'].positive:
 		Setup.do()

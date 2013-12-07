@@ -4,11 +4,10 @@ from bge import logic
 from script import sceneControl, objectControl, marker
 
 # Display the unit's info
-def info(cont):
-	# TODO(kgeffen) Fix info scene
-	return
-	
+def info(cont):	
 	if cont.sensors['downKey'].positive:
+		logic.globalDict['described'] = logic.globalDict['actor']
+
 		sceneControl.show('info')
 		sceneControl.hide('battlefieldOverlay')
 		sceneControl.suspend('battlefield')

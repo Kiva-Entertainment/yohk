@@ -4,7 +4,7 @@ from bge import logic
 
 from script import sceneControl
 
-BACKGROUND_SCENES = ['basicInfo', 'commandSelect']#, 'info']
+BACKGROUND_SCENES = ['basicInfo', 'commandSelect', 'info']
 OVERLAY_SCENES = ['battlefieldOverlay', 'sound']
 
 # Add all necessary scenes, even ones that are hidden
