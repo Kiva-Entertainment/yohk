@@ -1,4 +1,4 @@
-# Call methods for given commands dynamically
+# Call methods for given alignments dynamically
 from script.align import align
 
 def name(alignment):
@@ -9,7 +9,7 @@ def color(alignment):
 	return callMethodForAlignment(alignment, 'color')
 
 # NOTE(kgeffen) This method is not called by any script besides the above
-# NOTE(kgeffen) The data for each command is stored in a standardized class
+# NOTE(kgeffen) The data for each alignment is stored in a standardized class
 # Each of those classes has identical methods like 'name', 'icon', etc.
 # Call a method (Ex: 'name') for a given alignment
 def callMethodForAlignment(alignment, methodName, *arguments):
@@ -21,4 +21,6 @@ def callMethodForAlignment(alignment, methodName, *arguments):
 	
 	# Call it with the arguments provided
 	result = method(*arguments)
+
+	# Return the result of the command, if any
 	return result
