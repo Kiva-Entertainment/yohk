@@ -14,11 +14,11 @@ def do():
 	time = logic.globalDict['time']
 	
 	# Churn the turn that just finished
-	lastTurn = churnSingle(time)
+	lastActors = churnSingle(time)
 	
 	# Units that just acted must be added to time again
 	# Also, they each have an upkeep
-	for unit in lastTurn:
+	for unit in lastActors:
 		upkeep.unit(unit)
 		addNext.unitAction(unit, time)
 	
@@ -42,11 +42,22 @@ def churnUntilTurnWithActor(time):
 # Remove current turn and add a blank turn on at end
 # Returns turn removed
 def churnSingle(time):
-	# The turn being removed
-	churned = time.pop(0)
-	
-	# Add on a turn to keep time same size
-	time.append([])
-	
-	# Return removed turn
+
+	turnHasActors = time[0] != []
+	if turnHasActors:
+		# Remove the first group from first turn
+		churned = time[0].pop(0)
+	else:
+		# Else, no units were churned
+		churned = []
+
+	# If first turn is now empty, remove entire turn
+	# and add one at end to maintain size
+	if time[0] == []:
+		time.pop(0)
+		time.append([])
+
+	# Return removed group
 	return churned
+
+
