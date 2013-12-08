@@ -40,10 +40,10 @@ def do(unit):
 
 # If unit acts on the current turn
 def unitActsThisTurn(unit):
-	actorsThisTurn = logic.globalDict['time'][0]
+	currentActors = logic.globalDict['time'][0][0]
 	
 	# Return true if unit is one of the actors this turn
-	unitActsThisTurn = actorsThisTurn.count(unit) == 1
+	unitActsThisTurn = currentActors.count(unit) == 1
 	if unitActsThisTurn:
 		return True
 
