@@ -1,10 +1,11 @@
 # Setup the Info scene
 from bge import logic
 
-from script import sceneControl, dynamicMaterial, objectControl
+from script import sceneControl, dynamicMaterial, objectControl, alignControl
 
 # Stats displayed on first screen
-STATS = [['name', 'model'],
+STATS = [['name'],
+		['model'],
 		['health', 'spirit', 'move', 'actions', 'speed', 'regen'],
 		['strength', 'toughness', 'intelligence', 'willpower', 'focus', 'agility']]
 
@@ -31,6 +32,8 @@ def do():
 
 	faceImage(unit)
 	statText(unit)
+
+	alignmentVisuals(unit)
 
 
 # Display the correct face based on the unit's model type (Ex: Soldier)
@@ -77,4 +80,42 @@ def statsInLines(unit, stats):
 			text += numerator + '/' + denominator + '\n'
 			
 	return text
+
+ALIGNMENT_TEXT_OBJECT_NAME = 'info_alignText'
+ALIGNMENT_ICON_OBJECT_NAME = 'info_alignIcon'
+BACKDROP_OBJECT_NAME = 'info_backdrop'
+
+# Display all visual relating to unit's alignment
+def alignmentVisuals(unit):
+	align = unit['align']
+
+	alignmentText(align)
+	alignmentIcon(align)
+	alignmentColor(align)
+
+# Alter the displayed text to match given alignment
+def alignmentText(align):
+	text = alignControl.name(align)
+
+	# Get text object
+	obj = objectControl.getFromScene(ALIGNMENT_TEXT_OBJECT_NAME, 'info')
+	
+	# Set that object's text
+	obj['Text'] = text
+
+# Display the correct icon for given alignment
+def alignmentIcon(align):
+	filename = alignControl.icon(align)
+
+	path = logic.expandPath('//images/icons/' + filename)
+	
+	dynamicMaterial.switchMaterialsImage(path, ALIGNMENT_ICON_OBJECT_NAME)
+
+# Change the backdrop to be the correct color for given alignment
+def alignmentColor(align):
+	color = alignControl.color(align)
+
+	obj = objectControl.getFromScene(BACKDROP_OBJECT_NAME, 'info')
+	
+	obj.color = color
 
