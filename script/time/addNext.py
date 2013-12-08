@@ -9,6 +9,9 @@ def unitAction(unit, timeArray):
 
 	# The turn number of the first turn in which unit acts
 	turnNumber = 100 - unit['speed']
+	if turnNumber < 1:
+		turnNumber = 1
+
 	turn = timeArray[turnNumber]
 
 	# Turns are divided into each alignment
