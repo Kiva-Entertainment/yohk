@@ -41,5 +41,7 @@ def addUnitToAlignGroup(unit, turn):
 	# Add unit in new group
 	if not unitAdded:
 		newGroup = [unit]
-		turn.append(newGroup)
+		# NOTE(kgeffen) Prepend so that order of teams switchs after each split turn
+		# Ex: Team A -> Team B first turn, teamB -> Team A second turn
+		turn.insert(0, newGroup)
 
