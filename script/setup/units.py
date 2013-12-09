@@ -11,7 +11,9 @@ def do():
 	unitData = getUnitData(filepath)
 
 	for unit in unitData:
-		unitControl.object.add(unit)
+		# Only add if unit starts on field
+		if unit['active']:
+			unitControl.object.add(unit)
 
 # Store unit data loaded from file in stage's dir
 def getUnitData(filepath):

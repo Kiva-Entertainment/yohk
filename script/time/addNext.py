@@ -7,6 +7,10 @@ def unitAction(unit, timeArray):
 	if unit['speed'] <= 0:
 		return
 
+	# If unit is not on field, it cannot act
+	if not unit['active']:
+		return
+
 	# The turn number of the first turn in which unit acts
 	turnNumber = 100 - unit['speed']
 	if turnNumber < 1:
