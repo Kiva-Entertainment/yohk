@@ -6,7 +6,5 @@ from script import check
 # The unit in a given space
 def inSpace(space):
 	for unit in logic.globalDict['units']:
-		if unit['active']:
-		
-			if check.eq2D(unit['position'], space):
-				return unit
+		if check.eq2D(unit['position'], space):
+			return unit

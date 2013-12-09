@@ -89,5 +89,5 @@ def addObjects(*units):
 		# Add game object
 		unitControl.object.add(unit)
 
-		storeResult.storeText(unit['position'], 'poof!')
+		storeResult.storeText(unit['position'], 'Poof!')
 

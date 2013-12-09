@@ -23,7 +23,7 @@ def do():
 		# Also, they each have an upkeep
 		for unit in actors:
 			upkeep.unit(unit)
-			addNext.unitAction(unit, time)
+			addNext.unitAction(unit)
 
 	churnUntilTurnWithActor(time)
 	

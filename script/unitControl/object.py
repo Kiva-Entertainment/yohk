@@ -2,7 +2,7 @@
 # Used throughout other scripts
 from bge import logic
 
-from script import check, sceneControl, getPosition
+from script import check, sceneControl, getPosition, time
 
 # Get the game object for a given unit
 def get(unit):
@@ -24,6 +24,9 @@ def add(unit):
 	# Create game object
 	obj = createGameObject(unit)
 	switchMesh(obj, unit['model'])
+
+	# Add first turn to time
+	time.addNext.unitAction(unit)
 
 
 # Create a game object for given unit at unit's position

@@ -691,3 +691,31 @@ class craft:
 	def icon():
 		return 'I_Rock_01.png'
 
+'''Special'''
+class deploy:
+	def perform(actor):
+		unit = logic.globalDict['inactiveUnits'][0]
+		
+		generic.command.addObjects(unit)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['specialSpaces'] = generic.shapes.single()
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Deploy a unit.\n\n'
+			'TODO.')
+	
+	def name():
+		return 'Deploy'
+	
+	def icon():
+		return 'S_Buff_06.png'
+
+

@@ -3,7 +3,7 @@
 # Called from setup.py
 from bge import logic
 
-from script.time import addNext, churn, displayTurnOrder
+from script.time import churn, displayTurnOrder
 
 # Number of entries in time array
 QUANTITY_ENTRIES = 100
@@ -20,7 +20,6 @@ def do():
 	if noActors:
 		churn.do()
 
-
 # Create starting timeArray, complete with each unit's first action
 def createStartingTimeArray():
 	timeArray = []
@@ -28,9 +27,5 @@ def createStartingTimeArray():
 	# Give timeArray appropriate number of entries
 	for i in range(0, QUANTITY_ENTRIES):
 		timeArray.append([])
-	
-	# Add each unit's first action to timeArray
-	for unit in logic.globalDict['units']:
-		addNext.unitAction(unit, timeArray)
 	
 	return timeArray
