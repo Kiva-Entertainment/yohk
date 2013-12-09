@@ -4,18 +4,21 @@ from bge import logic
 
 from script.scene.commandSelect import setup
 
-# Raise or lower the extent of the current command by 1
-# Extent cannot go below 0
-def alter(cont):
-	aKey = cont.sensors['aKey'].positive
-	dKey = cont.sensors['dKey'].positive
+# Cycle through choices forwards/backwards 1 choice
+def cycle(cont):
+	zKey = cont.sensors['zKey'].positive
+	cKey = cont.sensors['cKey'].positive
 	
-	if aKey and logic.globalDict['extent'] != 0:
-		logic.globalDict['extent'] -= 1
+	choices = logic.globalDict['commandChoices']
+
+	if zKey:
+		choice = choices.pop()
+		choices.insert(0, choice)
 		
-	elif dKey:
-		logic.globalDict['extent'] += 1
-	
+	elif cKey:
+		choice = choices.pop(0)
+		choices.append(choice)
+		
 	# Display the new cost of the command
-	setup.costText()
+	setup.choiceText()
 

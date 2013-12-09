@@ -46,7 +46,7 @@
 		'speed' : 1,
 		'jump' : 0,
 		'regen' : 0,
-		'commands' : [['deploy']]
+		'commands' : [['deploy', 'slash']]
 	},
 	{	'position' : [3,3],
 		'model' : 'barrel',

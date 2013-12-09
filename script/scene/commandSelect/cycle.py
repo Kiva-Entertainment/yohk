@@ -31,6 +31,8 @@ def commandLists(cont):
 	
 	# Reset extent
 	logic.globalDict['extent'] = 0
+	# Reset choices
+	logic.globalDict['commandChoices'] = []
 	
 	setup.screen()
 
@@ -54,5 +56,7 @@ def commands(cont):
 	
 	# Reset extent
 	logic.globalDict['extent'] = 0
-	
+	# Reset choices
+	logic.globalDict['commandChoices'] = []
+
 	setup.screen()

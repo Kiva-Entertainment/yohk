@@ -694,7 +694,8 @@ class craft:
 '''Special'''
 class deploy:
 	def perform(actor):
-		unit = logic.globalDict['inactiveUnits'][0]
+		choice = logic.globalDict['commandChoices'][0]['value']
+		unit = choice
 
 		generic.command.addObjects(unit)
 	
@@ -725,7 +726,7 @@ class deploy:
 		for unit in logic.globalDict['inactiveUnits']:
 			if unit['align'] == ownAlign:
 				
-				pair = {'choice' : unit,
+				pair = {'value' : unit,
 						'display' : unit['name']}
 				choices.append(pair)
 
