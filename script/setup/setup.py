@@ -33,6 +33,7 @@ def doSecondSetup():
 	# Overlay scene must exists before units are added to time so that display can appear
 	time.setup.do()
 	setup.units.do()
+	time.setup.ensureTimeStartsWithActors()
 
 	# Move cursor to be on ground
 	# NOTE(kgeffen) This relies on height display existing, so it must be done after

@@ -3,7 +3,7 @@
 # Called from setup.py
 from bge import logic
 
-from script.time import churn, displayTurnOrder
+from script.time import churn
 
 # Number of entries in time array
 QUANTITY_ENTRIES = 100
@@ -14,8 +14,10 @@ def do():
 	timeArray = createStartingTimeArray()
 	
 	logic.globalDict['time'] = timeArray
-	
-	# Ensure time starts with a turn that has actors
+
+# Ensure time starts with a turn that has actors
+# Called from main setup
+def ensureTimeStartsWithActors():
 	noActors = logic.globalDict['time'][0] == []
 	if noActors:
 		churn.do()
