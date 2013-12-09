@@ -13,15 +13,18 @@ def attempt(cont):
 def do():
 	time = logic.globalDict['time']
 	
-	# Churn the turn that just finished
-	lastTurn = churnSingle(time)
-	
-	# Units that just acted must be added to time again
-	# Also, they each have an upkeep
-	for unit in lastTurn:
-		upkeep.unit(unit)
-		addNext.unitAction(unit, time)
-	
+	turnHasActors = time[0] != []
+	if turnHasActors:
+		# Remove the actors that just acted from time
+		# time[0] is current turn, first entry in it is first group of units
+		actors = time[0].pop(0)
+
+		# Units that just acted must be added to time again
+		# Also, they each have an upkeep
+		for unit in actors:
+			upkeep.unit(unit)
+			addNext.unitAction(unit, time)
+
 	churnUntilTurnWithActor(time)
 	
 	displayTurnOrder.do()
@@ -34,19 +37,9 @@ def churnUntilTurnWithActor(time):
 		
 		noActors = time[0] == []
 		if noActors:
-			churnSingle(time)
+			time.pop(0)
+			time.append([])
 		else:
 			# Current turn has actors
 			return
 
-# Remove current turn and add a blank turn on at end
-# Returns turn removed
-def churnSingle(time):
-	# The turn being removed
-	churned = time.pop(0)
-	
-	# Add on a turn to keep time same size
-	time.append([])
-	
-	# Return removed turn
-	return churned

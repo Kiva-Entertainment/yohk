@@ -25,7 +25,7 @@ def do():
 
 # Move cursor to the space where the (next acting unit this turn) is
 def toNextActor():
-	actors = logic.globalDict['time'][0]
+	actors = logic.globalDict['time'][0][0]
 	
 	if actors != []:
 		# Position that cursor will move to

@@ -26,9 +26,10 @@ def formDisplayedText():
 		turnHasActors = turn != []
 		if turnHasActors:
 
-			# Add name of each actor in turn
-			for actor in turn:
-				text += actor['name'] + '\n'
+			for group in turn:
+				# Add name of each actor in group
+				for actor in group:
+					text += actor['name'] + '\n'
 			
 			# Follow (turn with actors) with a blank line
 			text += '\n'

@@ -68,11 +68,16 @@ def updateTime(unit):
 	newTime = []
 	
 	for tic in logic.globalDict['time']:
-		# NOTE(kgeffen) This retains all entries in the array that are != unit
-		# Remove unit's existance from current tic
-		newTic = list(filter((unit).__ne__, tic))
-		
-		# Add new tic to new time
+		newTic = []
+
+		for group in tic:
+			# NOTE(kgeffen) This retains all entries in the array that are != unit
+			# Remove unit's existance from current tic
+			newGroup = list(filter((unit).__ne__, group))
+			
+			# Add new tic to new time
+			newTic.append(newGroup)
+
 		newTime.append(newTic)
 	
 	# Set time array to newTime, which excludes dead unit's number
