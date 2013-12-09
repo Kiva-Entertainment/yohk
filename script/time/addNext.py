@@ -2,6 +2,8 @@
 # Units act sooner/more often if they have higher speed
 from bge import logic
 
+from script.time import displayTurnOrder
+
 def unitAction(unit):
 	time = logic.globalDict['time']
 
@@ -21,6 +23,8 @@ def unitAction(unit):
 	addUnitToAlignGroup(unit, turn)
 
 	time[turnNumber] = turn
+
+	displayTurnOrder.do()
 
 # Add unit to the group within turn that matchs unit's alignment
 def addUnitToAlignGroup(unit, turn):

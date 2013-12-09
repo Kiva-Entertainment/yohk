@@ -42,6 +42,7 @@ def fromUnitSelected():
 	logic.globalDict['cursor'] = 'selecting'
 	logic.globalDict['actor'] = None
 	logic.globalDict['extent'] = 0
+	logic.globalDict['commandChoices'] = []
 	
 	# Clear movement range markers
 	marker.clear()
