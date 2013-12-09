@@ -89,5 +89,12 @@ def addObjects(*units):
 		# Add game object
 		unitControl.object.add(unit)
 
+		# Remove unit from inactive units list, if it's in there
+		inactiveUnits = logic.globalDict['inactiveUnits']
+		for i in range(0, len(inactiveUnits)):
+			if unit == inactiveUnits[i]:
+				del inactiveUnits[i]
+				break
+
 		storeResult.storeText(unit['position'], 'Poof!')
 
