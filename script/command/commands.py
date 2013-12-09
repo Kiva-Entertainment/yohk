@@ -695,7 +695,7 @@ class craft:
 class deploy:
 	def perform(actor):
 		unit = logic.globalDict['inactiveUnits'][0]
-		
+
 		generic.command.addObjects(unit)
 	
 	def displayRange():
@@ -717,5 +717,16 @@ class deploy:
 	
 	def icon():
 		return 'S_Buff_06.png'
+
+	def determineChoices():
+		ownAlign = logic.globalDict['actor']['align']
+
+		choices = logic.globalDict['commandChoices']
+		for unit in logic.globalDict['inactiveUnits']:
+			if unit['align'] == ownAlign:
+				
+				pair = {'choice' : unit,
+						'display' : unit['name']}
+				choices.append(pair)
 
 

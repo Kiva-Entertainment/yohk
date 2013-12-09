@@ -1,6 +1,8 @@
 # Call methods for given commands dynamically
 from script.command import commands
 
+def determineChoices(commandName):
+	callMethodForCommand(commandName, 'determineChoices')
 def perform(commandName, actor, targets):
 	# NOTE(kgeffen) Commands that only have single target have param "target"
 	# which the first/only entry in targets becomes, commands with (possibly)
@@ -26,11 +28,16 @@ def callMethodForCommand(commandName, methodName, *arguments):
 	# The class that contains the method to perform the given command
 	commandClass = getattr(commands, commandName)
 	
-	# The method which performs the given command
-	commandMethod = getattr(commandClass, methodName)
-	
-	# Call it with the arguments provided
-	result = commandMethod(*arguments)
-	# NOTE(kgeffen) Method returns results for some values of methodName (Ex: 'cost')
-	# but not for all (Ex: 'displayRange')
-	return result
+	# If class doesn't have method, return None
+	if methodName in dir(commandClass):
+		# The method which performs the given command
+		commandMethod = getattr(commandClass, methodName)
+		
+		# Call it with the arguments provided
+		result = commandMethod(*arguments)
+		# NOTE(kgeffen) Method returns results for some values of methodName (Ex: 'cost')
+		# but not for all (Ex: 'displayRange')
+		return result
+	else:
+		return None
+
