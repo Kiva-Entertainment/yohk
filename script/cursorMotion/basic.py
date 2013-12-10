@@ -11,7 +11,7 @@ def attempt():
 
 	offset = getOffset()
 
-	if cursor['moveable']:
+	if logic.globalDict['cursor'] != 'wait':
 		if offset is not None:
 			do(cursor, offset)
 
