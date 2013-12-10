@@ -636,7 +636,7 @@ class icePrison:
 		factors = generic.commandFactors.magic(actor, target)
 		
 		if generic.command.hitCheck(target, factors):
-			generic.command.raiseStat(target, 'movement', -1)
+			generic.command.raiseStat(target, 'move', -1)
 			generic.command.raiseStat(target, 'mv', -1)
 	
 	def displayRange():
