@@ -48,6 +48,8 @@ def scaleStat(unit, stat, factor):
 	amount = v2 - v1
 	storeResult.statChange(stat, amount, unit)
 
+	return amount
+
 'Movement'
 def move(unit):
 	# First special space

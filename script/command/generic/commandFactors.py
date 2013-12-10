@@ -27,6 +27,12 @@ def dagger(actor, target):
 			'evasion' : target['agility']}
 
 'Other'
+def physical(actor, target):
+	return {'force' : actor['strength'],
+	 		'resist' : target['toughness'],
+	 		'accuracy' : actor['focus'],
+	 		'evasion' : target['agility']}
+
 def magic(actor, target):
 	return {'force' : actor['intelligence'],
 			'resist' : target['willpower'],
