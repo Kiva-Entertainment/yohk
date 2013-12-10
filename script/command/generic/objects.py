@@ -43,8 +43,8 @@ def bird():
 		'willpower' : 20,
 		'focus' : 0,
 		'agility' : 30,
-		'speed' : 0,
-		'jump' : 0,
+		'speed' : 30,
+		'jump' : 100,
 		'regen' : 0,
 		'commands' : [[]]
 		}

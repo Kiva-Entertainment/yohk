@@ -96,7 +96,7 @@ def displayCommandResults():
 def ensureStatsWithinBounds(unit):
 	maxSp = unit['spirit']
 	if unit['sp'] > maxSp:
-		unit['sp'] = maxSP
+		unit['sp'] = maxSp
 	
 	maxHp = unit['health']
 	if unit['hp'] > maxHp:

@@ -472,8 +472,14 @@ class psiStrike:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
 		
+		factors['accuracy'] *= 0.5
+
+		# Lower target's hp and lower sp by tenth of hp loss
 		if generic.command.hitCheck(target, factors):
-			generic.command.standardAttack(target, factors)
+			amount = generic.command.standardAttack(target, factors)
+			amount /= 10
+
+			generic.command.raiseStat(target, 'sp', -amount)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.standard()
@@ -484,7 +490,7 @@ class psiStrike:
 	
 	def description():
 		return ('Hit an adjacent unit with magical waves of energy.' + '\n\n'
-				'Basic magic attack.')
+				'Basic magic attack. Lowers target\'s sp')
 	
 	def name():
 		return 'Psi-Strike'
@@ -494,37 +500,6 @@ class psiStrike:
 
 '''Magic'''
 'Offensive'
-class flameBarrage:
-	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-		
-		numberTimes = generic.extentInfluence.polynomial(1,1)
-		for i in range(0, numberTimes):
-
-			# Attack target
-			if generic.command.hitCheck(target, factors):
-				generic.command.standardAttack(target, factors)
-	
-	def displayRange():
-		commandRange = generic.rangeFactors.standard()
-
-		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
-		commandRange['range'] = generic.shapes.diamond(2, 1)
-
-		generic.range.free(commandRange)
-	
-	def cost():
-		return generic.extentInfluence.polynomial(12, 36, 27)
-	
-	def description():
-		return ('Send a barrage of flame at a nearby unit.\n\n'
-			'Standard magic damage X times.')
-	
-	def name():
-		return 'Flame Barrage'
-	
-	def icon():
-		return 'S_Fire_03.png'
 class mudshot:
 	def perform(actor, *targets):
 		for target in targets:
@@ -628,6 +603,127 @@ class galeCloak:
 	
 	def icon():
 		return 'S_Wind_02.png'
+class earthGrip:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			generic.command.scaleStat(target, 'mv', 0)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.standard()
+
+		# Max distance to target
+		distance = generic.extentInfluence.polynomial(1, 1)
+		commandRange['range'] = generic.shapes.line(distance)
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(40, 12, 8)
+	
+	def description():
+		return ('Drag a nearby unit to the ground.' + '\n\n'
+				'TODO.')
+	
+	def name():
+		return 'Earth Grip'
+	
+	def icon():
+		return 'S_Earth_02.png'
+class icePrison:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			generic.command.raiseStat(target, 'movement', -1)
+			generic.command.raiseStat(target, 'mv', -1)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.standard()
+
+		# Max distance to target
+		distance = generic.extentInfluence.polynomial(2, 1)
+		commandRange['range'] = generic.shapes.diamond(distance, 1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(40, 6, 17)
+	
+	def description():
+		return ('Enclose nearby unit in ice, lowering their movement.' + '\n\n'
+				'TODO.')
+	
+	def name():
+		return 'Ice Prison'
+	
+	def icon():
+		return 'S_Ice_07.png'
+class degenerate:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		numberTimes = generic.extentInfluence.polynomial(1,1)
+		for i in range(0, numberTimes):
+
+			# Attack target
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.standard()
+
+		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
+		commandRange['range'] = generic.shapes.diamond(2, 1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(12, 36, 27)
+	
+	def description():
+		return ('Send a barrage of flame at a nearby unit.\n\n'
+			'Standard magic damage X times.')
+	
+	def name():
+		return 'Flame Barrage'
+	
+	def icon():
+		return 'S_Fire_03.png'
+
+
+class flameBarrage:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		numberTimes = generic.extentInfluence.polynomial(1,1)
+		for i in range(0, numberTimes):
+
+			# Attack target
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.standard()
+
+		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
+		commandRange['range'] = generic.shapes.diamond(2, 1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(12, 36, 27)
+	
+	def description():
+		return ('Send a barrage of flame at a nearby unit.\n\n'
+			'Standard magic damage X times.')
+	
+	def name():
+		return 'Flame Barrage'
+	
+	def icon():
+		return 'S_Fire_03.png'
 class meteor:
 	def perform(actor, *targets):
 		for target in targets:
@@ -666,7 +762,6 @@ class meteor:
 	
 	def icon():
 		return 'S_Fire_05.png'
-
 class divineReflection:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
@@ -787,7 +882,7 @@ class emogen:
 		amount = generic.extentInfluence.polynomial(100, 50)
 
 		for target in targets:
-			generic.commands.raiseStat(target, 'hp', amount)
+			generic.command.raiseStat(target, 'hp', amount)
 	
 	def displayRange():
 		commandRange = generic.rangeFactors.self()
