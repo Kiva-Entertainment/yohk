@@ -11,6 +11,9 @@ def do():
 	# Clear list of spaces that command can target
 	logic.globalDict['spaceTarget'] = []
 	
+	# Clear list of choices for command
+	logic.globalDict['commandChoices'] = []
+
 	# Modify the actor's stats
 	actor = logic.globalDict['actor']
 	actor['act'] -= 1

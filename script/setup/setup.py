@@ -17,9 +17,8 @@ def do():
 	setup.globalVariables.do()
 	
 	setup.ground.do()
-	setup.units.do()
 	setup.scenes.do()
-	
+
 	# This triggers the below method on next tic
 	ground = objectControl.getFromScene('ground', 'battlefield')
 	ground.sendMessage('secondSetup')
@@ -30,8 +29,12 @@ def attemptSecondSetup(cont):
 		doSecondSetup()
 
 def doSecondSetup():
+	# NOTE(kgeffen) Time array must exist before units are added so that they can be added to it
+	# Overlay scene must exists before units are added to time so that display can appear
 	time.setup.do()
-	
+	setup.units.do()
+	time.setup.ensureTimeStartsWithActors()
+
 	# Move cursor to be on ground
 	# NOTE(kgeffen) This relies on height display existing, so it must be done after
 	# overlay scene added

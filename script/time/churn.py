@@ -1,7 +1,7 @@
 # Churn through entries in time until turn with actors comes up
 from bge import logic
 
-from script.time import addNext, upkeep, displayTurnOrder
+from script.time import addNext, upkeep
 
 # Number of entries in time array
 QUANTITY_ENTRIES = 100
@@ -23,11 +23,9 @@ def do():
 		# Also, they each have an upkeep
 		for unit in actors:
 			upkeep.unit(unit)
-			addNext.unitAction(unit, time)
+			addNext.unitAction(unit)
 
 	churnUntilTurnWithActor(time)
-	
-	displayTurnOrder.do()
 
 
 # Remove turns with no actors until current turn has actor(s)

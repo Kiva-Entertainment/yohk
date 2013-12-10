@@ -1,8 +1,12 @@
-# Add unit to timeArray at next turn when unit acts
+# Add unit to time list at next turn when unit acts
 # Units act sooner/more often if they have higher speed
 from bge import logic
 
-def unitAction(unit, timeArray):
+from script.time import displayTurnOrder
+
+def unitAction(unit):
+	time = logic.globalDict['time']
+
 	# If unit has no/negative speed, it cannot act
 	if unit['speed'] <= 0:
 		return
@@ -12,13 +16,15 @@ def unitAction(unit, timeArray):
 	if turnNumber < 1:
 		turnNumber = 1
 
-	turn = timeArray[turnNumber]
+	turn = time[turnNumber]
 
 	# Turns are divided into each alignment
 	# Add unit to the group that matchs its alignment
 	addUnitToAlignGroup(unit, turn)
 
-	timeArray[turnNumber] = turn
+	time[turnNumber] = turn
+
+	displayTurnOrder.do()
 
 # Add unit to the group within turn that matchs unit's alignment
 def addUnitToAlignGroup(unit, turn):

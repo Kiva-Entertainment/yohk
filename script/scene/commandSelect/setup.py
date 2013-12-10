@@ -10,6 +10,7 @@ LIST_OBJECT_NAME = 'commandSelect_list'
 COST_OBJECT_NAME = 'commandSelect_cost'
 DESCRIPTION_OBJECT_NAME = 'commandSelect_description'
 ICON_OBJECT_NAME = 'commandSelect_icon'
+CHOICE_OBJECT_NAME = 'commandSelect_choice'
 SCENE_NAME = 'commandSelect'
 
 # Setup the entire screen in commandSelect
@@ -18,6 +19,7 @@ def screen():
 	iconImage()
 	costText()
 	descriptionText()
+	choiceText()
 
 
 # Alter the icon diplayed
@@ -88,6 +90,26 @@ def descriptionText():
 	# Set the text of the object
 	obj = objectControl.getFromScene(DESCRIPTION_OBJECT_NAME, SCENE_NAME)
 	obj['Text'] = text
+
+# Alter the text of the 'command choice' text object
+def choiceText():
+	# Get the command currently being considered
+	command = getCommandsList()[0][0]
+
+	choices = logic.globalDict['commandChoices']
+	if choices == []:
+		# Form list of choices for command, if any
+		commandControl.determineChoices(command)
+
+	# Display choice, if any
+	# NOTE(kgeffen) determineChoices may have populated choices
+	text = ''
+	if choices != []:
+		text = choices[0]['display']
+
+	# Set the text of the object
+	object = objectControl.getFromScene(CHOICE_OBJECT_NAME, SCENE_NAME)
+	object['Text'] = text
 
 
 def getCommandsList():

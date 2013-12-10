@@ -8,6 +8,10 @@ def do():
 	logic.texture = {}
 	logic.globalDict['infoLists'] = [[],[],[]]
 	logic.globalDict['units'] = []
+	# A list of choices for current command
+	logic.globalDict['commandChoices'] = []
+	# Units that haven't been deployed from base yet
+	logic.globalDict['inactiveUnits'] = []
 	logic.globalDict['actor'] = None
 	logic.globalDict['described'] = None
 	logic.globalDict['cursor'] = 'selecting'

@@ -691,3 +691,43 @@ class craft:
 	def icon():
 		return 'I_Rock_01.png'
 
+'''Special'''
+class deploy:
+	def perform(actor):
+		choice = logic.globalDict['commandChoices'][0]['value']
+		unit = choice
+
+		generic.command.addObjects(unit)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['specialSpaces'] = generic.shapes.single()
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Deploy a unit.\n\n'
+			'TODO.')
+	
+	def name():
+		return 'Deploy'
+	
+	def icon():
+		return 'S_Buff_06.png'
+
+	def determineChoices():
+		ownAlign = logic.globalDict['actor']['align']
+
+		choices = logic.globalDict['commandChoices']
+		for unit in logic.globalDict['inactiveUnits']:
+			if unit['align'] == ownAlign:
+				
+				pair = {'value' : unit,
+						'display' : unit['name']}
+				choices.append(pair)
+
+

@@ -10,8 +10,13 @@ def do():
 	
 	unitData = getUnitData(filepath)
 
-	for unit in unitData:
+	# Add active units to field
+	for unit in unitData['active']:
 		unitControl.object.add(unit)
+
+	# Add inactive units to list
+	for unit in unitData['inactive']:
+		logic.globalDict['inactiveUnits'].append(unit)
 
 # Store unit data loaded from file in stage's dir
 def getUnitData(filepath):
