@@ -3,10 +3,14 @@ from bge import logic
 
 from script import unitControl
 
+# TODO(kgeffen) Remove once stage selection has been enabled
+TEMP_STAGE_NAME = 'earth'
+
 # TODO(kgeffen) Unit loading will change drastically (Probably in version 0.5)
 # Until then, scaffolding is acceptable
 def do():
-	filepath = logic.globalDict['stageFilepath']
+	# TODO(kgeffen) Remove once stage selection has been enabled
+	filepath = logic.expandPath('//stages/') + TEMP_STAGE_NAME + '/'
 	
 	unitData = getUnitData(filepath)
 
@@ -23,4 +27,3 @@ def getUnitData(filepath):
 	with open(filepath + 'unitData.py') as unitsFile:
 		# TODO(kgeffen) This is tamperable, improve means of loading/storing data
 		return eval(unitsFile.read())
-
