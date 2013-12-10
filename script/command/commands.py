@@ -449,7 +449,7 @@ class concentratedChaos:
 
 		radius = generic.extentInfluence.polynomial(0,1)
 		commandRange['specialSpaces'] = generic.shapes.diamond(radius, 1)
-		commandRange['range'] = generic.shapes.diamond(radius + 1, 1)
+		commandRange['range'] = generic.shapes.ring(radius + 1)
 
 		generic.range.free(commandRange)
 	
@@ -457,7 +457,7 @@ class concentratedChaos:
 		return 0#generic.extentInfluence.polynomial(13, 7, 18)
 	
 	def description():
-		return ('The entire unit focuses its pain and confusion of the enemy.\n\n'
+		return ('The entire universe focuses its pain and confusion of the enemy.\n\n'
 		 		'TODO.')
 	
 	def name():
@@ -666,6 +666,148 @@ class meteor:
 	
 	def icon():
 		return 'S_Fire_05.png'
+
+class divineReflection:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+
+		if generic.command.hitCheck(target, factors):
+			# Make a copy of target and place it
+			unit = copy.deepcopy(target)
+			unit['hp'] = 1
+			unit['sp'] = 0
+			unit['align'] = actor['align']
+			unit['name'] = 'Reflection'
+			
+			generic.command.addObjects(unit)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['specialSpaces'] = [[0,1]]
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('To reflect is divine.\n\n'
+			'TODO.')
+	
+	def name():
+		return 'Divine Reflection'
+	
+	def icon():
+		return 'I_Mirror.png'
+class birdcall:
+	def perform(actor):
+		# Make a copy of target and place it
+		unit = generic.objects.bird()
+		unit['align'] = actor['align']
+		
+		generic.command.addObjects(unit)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['range'] = generic.shapes.diamond(3, 1)
+		commandRange['specialSpaces'] = generic.shapes.single()
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('TWeet tweet.\n\n'
+			'TODO.')
+	
+	def name():
+		return 'Birdcall'
+	
+	def icon():
+		return 'I_Feather_01.png'
+class stoneGarden:
+	def perform(actor, target):
+		# Add a barrel on each side
+		# 4 barrels in total
+		units = []
+		for i in range(0,4):
+			units.append(generic.objects.barrel())
+
+		generic.command.addObjects(*units)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.self()
+
+		commandRange['specialSpaces'] = generic.shapes.ring(1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Get some alone time.\n\n'
+			'TODO.')
+	
+	def name():
+		return 'Stone Garden'
+	
+	def icon():
+		return 'S_Earth_04.png'
+class stoneArmor:
+	def perform(actor, target):
+		amount = generic.extentInfluence.polynomial(10, 4)
+		generic.command.raiseStat(target, 'toughness', 10)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['range'] = generic.shapes.diamond(2)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(20, 5, 4)
+	
+	def description():
+		return ('Cloak a nearby unit in tough stone.\n\n'
+			'TODO.')
+	
+	def name():
+		return 'Stone Armor'
+	
+	def icon():
+		return 'S_Earth_06.png'
+class emogen:
+	def perform(actor, *targets):
+		# Amount of healing
+		amount = generic.extentInfluence.polynomial(100, 50)
+
+		for target in targets:
+			generic.commands.raiseStat(target, 'hp', amount)
+	
+	def displayRange():
+		commandRange = generic.rangeFactors.self()
+
+		commandRange['aoe'] = generic.shapes.diamond(1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(30, 10, 10)
+	
+	def description():
+		return ('The healing is good.\n\n'
+			'TODO.')
+	
+	def name():
+		return 'Emogen'
+	
+	def icon():
+		return 'S_Magic_01.png'
 
 
 
@@ -986,6 +1128,7 @@ class riteOfImmortality:
 
 		unit['hp'] = 1
 		unit['sp'] = 0
+		unit['name'] = 'Husk'
 
 		generic.command.addObjects(unit)
 	

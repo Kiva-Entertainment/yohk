@@ -121,7 +121,7 @@
 						['bloodRitual', 'bloodlust', 'riteOfImmortality']] # Iron maiden
 	},
 	{	'model' : 'devoted',
-		'name' : 'Urchin',
+		'name' : 'Urchin, the Summoner',
 		'align' : 'solarServants',
 		'health' : 800,
 		'hp' : 800,
@@ -140,8 +140,9 @@
 		'speed' : 10,
 		'jump' : 10,
 		'regen' : 7,
-		'commands' : 	[['psiStrike', 'flameBarrage', 'mudshot', 'aeroImpact', 'meteor', 'galeCloak'],
-						['smarten', 'tutor', 'study', 'dash']]
+		'commands' : 	[['psiStrike', 'flameBarrage', 'meteor'],
+						['birdcall', 'stoneGarden', 'divineReflection'],
+						['tutor', 'stoneArmor', 'emogen']]
 	},
 	{	'model' : 'devoted',
 		'name' : 'Lish',

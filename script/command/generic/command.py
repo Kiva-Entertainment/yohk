@@ -86,6 +86,7 @@ def addObjects(*units):
 		unit = units[i]
 
 		# Change its position before adding
+		print(unit)
 		unit['position'] = logic.globalDict['commandSpecialSpaces'][i]
 
 		# Add game object
