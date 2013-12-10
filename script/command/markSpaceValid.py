@@ -18,9 +18,6 @@ def attempt(actorPosition, targetSpace, rng):
 def markTargetableSpace(actorPosition, targetSpace, rng):
 	targetPosition = getPosition.onGround(targetSpace)
 	
-	# Add a standard marker on space
-	marker.add(targetPosition)
-	
 	# Get a list of all spaces within area of effect
 	effectedSpaces = getEffectedSpaces(actorPosition, targetSpace, rng)
 	
@@ -34,7 +31,7 @@ def markTargetableSpace(actorPosition, targetSpace, rng):
 		return
 	
 	# Add given space to list of all spaces that command can target
-	formattedEntry = {'space' : targetPosition,
+	formattedEntry = {'space' : targetSpace,
 					  'effectedSpaces' : effectedSpaces,
 					  'units' : effectedUnits,
 					  'specialSpaces' : specialSpaces}

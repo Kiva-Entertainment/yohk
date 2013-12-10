@@ -17,7 +17,7 @@ class slash:
 		if generic.command.hitCheck(target, factors):
 			generic.command.standardAttack(target, factors)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.sword()
 		generic.range.rigid(commandRange)
 	
@@ -45,7 +45,7 @@ class gloryStrike:
 			# Raise strength
 			generic.command.raiseStat(actor, 'strength', 8)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.sword()
 		generic.range.rigid(commandRange)
 	
@@ -74,7 +74,7 @@ class predatorsDescent:
 		# Move actor forward to space in front of target
 		generic.command.move(actor)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.sword()
 		
 		# Hit units in sightline from actor that are not adjacent (to actor)
@@ -110,7 +110,7 @@ class doubleSlash:
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.sword()
 		
 		# Empty spaces
@@ -144,7 +144,7 @@ class ribbonDash:
 		# Move forward
 		generic.command.move(actor)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.sword()
 		
 		length = logic.globalDict['extent'] + 1
@@ -175,7 +175,7 @@ class frontlineSlash:
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.sword()
 		
 		commandRange['aoe'] = generic.shapes.flatLine(1)
@@ -204,7 +204,7 @@ class ebber:
 		# Step backwards 1 space
 		generic.command.move(actor)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.sword()
 		
 		# Space X spaces behind actor
@@ -238,7 +238,7 @@ class cleave:
 		if generic.command.hitCheck(target, factors):
 			generic.command.standardAttack(target, factors)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.sword()
 		generic.range.rigid(commandRange)
 	
@@ -267,7 +267,7 @@ class gorgonSlash:
 			# Lower mv
 			generic.command.raiseStat(target, 'mv', -1)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.sword()
 		generic.range.rigid(commandRange)
 	
@@ -293,7 +293,7 @@ class chop:
 		if generic.command.hitCheck(target, factors):
 			generic.command.standardAttack(target, factors)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.axe()
 		generic.range.rigid(commandRange)
 	
@@ -318,7 +318,7 @@ class quakeImpact:
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.axe()
 
 		commandRange['aoe'] = generic.shapes.diamond(1)
@@ -348,7 +348,7 @@ class grandSwath:
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.axe()
 
 		commandRange['aoe'] = generic.shapes.diamond(2,1)
@@ -382,7 +382,7 @@ class skullShatter:
 			amount = generic.extentInfluence.polynomial(12, 4)
 			generic.command.raiseStat(target, 'intelligence', -amount)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.axe()
 		generic.range.rigid(commandRange)
 	
@@ -412,7 +412,7 @@ class murderTwist:
 				amount = generic.extentInfluence.polynomial(12, 4)
 				generic.command.raiseStat(target, 'agility', -amount)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.axe()
 
 		commandRange['aoe'] = generic.shapes.ring(1)
@@ -444,7 +444,7 @@ class concentratedChaos:
 			amount = generic.extentInfluence.polynomial(9, 5)
 			generic.command.raiseStat(target, 'focus', -amount)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.axe()
 
 		radius = generic.extentInfluence.polynomial(0,1)
@@ -481,7 +481,7 @@ class psiStrike:
 
 			generic.command.raiseStat(target, 'sp', -amount)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 		generic.range.rigid(commandRange)
 	
@@ -515,7 +515,7 @@ class mudshot:
 				generic.command.standardAttack(target, factors)
 				
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 		
 		# Hit all units in actors sightline of length = _extent_
@@ -549,7 +549,7 @@ class aeroImpact:
 			# Deal damage
 			generic.command.standardAttack(target, factors)				
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 		
 		# Can hit very low targets so they can land lower
@@ -583,7 +583,7 @@ class galeCloak:
 		generic.command.raiseStat(target, 'agility', 10)
 		generic.command.raiseStat(target, 'mv', 3)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
 		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
@@ -610,7 +610,7 @@ class earthGrip:
 		if generic.command.hitCheck(target, factors):
 			generic.command.scaleStat(target, 'mv', 0)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
 		# Max distance to target
@@ -639,7 +639,7 @@ class icePrison:
 			generic.command.raiseStat(target, 'move', -1)
 			generic.command.raiseStat(target, 'mv', -1)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
 		# Max distance to target
@@ -671,7 +671,7 @@ class degenerate:
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
 		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
@@ -704,7 +704,7 @@ class flameBarrage:
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
 		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
@@ -737,7 +737,7 @@ class meteor:
 				generic.command.standardAttack(target, factors)
 		
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 		
 		# How far from caster spell command can be target meteor's center
@@ -776,7 +776,7 @@ class divineReflection:
 			
 			generic.command.addObjects(unit)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
 		commandRange['specialSpaces'] = [[0,1]]
@@ -803,7 +803,7 @@ class birdcall:
 		
 		generic.command.addObjects(unit)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
 		commandRange['range'] = generic.shapes.diamond(3, 1)
@@ -833,7 +833,7 @@ class stoneGarden:
 
 		generic.command.addObjects(*units)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.self()
 
 		commandRange['specialSpaces'] = generic.shapes.ring(1)
@@ -857,7 +857,7 @@ class stoneArmor:
 		amount = generic.extentInfluence.polynomial(10, 4)
 		generic.command.raiseStat(target, 'toughness', 10)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
 		commandRange['range'] = generic.shapes.diamond(2)
@@ -884,7 +884,7 @@ class emogen:
 		for target in targets:
 			generic.command.raiseStat(target, 'hp', amount)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.self()
 
 		commandRange['aoe'] = generic.shapes.diamond(1)
@@ -916,7 +916,7 @@ class study:
 		dSp = round(dSp)
 		generic.command.raiseStat(actor, 'sp', dSp)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.self()
 		generic.range.free(commandRange)
 	
@@ -941,7 +941,7 @@ class tutor:
 		generic.command.raiseStat(actor, 'sp', amount)
 		generic.command.raiseStat(target, 'sp', amount)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 		generic.range.rigid(commandRange)
 	
@@ -963,7 +963,7 @@ class dash:
 	def perform(actor, target):
 		generic.command.raiseStat(actor, 'mv', 2)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.self()
 		generic.range.free(commandRange)
 	
@@ -984,7 +984,7 @@ class rush:
 	def perform(actor, target):
 		generic.command.raiseStat(actor, 'speed', 5)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.self()
 		generic.range.free(commandRange)
 	
@@ -1014,7 +1014,7 @@ class kick:
 		# Raise movement
 		generic.command.raiseStat(actor, 'mv', 1)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 		generic.range.rigid(commandRange)
 	
@@ -1035,7 +1035,7 @@ class sneak:
 		generic.command.raiseStat(actor, 'mv', 1)
 		generic.command.raiseStat(actor, 'agility', 8)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.self()
 		generic.range.free(commandRange)
 	
@@ -1058,7 +1058,7 @@ class strengthen:
 	def perform(actor, target):
 		generic.command.raiseStat(actor, 'strength', 10)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.self()
 		generic.range.free(commandRange)
 	
@@ -1078,7 +1078,7 @@ class smarten:
 	def perform(actor, target):
 		generic.command.raiseStat(actor, 'intelligence', 10)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.self()
 		generic.range.free(commandRange)
 	
@@ -1098,7 +1098,7 @@ class focus:
 	def perform(actor, target):
 		generic.command.raiseStat(actor, 'focus', 10)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.self()
 		generic.range.free(commandRange)
 	
@@ -1119,7 +1119,7 @@ class dualSharpen:
 		generic.command.raiseStat(actor, 'strength', 8)
 		generic.command.raiseStat(target, 'strength', 8)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 		generic.range.rigid(commandRange)
 	
@@ -1142,7 +1142,7 @@ class craft:
 
 		generic.command.addObjects(unit)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
 		commandRange['specialSpaces'] = generic.shapes.single()
@@ -1171,7 +1171,7 @@ class bloodRitual:
 		generic.command.raiseStat(actor, 'intelligence', 20)
 		generic.command.raiseStat(actor, 'sp', 20)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.self()
 		generic.range.free(commandRange)
 	
@@ -1195,7 +1195,7 @@ class bloodlust:
 		# Raise target's sp by same amount
 		generic.command.raiseStat(target, 'strength', -amount)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
 		commandRange['range'] = generic.shapes.diamond(1)
@@ -1227,7 +1227,7 @@ class riteOfImmortality:
 
 		generic.command.addObjects(unit)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
 		reach = generic.extentInfluence.polynomial(1,1)
@@ -1259,7 +1259,7 @@ class deploy:
 
 		generic.command.addObjects(unit)
 	
-	def displayRange():
+	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
 		commandRange['specialSpaces'] = generic.shapes.single()

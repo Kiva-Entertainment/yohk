@@ -10,34 +10,76 @@ from script import check, objectControl, marker
 # when cursor moves while selecting target
 # When speeding up game, make this script fire less often
 
-# TODO(kgeffen) 'Standard' range markers are added when command is selected from commandSelect
-# But they should be added every time this script executes so that markers do not overlap
-# No 2 markers should be added to the same space, and aoe takes precedence
+def attempt():
+	# TODO(kgeffen) cursor should have setting for command
+	# and specific command should be stored elsewhere
+	selectingCommand = logic.globalDict['cursor'] != 'wait' and \
+						logic.globalDict['cursor'] != 'move'
+	if selectingCommand:
+		do()
 
-def do(aoe):
-	# Clear any markers from last tic
-	marker.clear('markerAoe')
+def do():
+	# Clear markers
+	marker.clear()
 	marker.clear('markerEmpty')
+	marker.clear('markerAoe')
+
+	# Get spaces
+	rangeSpaces = getRangeSpaces()
+	aoeSpaces = getAoeSpaces()
+	emptySpaces = getEmptySpaces()
 	
+	coveredSpaces = []
+	
+	# Add markers for each space, only if that space is uncovered
+	for space in emptySpaces:
+		marker.add(space, 'markerEmpty')
+		coveredSpaces.append(space)
+
+	for space in aoeSpaces:
+		if space not in coveredSpaces:
+			marker.add(space, 'markerAoe')
+			coveredSpaces.append(space)
+
+	for space in rangeSpaces:
+		print(space)
+		if space not in coveredSpaces:
+			marker.add(space)
+			coveredSpaces.append(space)
+
+# Return a list of all spaces that could be selected as target center for command
+def getRangeSpaces():
+	spaces = []
+	for space in logic.globalDict['spaceTarget']:
+		spaces.append(space['space'])
+
+	return spaces
+
+# Return a list of all spaces that are in command's aoe if command is performed with cursor
+# as target center
+def getAoeSpaces():
+	target = getTargetAtCursor()
+	if target is not None:
+		return target['effectedSpaces']
+	else:
+		return []
+
+# Return a list of all spaces that must be empty for command to be performed with cursor
+# as target center
+def getEmptySpaces():
+	target = getTargetAtCursor()
+	if target is not None:
+		return target['specialSpaces']
+	else:
+		return []
+
+# Get the target dictionary (if any) for command occuring at cursor's position
+def getTargetAtCursor():
 	cursor = objectControl.getFromScene('cursor', 'battlefield')
 	cursorPosition = cursor.worldPosition
-	
-	# Get data for command targetted at cursor's position
-	target = getTargetAtPosition(cursorPosition)
-	if target is not None:
-		
-		# Add a marker at each space command requires be empty
-		for specialSpace in target['specialSpaces']:
-			marker.add(specialSpace, 'markerEmpty')
-		
-		# Add a marker at each space that command would hit in its aoe
-		for aoeSpace in target['effectedSpaces']:
-			marker.add(aoeSpace, 'markerAoe')
 
-# Get the target dictionary for command occuring at _position_, if any
-def getTargetAtPosition(position):
 	for target in logic.globalDict['spaceTarget']:
 		
 		# If target happens on same space as given position, return it 
-		if check.eq2D(position, target['space']):
+		if check.eq2D(cursorPosition, target['space']):
 			return target
