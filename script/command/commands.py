@@ -3,7 +3,7 @@
 # Dynamically called by commandControl.py
 # NOTE(kgeffen) Class names start with lowercase for ease of use
 from bge import logic
-import copy
+import copy, random
 
 from script.command import generic
 
@@ -626,71 +626,6 @@ class mudshot:
 	
 	def icon():
 		return 'S_Earth_05.png'
-class aeroImpact:
-	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-		
-		# move target
-		generic.command.move(target)
-		
-		if generic.command.hitCheck(target, factors):
-			# Deal damage
-			generic.command.standardAttack(target, factors)				
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-		
-		# Can hit very low targets so they can land lower
-		# TODO(kgeffen) Make landing space ok to be low,
-		# but not the target hit
-		commandRange['okDz'] = {'max' : 1.0, 'min' : -10.0}
-		
-		# Move target back Number of spaces equal to extent
-		distance = generic.extentInfluence.polynomial(1, 1)
-		commandRange['specialSpaces'] = [[0, distance]]
-		
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return generic.extentInfluence.polynomial(16, 5, 11)
-	
-	def description():
-		return ('Send a burst of air at an adjacent unit.\n\n'
-			'Standard magic damage and move target backwards.\n'
-			'Push target further by spending more.')
-	
-	def name():
-		return 'Aero Impact'
-	
-	def icon():
-		return 'S_Physic_02.png'
-class galeCloak:
-	def perform(actor, target):
-		generic.command.raiseStat(target, 'toughness', 10)
-		generic.command.raiseStat(target, 'willpower', 10)
-		generic.command.raiseStat(target, 'agility', 10)
-		generic.command.raiseStat(target, 'mv', 3)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
-		commandRange['range'] = generic.shapes.diamond(2, 1)
-
-		generic.range.free(commandRange)
-	
-	def cost():
-		return 60
-	
-	def description():
-		return ('Cloak a nearby unit in powerful wind.\n\n'
-			'Raise target\'s defensive abilities and mv.')
-	
-	def name():
-		return 'Gale Cloak'
-	
-	def icon():
-		return 'S_Wind_02.png'
 class earthGrip:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
@@ -980,6 +915,225 @@ class blazeCloak:
 	def icon():
 		return 'S_Fire_04.png'
 
+'Light'
+class lightningBolt:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		factors['accuracy'] *= 2
+		factors['force'] *= 0.8
+
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['range'] = generic.shapes.diamond(2, 1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('.')
+	
+	def name():
+		return 'Lightning Bolt'
+	
+	def icon():
+		return 'S_Thunder_01.png'
+class chainLightning:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		factors['accuracy'] *= 2
+		factors['force'] *= 0.7
+
+		if generic.command.hitCheck(target, factors):
+			# Attack
+			generic.command.standardAttack(target, factors)
+			
+			if generic.command.coinFlip():
+				# Grant user +1 action
+				generic.command.raiseStat(actor, 'act', 1)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['range'] = generic.shapes.diamond(2, 1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('.')
+	
+	def name():
+		return 'Chain Lightning'
+	
+	def icon():
+		return 'S_Thunder_05.png'
+class passageBolt:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		factors['accuracy'] *= 2
+		factors['force'] *= 0.7
+
+		# Move user
+		generic.command.move(actor)
+
+		if generic.command.hitCheck(target, factors):
+			# Attack
+			generic.command.standardAttack(target, factors)
+			
+			if generic.command.coinFlip():
+				# Grant user +1 action
+				generic.command.raiseStat(actor, 'act', 1)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		length = generic.extentInfluence.polynomial(2,1)
+		commandRange['range'] = generic.shapes.line(length)
+		commandRange['specialSpaces'] = [[0,1]]
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(1,1)
+	
+	def description():
+		return ('.')
+	
+	def name():
+		return 'Passage Bolt'
+	
+	def icon():
+		return 'S_Thunder_04.png'
+
+'Wind'
+class birdcall:
+	def perform(actor):
+		# Make a copy of target and place it
+		unit = generic.objects.bird()
+		unit['align'] = actor['align']
+		
+		generic.command.addObjects(unit)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['range'] = generic.shapes.diamond(3, 1)
+		commandRange['specialSpaces'] = generic.shapes.single()
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('TWeet tweet.\n\n'
+			'TODO.')
+	
+	def name():
+		return 'Birdcall'
+	
+	def icon():
+		return 'I_Feather_01.png'
+class aeroImpact:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		# move target
+		generic.command.move(target)
+		
+		if generic.command.hitCheck(target, factors):
+			# Deal damage
+			generic.command.standardAttack(target, factors)				
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+		
+		# Can hit very low targets so they can land lower
+		# TODO(kgeffen) Make landing space ok to be low,
+		# but not the target hit
+		commandRange['okDz'] = {'max' : 1.0, 'min' : -10.0}
+		
+		# Move target back Number of spaces equal to extent
+		distance = generic.extentInfluence.polynomial(1, 1)
+		commandRange['specialSpaces'] = [[0, distance]]
+		
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(16, 5, 11)
+	
+	def description():
+		return ('Send a burst of air at an adjacent unit.\n\n'
+			'Standard magic damage and move target backwards.\n'
+			'Push target further by spending more.')
+	
+	def name():
+		return 'Aero Impact'
+	
+	def icon():
+		return 'S_Physic_02.png'
+class galeCloak:
+	def perform(actor, target):
+		generic.command.raiseStat(target, 'toughness', 10)
+		generic.command.raiseStat(target, 'willpower', 10)
+		generic.command.raiseStat(target, 'agility', 10)
+		generic.command.raiseStat(target, 'mv', 3)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
+		commandRange['range'] = generic.shapes.diamond(2, 1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 60
+	
+	def description():
+		return ('Cloak a nearby unit in powerful wind.\n\n'
+			'Raise target\'s defensive abilities and mv.')
+	
+	def name():
+		return 'Gale Cloak'
+	
+	def icon():
+		return 'S_Wind_02.png'
+class fly:
+	def perform(actor):
+		generic.command.move(actor)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		length = generic.extentInfluence.polynomial(1, 1)
+		commandRange['range'] = generic.shapes.diamond(length, 1)
+		commandRange['specialSpaces'] = generic.shapes.single()
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(1, 1)
+	
+	def description():
+		return ('Beats taking the bus.')
+	
+	def name():
+		return 'Fly'
+	
+	def icon():
+		return 'S_Wind_06.png'
 
 
 class divineReflection:
@@ -1015,34 +1169,6 @@ class divineReflection:
 	
 	def icon():
 		return 'I_Mirror.png'
-class birdcall:
-	def perform(actor):
-		# Make a copy of target and place it
-		unit = generic.objects.bird()
-		unit['align'] = actor['align']
-		
-		generic.command.addObjects(unit)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['range'] = generic.shapes.diamond(3, 1)
-		commandRange['specialSpaces'] = generic.shapes.single()
-
-		generic.range.free(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return ('TWeet tweet.\n\n'
-			'TODO.')
-	
-	def name():
-		return 'Birdcall'
-	
-	def icon():
-		return 'I_Feather_01.png'
 class stoneGarden:
 	def perform(actor, target):
 		# Add a barrel on each side
