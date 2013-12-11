@@ -30,6 +30,12 @@ def standardAttack(target, factors):
 	
 	return damage
 
+def regen(unit):
+	dSp = unit['regen']/100 * unit['spirit']
+	dSp = round(dSp)
+
+	raiseStat(unit, 'sp', dSp)
+
 'Basic results of commands'
 # Raise one of unit's stats by an amount
 def raiseStat(unit, stat, amount):

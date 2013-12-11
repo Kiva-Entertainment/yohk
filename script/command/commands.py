@@ -321,8 +321,8 @@ class grandCross:
 		for target in targets:
 			factors = generic.commandFactors.sword(actor, target)
 			
-			factors['accuracy'] *= 1.5
-			factors['force'] *= 2
+			factors['accuracy'] *= 1.2
+			factors['force'] *= 1.5
 
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
@@ -335,7 +335,7 @@ class grandCross:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 0
+		return 50
 	
 	def description():
 		return ('.')
@@ -350,6 +350,8 @@ class hugeSlash:
 		for target in targets:
 			factors = generic.commandFactors.sword(actor, target)
 			
+			factors['force'] *= 1.3
+
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
 	
@@ -361,7 +363,7 @@ class hugeSlash:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 0
+		return 30
 	
 	def description():
 		return ('.')
@@ -726,7 +728,7 @@ class pinpointHeat:
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
-		commandRange['range'] = generic.shapes.line(2, 1)
+		commandRange['range'] = generic.shapes.line(1, 1)
 
 		generic.range.rigid(commandRange)
 	
@@ -741,32 +743,6 @@ class pinpointHeat:
 	
 	def icon():
 		return 'S_Fire_01.png'
-class magmaSeizure:
-	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-		
-		if generic.command.hitCheck(target, factors):
-			generic.command.standardAttack(target, factors)
-			generic.command.raiseStat(target, 'mv', 3)
-
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['range'] = generic.shapes.diamond(4)
-
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return ('.')
-	
-	def name():
-		return 'Magma Seizure'
-	
-	def icon():
-		return 'S_Fire_06.png'
 class flameBarrage:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
@@ -836,6 +812,35 @@ class meteor:
 	
 	def icon():
 		return 'S_Fire_05.png'
+
+class infernoEmbrace:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		factors['force'] *= 2
+
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
+			generic.command.raiseStat(target, 'mv', 3)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['range'] = generic.shapes.diamond(3)
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 70
+	
+	def description():
+		return ('.')
+	
+	def name():
+		return 'Inferno Embrace'
+	
+	def icon():
+		return 'S_Fire_06.png'
 class livingFlame:
 	def perform(actor):
 		# Make a copy of target and place it
@@ -853,7 +858,7 @@ class livingFlame:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 0
+		return 100
 	
 	def description():
 		return ('.')
@@ -880,7 +885,7 @@ class infernoSwath:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(1, 1)
+		return generic.extentInfluence.polynomial(30, 20, 20)
 	
 	def description():
 		return ('.')
@@ -904,7 +909,7 @@ class blazeCloak:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 10
+		return 90
 	
 	def description():
 		return ('Raise you offensive power substantially.')
@@ -1254,13 +1259,9 @@ class emogen:
 
 '''Items'''
 'Books'
-# TODO(kgeffen) Sp regen should happen in a generic method
 class study:
 	def perform(actor, target):
-		# Increase sp by same amount as at upkeep
-		dSp = actor['regen']/100 * actor['spirit']
-		dSp = round(dSp)
-		generic.command.raiseStat(actor, 'sp', dSp)
+		generic.command.regen(actor)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.self()
@@ -1280,12 +1281,8 @@ class study:
 		return 'W_Book_01.png'
 class tutor:
 	def perform(actor, target):
-		# Increase sp by same amount as at upkeep
-		amount = actor['regen']/100 * actor['spirit']
-		amount = round(amount)
-		
-		generic.command.raiseStat(actor, 'sp', amount)
-		generic.command.raiseStat(target, 'sp', amount)
+		generic.command.regen(actor)
+		generic.command.regen(target)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
@@ -1560,7 +1557,7 @@ class bloodRitual:
 
 		generic.command.raiseStat(actor, 'strength', 20)
 		generic.command.raiseStat(actor, 'intelligence', 20)
-		generic.command.raiseStat(actor, 'sp', 20)
+		generic.command.regen(actor)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.self()
