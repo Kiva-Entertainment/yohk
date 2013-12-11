@@ -35,6 +35,19 @@ def diamond(length, offset = 0):
 	
 	return spaces
 
+# Cross that includes all spaces _length_ spaces from center cardinally
+# 'length' = the max offset from the center
+# If _offset_ is provided, exclude that many spaces in each direction
+def cross(length, offset = 0):
+	spaces = []
+	
+	# Describes space in rings of radius r
+	for r in range(offset, length + 1):
+		for space in [[0,r], [0,-r], [r,0], [-r,0]]:
+			spaces.append(space)
+	
+	return spaces
+
 # Straight line going out from center _length_ spaces
 # If _offset_ is provided, put that many empty spaces before the line begins
 def line(length, offset = 0):

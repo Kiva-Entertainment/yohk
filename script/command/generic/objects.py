@@ -49,3 +49,27 @@ def bird():
 		'commands' : [[]]
 		}
 
+def flame():
+	return {
+		'model' : 'flame',
+		'name' : 'Flame',
+		'align' : 'neutral',
+		'health' : 200,
+		'hp' : 200,
+		'spirit' : 0,
+		'sp' : 200,
+		'move' : 0,
+		'mv' : 0,
+		'actions' : 1,
+		'act' : 1,
+		'strength' : 0,
+		'intelligence' : 0,
+		'toughness' : 0,
+		'willpower' : 0,
+		'focus' : 0,
+		'agility' : 0,
+		'speed' : 30,
+		'jump' : 0,
+		'regen' : 20,
+		'commands' : [['pinpointHeat', 'flameBarrage', 'livingFlame']]
+		}

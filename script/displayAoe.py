@@ -42,7 +42,6 @@ def do():
 			coveredSpaces.append(space)
 
 	for space in rangeSpaces:
-		print(space)
 		if space not in coveredSpaces:
 			marker.add(space)
 			coveredSpaces.append(space)
