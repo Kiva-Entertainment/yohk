@@ -41,4 +41,12 @@ def dagger():
 			'aoe' : shapes.single(),
 			'specialSpaces' : []}
 
+'Magic Elements'
+def lightning():
+	return {'okDz' : {'max' : 10, 'min' : -10},
+			'range' : shapes.diamond(2, 1),
+			'aoe' : shapes.single(),
+			'specialSpaces' : []}
+
+
 'Other'

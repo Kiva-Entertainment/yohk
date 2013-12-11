@@ -698,37 +698,6 @@ class icePrison:
 	
 	def icon():
 		return 'S_Ice_07.png'
-class degenerate:
-	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-		
-		numberTimes = generic.extentInfluence.polynomial(1,1)
-		for i in range(0, numberTimes):
-
-			# Attack target
-			if generic.command.hitCheck(target, factors):
-				generic.command.standardAttack(target, factors)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
-		commandRange['range'] = generic.shapes.diamond(2, 1)
-
-		generic.range.free(commandRange)
-	
-	def cost():
-		return generic.extentInfluence.polynomial(12, 36, 27)
-	
-	def description():
-		return ('Send a barrage of flame at a nearby unit.\n\n'
-			'Standard magic damage X times.')
-	
-	def name():
-		return 'Flame Barrage'
-	
-	def icon():
-		return 'S_Fire_03.png'
 
 'Fire'
 class pinpointHeat:
@@ -876,16 +845,19 @@ class blazeCloak:
 	
 	def icon():
 		return 'S_Fire_04.png'
-
 class infernoEmbrace:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
 		
 		factors['force'] *= 2
+		factors['accuracy'] *= 1.4
 
 		if generic.command.hitCheck(target, factors):
 			generic.command.standardAttack(target, factors)
-			generic.command.raiseStat(target, 'mv', 3)
+			
+			# Raise target's offensive power
+			generic.command.raiseStat(target, 'attack', 50)
+			generic.command.raiseStat(target, 'intelligence', 50)
 
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
@@ -895,10 +867,10 @@ class infernoEmbrace:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 70
+		return 120
 	
 	def description():
-		return ('.')
+		return ('Hits hard, but raises offensive power.')
 	
 	def name():
 		return 'Inferno Embrace'
@@ -910,6 +882,8 @@ class infernoSwath:
 		for target in targets:
 			factors = generic.commandFactors.magic(actor, target)
 			
+			factors['force'] *= generic.extentInfluence.polynomial(1, 1/10)
+
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
 
@@ -922,7 +896,7 @@ class infernoSwath:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(30, 20, 20)
+		return generic.extentInfluence.polynomial(30, 20, 10)
 	
 	def description():
 		return ('.')
@@ -936,18 +910,13 @@ class infernoSwath:
 'Light'
 class lightningBolt:
 	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
+		factors = generic.commandFactors.lightning(actor, target)
 		
-		factors['accuracy'] *= 2
-		factors['force'] *= 0.8
-
 		if generic.command.hitCheck(target, factors):
 			generic.command.standardAttack(target, factors)
 
 	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['range'] = generic.shapes.diamond(2, 1)
+		commandRange = generic.rangeFactors.lightning()
 
 		generic.range.free(commandRange)
 	
@@ -955,7 +924,7 @@ class lightningBolt:
 		return 0
 	
 	def description():
-		return ('.')
+		return ('Weaker than most magic, but has good range and accuracy.')
 	
 	def name():
 		return 'Lightning Bolt'
@@ -964,28 +933,22 @@ class lightningBolt:
 		return 'S_Thunder_01.png'
 class chainLightning:
 	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-		
-		factors['accuracy'] *= 2
-		factors['force'] *= 0.7
+		factors = generic.commandFactors.lightning(actor, target)
 
 		if generic.command.hitCheck(target, factors):
 			# Attack
 			generic.command.standardAttack(target, factors)
 			
-			if generic.command.coinFlip():
-				# Grant user +1 action
-				generic.command.raiseStat(actor, 'act', 1)
+			# Grant user +1 action
+			generic.command.raiseStat(actor, 'act', 1)
 
 	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['range'] = generic.shapes.diamond(2, 1)
+		commandRange = generic.rangeFactors.lightning()
 
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 0
+		return 13
 	
 	def description():
 		return ('.')
@@ -997,10 +960,9 @@ class chainLightning:
 		return 'S_Thunder_05.png'
 class passageBolt:
 	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-		
-		factors['accuracy'] *= 2
-		factors['force'] *= 0.7
+		factors = generic.commandFactors.lightning(actor, target)
+
+		factors['force'] *= generic.extentInfluence.polynomial(1, 1/8)
 
 		# Move user
 		generic.command.move(actor)
@@ -1009,21 +971,21 @@ class passageBolt:
 			# Attack
 			generic.command.standardAttack(target, factors)
 			
-			if generic.command.coinFlip():
-				# Grant user +1 action
-				generic.command.raiseStat(actor, 'act', 1)
+			# Grant user +1 action
+			generic.command.raiseStat(actor, 'act', 1)
 
 	def determineRange():
-		commandRange = generic.rangeFactors.standard()
+		commandRange = generic.rangeFactors.lightning()
 
-		length = generic.extentInfluence.polynomial(2,1)
+		length = generic.extentInfluence.polynomial(1,1)
 		commandRange['range'] = generic.shapes.line(length)
+
 		commandRange['specialSpaces'] = [[0,1]]
 
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(1,1)
+		return generic.extentInfluence.polynomial(19, 7, 3)
 	
 	def description():
 		return ('.')
@@ -1067,6 +1029,8 @@ class aeroImpact:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
 		
+		factors['force'] *= generic.extentInfluence.polynomial(1, 1/9)
+
 		# move target
 		generic.command.move(target)
 		
@@ -1103,21 +1067,20 @@ class aeroImpact:
 		return 'S_Physic_02.png'
 class galeCloak:
 	def perform(actor, target):
-		generic.command.raiseStat(target, 'toughness', 10)
-		generic.command.raiseStat(target, 'willpower', 10)
-		generic.command.raiseStat(target, 'agility', 10)
+		generic.command.raiseStat(target, 'toughness', 50)
+		generic.command.raiseStat(target, 'willpower', 50)
+		generic.command.raiseStat(target, 'agility', 50)
 		generic.command.raiseStat(target, 'mv', 3)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
-		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
-		commandRange['range'] = generic.shapes.diamond(2, 1)
+		commandRange['range'] = generic.shapes.diamond(2)
 
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 60
+		return 70
 	
 	def description():
 		return ('Cloak a nearby unit in powerful wind.\n\n'
@@ -1135,6 +1098,8 @@ class fly:
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
+		commandRange['okDz'] = {'max' : 10, 'min' : -10}
+
 		length = generic.extentInfluence.polynomial(1, 1)
 		commandRange['range'] = generic.shapes.diamond(length, 1)
 		commandRange['specialSpaces'] = generic.shapes.single()
@@ -1142,7 +1107,7 @@ class fly:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(1, 1)
+		return generic.extentInfluence.polynomial(20, 17, 5)
 	
 	def description():
 		return ('Beats taking the bus.')
@@ -1153,7 +1118,7 @@ class fly:
 	def icon():
 		return 'S_Wind_06.png'
 
-
+'Other'
 class divineReflection:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
