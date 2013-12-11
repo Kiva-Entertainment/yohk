@@ -69,7 +69,7 @@
 		'speed' : 10,
 		'jump' : 12,
 		'regen' : 5,
-		'commands' :	[['slash', 'ebber', 'lightningSlash'],
+		'commands' :	[['slash', 'ebber', 'reignOfBlades'],
 						['ribbonDash', 'predatorsDescent', 'stormsEye'],
 						['dash', 'dualSharpen', 'eatPie']]
 	},

@@ -68,6 +68,8 @@ class predatorsDescent:
 	def perform(actor, target):
 		factors = generic.commandFactors.sword(actor, target)
 		
+		factors['force'] *= generic.extentInfluence.polynomial(1, 1/5)
+
 		if generic.command.hitCheck(target, factors):
 			generic.command.standardAttack(target, factors)
 		
@@ -136,7 +138,7 @@ class ribbonDash:
 		for target in targets:
 			factors = generic.commandFactors.sword(actor, target)
 			
-			factors['force'] *= generic.extentInfluence.polynomial(1, 1/12)
+			factors['force'] *= generic.extentInfluence.polynomial(1, 1/8, 1/25)
 			
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
@@ -198,6 +200,8 @@ class ebber:
 	def perform(actor, target):
 		factors = generic.commandFactors.sword(actor, target)
 		
+		factors['force'] *= generic.extentInfluence.polynomial(1, 1/10)
+
 		if generic.command.hitCheck(target, factors):
 			generic.command.standardAttack(target, factors)
 		
@@ -259,7 +263,7 @@ class stormsEye:
 		for target in targets:
 			factors = generic.commandFactors.sword(actor, target)
 			
-			factors['force'] *= generic.extentInfluence.polynomial(1, 1/12)
+			factors['force'] *= 1.3
 			
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
@@ -278,7 +282,7 @@ class stormsEye:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 0#generic.extentInfluence.polynomial(9, 2, 2)
+		return 36
 	
 	def description():
 		return ('TODO.')
@@ -288,34 +292,6 @@ class stormsEye:
 	
 	def icon():
 		return 'W_Sword_021.png'
-class lightningSlash:
-	def perform(actor, target):
-		factors = generic.commandFactors.sword(actor, target)
-		
-		if generic.command.hitCheck(target, factors):
-			# Attack (Don't take altered attack into consideration)
-			generic.command.standardAttack(target, factors)
-			
-			# Raise mv
-			amount = generic.extentInfluence.polynomial(1,1)
-			generic.command.raiseStat(actor, 'mv', amount)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.sword()
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return generic.extentInfluence.polynomial(1,1)
-	
-	def description():
-		return ('Strike an adjacent unit and lower their mv.' + '\n\n'
-		 		'TODO.')
-	
-	def name():
-		return 'Lightning Slash'
-	
-	def icon():
-		return 'W_Sword_015.png'
 class grandCross:
 	def perform(actor, *targets):
 		for target in targets:
@@ -373,6 +349,43 @@ class hugeSlash:
 	
 	def icon():
 		return 'W_Sword_006.png'
+class reignOfBlades:
+	# The most basic attack
+	def perform(actor, *targets):
+		# Move actor
+		generic.command.move(actor)
+
+		for target in targets:
+			factors = generic.commandFactors.sword(actor, target)
+			
+			factors['force'] *= 2
+			factors['accuracy'] *= 1.6
+
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.sword()
+
+		rectangle = generic.shapes.rectangle(1, 1)
+		commandRange['aoe'] = generic.shapes.push(rectangle, [0, 2])
+
+		commandRange['specialSpaces'] = generic.shapes.single()
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 100
+	
+	def description():
+		return ('Slash an adjacent unit with your sword.' + '\n\n'
+		 		'Basic physical attack.')
+	
+	def name():
+		return 'Reign of Blades'
+	
+	def icon():
+		return 'W_Sword_003.png'
 
 
 'Axe'
@@ -812,6 +825,57 @@ class meteor:
 	
 	def icon():
 		return 'S_Fire_05.png'
+class livingFlame:
+	def perform(actor):
+		# Make a copy of target and place it
+		unit = generic.objects.flame()
+		unit['align'] = actor['align']
+		
+		generic.command.addObjects(unit)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['range'] = generic.shapes.diamond(2, 1)
+		commandRange['specialSpaces'] = generic.shapes.single()
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 100
+	
+	def description():
+		return ('.')
+	
+	def name():
+		return 'Living Flame'
+	
+	def icon():
+		return 'S_Fire_02.png'
+class blazeCloak:
+	def perform(actor, target):
+		generic.command.raiseStat(target, 'intelligence', 50)
+		generic.command.raiseStat(target, 'strength', 50)
+		generic.command.raiseStat(target, 'focus', 50)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['range'] = generic.shapes.diamond(1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 90
+	
+	def description():
+		return ('Raise you offensive power substantially.')
+	
+	def name():
+		return 'Blaze Cloak'
+	
+	def icon():
+		return 'S_Fire_04.png'
 
 class infernoEmbrace:
 	def perform(actor, target):
@@ -841,33 +905,6 @@ class infernoEmbrace:
 	
 	def icon():
 		return 'S_Fire_06.png'
-class livingFlame:
-	def perform(actor):
-		# Make a copy of target and place it
-		unit = generic.objects.flame()
-		unit['align'] = actor['align']
-		
-		generic.command.addObjects(unit)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['range'] = generic.shapes.diamond(2, 1)
-		commandRange['specialSpaces'] = generic.shapes.single()
-
-		generic.range.free(commandRange)
-	
-	def cost():
-		return 100
-	
-	def description():
-		return ('.')
-	
-	def name():
-		return 'Living Flame'
-	
-	def icon():
-		return 'S_Fire_02.png'
 class infernoSwath:
 	def perform(actor, *targets):
 		for target in targets:
@@ -895,30 +932,6 @@ class infernoSwath:
 	
 	def icon():
 		return 'S_Fire_07.png'
-class blazeCloak:
-	def perform(actor, target):
-		generic.command.raiseStat(target, 'intelligence', 50)
-		generic.command.raiseStat(target, 'strength', 50)
-		generic.command.raiseStat(target, 'focus', 50)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['range'] = generic.shapes.diamond(1)
-
-		generic.range.free(commandRange)
-	
-	def cost():
-		return 90
-	
-	def description():
-		return ('Raise you offensive power substantially.')
-	
-	def name():
-		return 'Blaze Cloak'
-	
-	def icon():
-		return 'S_Fire_04.png'
 
 'Light'
 class lightningBolt:
@@ -1553,7 +1566,8 @@ class craft:
 class bloodRitual:
 	def perform(actor, target):
 		# Lower hp
-		generic.command.raiseStat(actor, 'hp', -100)
+		dHp = -round( actor['health'] / 10 )
+		generic.command.raiseStat(actor, 'hp', dHp)
 
 		generic.command.raiseStat(actor, 'strength', 20)
 		generic.command.raiseStat(actor, 'intelligence', 20)

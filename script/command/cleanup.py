@@ -49,6 +49,7 @@ def killDeadUnits():
 	for unit in doomedList:
 		killUnit(unit)
 
+# TODO(kgeffen) Put this method in unitControl
 # Delete the units entry from all its locations and delete the game object for unit
 def killUnit(unit):
 	# Delete unit object
@@ -63,7 +64,8 @@ def killUnit(unit):
 	# Update the time data and display to account for deaths
 	updateTime(unit)
 	displayTurnOrder.do()
-	
+
+	# TODO(kgeffen) Churn if turn now empty
 
 # Update the time array to account for units dying
 def updateTime(unit):
