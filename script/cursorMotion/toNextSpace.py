@@ -2,7 +2,7 @@
 # Ex: To next space that can be targeted if selecting command targets
 # Ex: To next unit acting this turn if selecting actor
 from bge import logic
-from script.cursor.motion import updateHeightDisplay
+
 from script import check, getPosition, objectControl
 
 def attempt(cont):
@@ -25,24 +25,27 @@ def do():
 
 # Move cursor to the space where the (next acting unit this turn) is
 def toNextActor():
-	actors = logic.globalDict['time'][0][0]
-	
-	if actors != []:
-		# Position that cursor will move to
-		position = getPosition.onGround(actors[0]['position'])
-		
-		# Cursor moved (Wasn't already in position)
-		cursorMoved = moveToPosition(position)
-		
-		# NOTE(kgeffen) If cursor didn't move (is already at position),
-		# cycle actors once, then get new first unit's position
-		if not cursorMoved:
-			cycleEntries(actors)
-			
-			# This is the position of the newly cycled list of actors
+	# Actors are grouped based on alignment
+	groups = logic.globalDict['time'][0]
+	if groups != []:
+
+		actors = groups[0]
+		if actors != []:
+			# Position that cursor will move to
 			position = getPosition.onGround(actors[0]['position'])
 			
-			moveToPosition(position)
+			# Cursor moved (Wasn't already in position)
+			cursorMoved = moveToPosition(position)
+			
+			# NOTE(kgeffen) If cursor didn't move (is already at position),
+			# cycle actors once, then get new first unit's position
+			if not cursorMoved:
+				cycleEntries(actors)
+				
+				# This is the position of the newly cycled list of actors
+				position = getPosition.onGround(actors[0]['position'])
+				
+				moveToPosition(position)
 
 # Move cursor to next space that could be selected as command target
 # TODO(kgeffen) Moves to any space in range, even if that space is not a valid target
@@ -77,9 +80,6 @@ def moveToPosition(position):
 	
 	else:
 		cursor.worldPosition = position
-		
-		# Display new height of cursor
-		updateHeightDisplay.do(position[2])
 		
 		return True # Movement happened
 

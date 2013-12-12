@@ -3,11 +3,17 @@ from bge import logic
 
 from script import objectControl
 
+# TODO(kgeffen) This method only needs to be called when cursor moves,
+# currently it is called every tic
+
 HEIGHT_DISPLAY_NAME = 'heightDisplay'
 OVERLAY_SCENE_NAME = 'battlefieldOverlay'
 
-def do(height):
-	heightInDm = round( height * 10 )
+def do():
+	cursor = objectControl.getFromScene('cursor', 'battlefield')
+	cursorHeight = cursor.worldPosition[2]
+
+	heightInDm = round( cursorHeight * 10 )
 	
 	text = str(heightInDm) + ' dm'
 	
