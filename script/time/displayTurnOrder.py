@@ -21,14 +21,23 @@ def do():
 def formDisplayedText():
 	text = ''
 	
-	for turn in logic.globalDict['time']:
+	time = logic.globalDict['time']
+	for turnNum in range(0, len(time)):
+		turn = time[turnNum]
 
 		turnHasActors = turn != []
 		if turnHasActors:
 
-			for group in turn:
-				# Add name of each actor in group
+			for groupNum in range(0, len(turn)):
+				group = turn[groupNum]
+
 				for actor in group:
+
+					# Start with turn number
+					text += str(turnNum)
+					# Add the group number
+					text += '.' + str(groupNum) + ': '
+					# End line with actor's name
 					text += actor['name'] + '\n'
 			
 			# Follow (turn with actors) with a blank line

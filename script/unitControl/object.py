@@ -3,6 +3,7 @@
 from bge import logic
 
 from script import check, sceneControl, getPosition, time
+from script.time import displayTurnOrder
 
 # Get the game object for a given unit
 def get(unit):
@@ -27,6 +28,7 @@ def add(unit):
 
 	# Add first turn to time
 	time.addNext.unitAction(unit)
+	displayTurnOrder.do()
 
 
 # Create a game object for given unit at unit's position
