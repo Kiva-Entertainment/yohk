@@ -72,18 +72,20 @@ def updateTime(unit):
 	# Remove unit from timeline
 	newTime = []
 	
-	for tic in logic.globalDict['time']:
-		newTic = []
+	for turn in logic.globalDict['time']:
+		newTurn = []
 
-		for group in tic:
+		for group in turn:
 			# NOTE(kgeffen) This retains all entries in the array that are != unit
-			# Remove unit's existance from current tic
+			# Remove unit's existance from current turn
 			newGroup = list(filter((unit).__ne__, group))
 			
-			# Add new tic to new time
-			newTic.append(newGroup)
+			# Only add group if it isn't empty
+			if newGroup != []:
+				# Add new tic to new time
+				newTurn.append(newGroup)
 
-		newTime.append(newTic)
+		newTime.append(newTurn)
 	
 	# Set time array to newTime, which excludes dead unit's number
 	logic.globalDict['time'] = newTime
