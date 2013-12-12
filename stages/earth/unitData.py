@@ -98,7 +98,7 @@
 						['strengthen', 'dualSharpen', 'eatMeat']]
 	},
 	{ 	'model' : 'soldier',
-		'name' : 'Ichi, the Masochist',
+		'name' : 'Brother Salmon',
 		'align' : 'martialLegion',
 		'health' : 1100,
 		'hp' : 1100,
@@ -117,9 +117,9 @@
 		'speed' : 24,
 		'jump' : 12,
 		'regen' : 5,
-		'commands' : 	[['chop', 'quakeImpact', 'grandSwath'],
-						['skullShatter', 'murderTwist', 'concentratedChaos'],
-						['bloodRitual', 'bloodlust', 'riteOfImmortality']]
+		'commands' : 	[['thrust', 'sharpRain', 'shredLines'],
+						[],
+						['focus', 'strategize', 'eatCarrot']]
 	},
 	{	'model' : 'devoted',
 		'name' : 'Afth the Destroyer',
@@ -166,11 +166,11 @@
 		'jump' : 10,
 		'regen' : 10,
 		'commands' : 	[['lightningBolt', 'chainLightning', 'passageBolt'],
-						['aeroImpact', 'birdcall', 'livingFlame'],
+						['birdcall', 'aeroImpact', 'divineReflection'],
 						['dash', 'fly', 'galeCloak']]
 	},
 	{	'model' : 'devoted',
-		'name' : 'Urchin, the Summoner',
+		'name' : 'Urchin',
 		'align' : 'solarServants',
 		'health' : 800,
 		'hp' : 800,
@@ -189,9 +189,9 @@
 		'speed' : 15,
 		'jump' : 10,
 		'regen' : 10,
-		'commands' : 	[['psiStrike', 'flameBarrage', 'meteor'],
-						['birdcall', 'stoneGarden', 'divineReflection'],
-						['tutor', 'stoneArmor', 'emogen']]
+		'commands' : 	[['psiStrike', 'mudshot', 'earthGrip'],
+						['stunBeam', 'stoneGarden', 'icePrison'],
+						['study', 'stoneArmor', 'emogen']]
 	},
 	{	'model' : 'devoted',
 		'name' : 'Lish, Sorrowmancer',

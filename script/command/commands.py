@@ -388,6 +388,90 @@ class reignOfBlades:
 		return 'W_Sword_003.png'
 
 
+'Spear'
+class thrust:
+	# The most basic attack
+	def perform(actor, target):
+		factors = generic.commandFactors.spear(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.spear()
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return 'Basic spear attack.'
+	
+	def name():
+		return 'Thrust'
+	
+	def icon():
+		return 'W_Spear_001.png'
+class sharpRain:
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.spear(actor, target)
+			
+			factors['accuracy'] *= 1.2
+			factors['force'] *= 1.2
+
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.spear()
+
+		commandRange['range'] = generic.shapes.ring(2)
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 16
+	
+	def description():
+		return 'TODO.'
+	
+	def name():
+		return 'Sharp Rain'
+	
+	def icon():
+		return 'W_Spear_009.png'
+class shredLines:
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.spear(actor, target)
+			
+			factors['accuracy'] *= 1.6
+			factors['force'] *= 1.4
+
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.spear()
+
+		commandRange['range'] = generic.shapes.cross(3, 1)
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 56
+	
+	def description():
+		return 'TODO.'
+	
+	def name():
+		return 'Shred Lines'
+	
+	def icon():
+		return 'W_Spear_011.png'
+
+
 'Axe'
 class chop:
 	# The most basic attack
@@ -580,9 +664,11 @@ class psiStrike:
 
 		# Lower target's hp and lower sp by tenth of hp loss
 		if generic.command.hitCheck(target, factors):
+			# Deal damage
 			amount = generic.command.standardAttack(target, factors)
-			amount /= 10
+			amount /= 20
 
+			# Lower sp by 1/20 of damage dealt
 			generic.command.raiseStat(target, 'sp', -amount)
 	
 	def determineRange():
@@ -603,102 +689,6 @@ class psiStrike:
 		return 'W_Wand_06.png'
 
 '''Magic'''
-class mudshot:
-	def perform(actor, *targets):
-		for target in targets:
-			factors = generic.commandFactors.magic(actor, target)
-			
-			if generic.command.hitCheck(target, factors):
-				
-				# Lower mv
-				amount = generic.extentInfluence.polynomial(1, 1)
-				generic.command.raiseStat(target, 'mv', -amount)
-
-				# Deal damage
-				generic.command.standardAttack(target, factors)
-				
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-		
-		# Hit all units in actors sightline of length = _extent_
-		length = 1 + logic.globalDict['extent']
-		commandRange['aoe'] = generic.shapes.line(length)
-		
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return generic.extentInfluence.polynomial(17, 16, 9)
-	
-	def description():
-		return ('Send mud cardinally. Hit all units in its path.\n\n'
-			'Standard magic damage to all units in mud\'s path.\n'
-			'All units that are hit have their movement lowered for the next turn.\n'
-			'Spend more to send mud farther and lower movement by more.')
-	
-	def name():
-		return 'Mudshot'
-	
-	def icon():
-		return 'S_Earth_05.png'
-class earthGrip:
-	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-		
-		if generic.command.hitCheck(target, factors):
-			generic.command.scaleStat(target, 'mv', 0)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		# Max distance to target
-		distance = generic.extentInfluence.polynomial(1, 1)
-		commandRange['range'] = generic.shapes.line(distance)
-
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return generic.extentInfluence.polynomial(40, 12, 8)
-	
-	def description():
-		return ('Drag a nearby unit to the ground.' + '\n\n'
-				'TODO.')
-	
-	def name():
-		return 'Earth Grip'
-	
-	def icon():
-		return 'S_Earth_02.png'
-class icePrison:
-	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-		
-		if generic.command.hitCheck(target, factors):
-			generic.command.raiseStat(target, 'move', -1)
-			generic.command.raiseStat(target, 'mv', -1)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		# Max distance to target
-		distance = generic.extentInfluence.polynomial(2, 1)
-		commandRange['range'] = generic.shapes.diamond(distance, 1)
-
-		generic.range.free(commandRange)
-	
-	def cost():
-		return generic.extentInfluence.polynomial(40, 6, 17)
-	
-	def description():
-		return ('Enclose nearby unit in ice, lowering their movement.' + '\n\n'
-				'TODO.')
-	
-	def name():
-		return 'Ice Prison'
-	
-	def icon():
-		return 'S_Ice_07.png'
-
 'Fire'
 class pinpointHeat:
 	def perform(actor, target):
@@ -856,7 +846,7 @@ class infernoEmbrace:
 			generic.command.standardAttack(target, factors)
 			
 			# Raise target's offensive power
-			generic.command.raiseStat(target, 'attack', 50)
+			generic.command.raiseStat(target, 'strength', 50)
 			generic.command.raiseStat(target, 'intelligence', 50)
 
 	def determineRange():
@@ -948,7 +938,7 @@ class chainLightning:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 13
+		return 23
 	
 	def description():
 		return ('.')
@@ -985,7 +975,7 @@ class passageBolt:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(19, 7, 3)
+		return generic.extentInfluence.polynomial(26, 8, 4)
 	
 	def description():
 		return ('.')
@@ -995,6 +985,29 @@ class passageBolt:
 	
 	def icon():
 		return 'S_Thunder_04.png'
+class stunBeam:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			generic.command.raiseStat(target, 'mv', -2)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.lightning()
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Lower targets spedd by 2.')
+	
+	def name():
+		return 'Stun Beam'
+	
+	def icon():
+		return 'S_Light_01.png'
 
 'Wind'
 class birdcall:
@@ -1118,40 +1131,45 @@ class fly:
 	def icon():
 		return 'S_Wind_06.png'
 
-'Other'
-class divineReflection:
-	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-
-		if generic.command.hitCheck(target, factors):
-			# Make a copy of target and place it
-			unit = copy.deepcopy(target)
-			unit['hp'] = 1
-			unit['sp'] = 0
-			unit['align'] = actor['align']
-			unit['name'] = 'Reflection'
+'Earth'
+class mudshot:
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.magic(actor, target)
 			
-			generic.command.addObjects(unit)
+			if generic.command.hitCheck(target, factors):
+				
+				# Lower mv
+				amount = generic.extentInfluence.polynomial(1, 1)
+				generic.command.raiseStat(target, 'mv', -amount)
+
+				# Deal damage
+				generic.command.standardAttack(target, factors)
+				
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
-
-		commandRange['specialSpaces'] = [[0,1]]
-
+		
+		# Hit all units in actors sightline of length = _extent_
+		length = 1 + logic.globalDict['extent']
+		commandRange['aoe'] = generic.shapes.line(length)
+		
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 0
+		return generic.extentInfluence.polynomial(17, 16, 9)
 	
 	def description():
-		return ('To reflect is divine.\n\n'
-			'TODO.')
+		return ('Send mud cardinally. Hit all units in its path.\n\n'
+			'Standard magic damage to all units in mud\'s path.\n'
+			'All units that are hit have their movement lowered for the next turn.\n'
+			'Spend more to send mud farther and lower movement by more.')
 	
 	def name():
-		return 'Divine Reflection'
+		return 'Mudshot'
 	
 	def icon():
-		return 'I_Mirror.png'
+		return 'S_Earth_05.png'
 class stoneGarden:
 	def perform(actor, target):
 		# Add a barrel on each side
@@ -1205,6 +1223,107 @@ class stoneArmor:
 	
 	def icon():
 		return 'S_Earth_06.png'
+class earthGrip:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			# Lower mc to zero, but don't raise it
+			if target['mv'] > 0:
+				generic.command.scaleStat(target, 'mv', 0)
+
+			# Deal damage
+			generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		# Max distance to target
+		distance = generic.extentInfluence.polynomial(1, 1)
+		commandRange['range'] = generic.shapes.line(distance)
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(40, 12, 8)
+	
+	def description():
+		return ('Drag a nearby unit to the ground.' + '\n\n'
+				'TODO.')
+	
+	def name():
+		return 'Earth Grip'
+	
+	def icon():
+		return 'S_Earth_02.png'
+
+
+'Water'
+class icePrison:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			generic.command.raiseStat(target, 'move', -2)
+			generic.command.raiseStat(target, 'mv', -2)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		# Max distance to target
+		distance = generic.extentInfluence.polynomial(2, 1)
+		commandRange['range'] = generic.shapes.diamond(distance, 1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(40, 6, 17)
+	
+	def description():
+		return ('Enclose nearby unit in ice, lowering their movement.' + '\n\n'
+				'TODO.')
+	
+	def name():
+		return 'Ice Prison'
+	
+	def icon():
+		return 'S_Ice_07.png'
+
+
+'Other'
+class divineReflection:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+
+		if generic.command.hitCheck(target, factors):
+			# Make a copy of target and place it
+			unit = copy.deepcopy(target)
+			unit['hp'] = 1
+			unit['sp'] = 0
+			unit['align'] = actor['align']
+			unit['name'] = 'Reflection'
+			
+			generic.command.addObjects(unit)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['specialSpaces'] = [[0,1]]
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 100
+	
+	def description():
+		return ('To reflect is divine.\n\n'
+			'TODO.')
+	
+	def name():
+		return 'Divine Reflection'
+	
+	def icon():
+		return 'I_Mirror.png'
 class emogen:
 	def perform(actor, *targets):
 		# Amount of healing
@@ -1259,7 +1378,6 @@ class study:
 		return 'W_Book_01.png'
 class tutor:
 	def perform(actor, target):
-		generic.command.regen(actor)
 		generic.command.regen(target)
 	
 	def determineRange():
@@ -1478,7 +1596,52 @@ class eatPie:
 	
 	def icon():
 		return 'I_C_Pie.png'
+class eatCarrot:
+	def perform(actor, target):
+		generic.command.raiseStat(actor, 'hp', 50)
+		generic.command.raiseStat(actor, 'focus', 5)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.self()
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Sharpens eyesight.')
+	
+	def name():
+		return 'Eat Carrot'
+	
+	def icon():
+		return 'I_C_Carrot.png'
 
+class strategize:
+	def perform(actor, *targets):
+		amount = 4 + len(targets) * 3
+
+		for target in targets:
+			generic.command.raiseStat(target, 'focus', amount)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.self()
+
+		commandRange['aoe'] = generic.shapes.diamond(1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('TODO.')
+	
+	def name():
+		return 'Strategize'
+	
+	def icon():
+		return 'I_Map.png'
 
 class dualSharpen:
 	def perform(actor, target):
