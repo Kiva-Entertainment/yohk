@@ -4,8 +4,8 @@ from bge import logic
 
 from script import sceneControl
 
-BACKGROUND_SCENES = ['basicInfo', 'commandSelect', 'info']
-OVERLAY_SCENES = ['battlefieldOverlay', 'sound']
+BACKGROUND_SCENES = ['commandSelect', 'info']
+OVERLAY_SCENES = ['battlefieldOverlay', 'sound', 'basicInfo']
 
 # Add all necessary scenes, even ones that are hidden
 # NOTE(kgeffen) Background scenes must be hidden only after they exist

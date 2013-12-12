@@ -20,8 +20,6 @@ def move(cont):
 		# Hide unitMenu
 		menu = objectControl.getFromScene('unitMenu', 'battlefield')
 		objectControl.hide(menu)
-		
-		sceneControl.hide('basicInfo')
 
 # Change to action select
 def skill(cont):
@@ -34,5 +32,5 @@ def skill(cont):
 		objectControl.hide(menu)
 		
 		sceneControl.show('commandSelect')
-		sceneControl.hide('battlefieldOverlay', 'basicInfo')
+		sceneControl.hide('battlefieldOverlay')
 		sceneControl.suspend('battlefield') # Battlefield is still visible

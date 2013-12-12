@@ -47,8 +47,6 @@ def fromUnitSelected():
 	# Clear movement range markers
 	marker.clearMoveMarkers()
 	
-	sceneControl.hide('basicInfo')
-	
 	# Hide unitMenu
 	menu = objectControl.getFromScene('unitMenu', 'battlefield')
 	objectControl.hide(menu)
