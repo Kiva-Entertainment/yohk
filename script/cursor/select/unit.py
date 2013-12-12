@@ -3,7 +3,7 @@
 # If it acts this turn, display unit menu
 from bge import logic
 
-from script import check, sceneControl, moveRange, objectControl
+from script import check, moveRange, objectControl
 
 # If a unit is in the same space as cursor, select it
 def attempt():
@@ -29,9 +29,6 @@ def do(unit):
 	# Display and store list of spaces unit can move to
 	moveRange.determine.do(unit)
 	moveRange.display.do()
-	
-	# Display basic info about unit
-	sceneControl.show('basicInfo')
 	
 	# Open unitMenu if unit acts this turn
 	if unitActsThisTurn(unit):
