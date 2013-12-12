@@ -45,7 +45,7 @@ def fromUnitSelected():
 	logic.globalDict['commandChoices'] = []
 	
 	# Clear movement range markers
-	marker.clear()
+	marker.clearMoveMarkers()
 	
 	sceneControl.hide('basicInfo')
 	
@@ -59,7 +59,7 @@ def fromUnitMoving():
 	moveCursorToActor()
 	
 	# NOTE(kgeffen) Clear because movement range markers added when unit is reselected
-	marker.clear()
+	marker.clearMoveMarkers()
 	
 	# NOTE(kgeffen) Cursor status must be 'selecting' to select a unit
 	logic.globalDict['cursor'] = 'selecting'
@@ -69,10 +69,6 @@ def fromUnitMoving():
 # Return cursor to actor, open commandSelect
 def fromUnitActing():
 	moveCursorToActor()
-	
-	# Clear all markers
-	marker.clear()
-	marker.clear('markerAoe')
 	
 	# Clear data about which spaces can be targetted
 	logic.globalDict['spaceTarget'] = []

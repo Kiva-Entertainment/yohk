@@ -4,12 +4,9 @@ from bge import logic
 
 from script import sceneControl, check, getPosition
 
-# The most common type of marker
-DEFAULT_MARKER = 'markerRange'
-
 # Add a given kind of marker at the given space
 # Does not check if space is in stage bounds
-def add(space, markerName = DEFAULT_MARKER):
+def add(space, markerName):
 	# If space is in bounds
 	if not check.outOfBounds(space):
 		position = getPosition.onGround(space)
@@ -22,13 +19,27 @@ def add(space, markerName = DEFAULT_MARKER):
 		obj.worldPosition = position
 
 # Removes all markers of a given kind
-# TODO(kgeffen) Every call to this wants all markers removed,
-# make a list of all marker names and clear all of them, not just the default marker
-def clear(markerName = DEFAULT_MARKER):
+def clear(markerName):
 	scene = sceneControl.get('battlefield')
 	
 	# NOTE(kgeffen) Not using objectControl because have to get multiple markers
 	for object in scene.objects:
 		if object.name == markerName:
 			object.endObject()
+
+
+# Remove all markers that display command range
+def clearCommandMarkers():
+	COMMAND_MARKERS = ['markerRange', 'markerAoe', 'markerEmpty']
+
+	for markerName in COMMAND_MARKERS:
+		clear(markerName)
+
+
+# Remove all markers that display movement range
+def clearMoveMarkers():
+	MOVE_MARKERS = ['markerMove']
+
+	for markerName in MOVE_MARKERS:
+		clear(markerName)
 

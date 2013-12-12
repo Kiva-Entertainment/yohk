@@ -6,23 +6,16 @@ from script import check, objectControl, marker
 # TODO(kgeffen) This script also displays spaces that need to be empty during command
 # which is only sort of aoe. Rename/split at next cleaning
 
-# TODO(kgeffen) This happens every tic, but only needs to happen
-# when cursor moves while selecting target
-# When speeding up game, make this script fire less often
 
 def attempt():
-	# TODO(kgeffen) cursor should have setting for command
-	# and specific command should be stored elsewhere
-	selectingCommand = logic.globalDict['cursor'] != 'wait' and \
-						logic.globalDict['cursor'] != 'move'
-	if selectingCommand:
-		do()
+	# TODO(kgeffen) This happens every tic, but only needs to happen
+	# when cursor moves while selecting target
+	# When speeding up game, make this script fire less often
+	do()
 
 def do():
 	# Clear markers
-	marker.clear()
-	marker.clear('markerEmpty')
-	marker.clear('markerAoe')
+	marker.clearCommandMarkers()
 
 	# Get spaces
 	rangeSpaces = getRangeSpaces()
@@ -43,7 +36,7 @@ def do():
 
 	for space in rangeSpaces:
 		if space not in coveredSpaces:
-			marker.add(space)
+			marker.add(space, 'markerRange')
 			coveredSpaces.append(space)
 
 # Return a list of all spaces that could be selected as target center for command

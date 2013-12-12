@@ -1,21 +1,20 @@
-# If space meets all requirements, mark it as within command range
-# by placing a marker on it
+# If space meets all requirements, store it in list of valid spaces that can be targeted
 # Also, make a list of all spaces within aoe that are effected, and all units on them
+# Called by range.py
 from bge import logic
 
-from script import check, unitControl, marker, getPosition
+from script import check, unitControl, getPosition
 
-# Mark space valid if it meets all requirements
+# Store space if it meets all requirements
 def attempt(actorPosition, targetSpace, rng):
 	# Space can be targetted by command
 	if spaceValid(actorPosition, targetSpace, rng):
 		
-		markTargetableSpace(actorPosition, targetSpace, rng)
+		storeTargetableSpace(actorPosition, targetSpace, rng)
 
-# If space is within range of command, add marker
 # If space has a unit in its range (Ex: Range = plus centered on space)
 # add that unit to validCommandTargets
-def markTargetableSpace(actorPosition, targetSpace, rng):
+def storeTargetableSpace(actorPosition, targetSpace, rng):
 	targetPosition = getPosition.onGround(targetSpace)
 	
 	# Get a list of all spaces within area of effect

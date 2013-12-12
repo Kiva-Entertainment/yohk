@@ -27,7 +27,7 @@ def move(cont):
 def skill(cont):
 	if cont.sensors['leftKey'].positive:
 		# Clear all movement range markers
-		marker.clear()
+		marker.clearMoveMarkers()
 		
 		# Hide the unit menu
 		menu = objectControl.getFromScene('unitMenu', 'battlefield')

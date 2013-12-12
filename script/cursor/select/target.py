@@ -1,6 +1,4 @@
 # Attempt to perform command on target cursor is selecting
-# Clear markers if command was performed
-from script import marker
 from script.command import perform
 
 def attempt():
@@ -9,8 +7,7 @@ def attempt():
 	success = perform.attempt()
 	
 	if success:
-		marker.clear()
-		marker.clear('markerAoe') # Clear any aoe markers
+		pass
 		#utility.playSound('attack')
 	
 	else:
