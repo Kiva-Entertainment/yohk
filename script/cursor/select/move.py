@@ -19,7 +19,7 @@ def do(position):
 	unit = logic.globalDict['actor']
 
 	# Remove markers which display unit's range of motion
-	marker.clear()
+	marker.clearMoveMarkers()
 	
 	unitControl.move.toSpace(unit, position)
 	adjustUnitStats(unit, position)

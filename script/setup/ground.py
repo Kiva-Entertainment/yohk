@@ -4,17 +4,20 @@ from bge import logic
 from script import objectControl
 
 GROUND_HEIGHT_FILENAME = 'groundHeight.txt'
+# TODO(kgeffen) Remove once stage selection has been enabled
+TEMP_STAGE_NAME = 'earth'
 
 # Setup the ground mesh and all ground vars
 def do():
-	filepath = logic.globalDict['stageFilepath']
+	# TODO(kgeffen) Remove once stage selection has been enabled
+	filepath = logic.expandPath('//stages/') + TEMP_STAGE_NAME + '/'
 	
 	setupGroundHeight(filepath)
 	setupMapDimensions()
 	
 	switchMapMesh(filepath)
 
-# Setup an array for the height of the ground of each space on the map
+# Setup an array containing the height of each space on ground
 # NOTE(kgeffen) At the moment, the groundHeight.txt has all of the data and is evaled
 def setupGroundHeight(filepath):
 	with open(filepath + GROUND_HEIGHT_FILENAME) as heightFile:

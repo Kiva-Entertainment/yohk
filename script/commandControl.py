@@ -9,8 +9,8 @@ def perform(commandName, actor, targets):
 	# multiple targets have the param "*targets" which recollects the expanded
 	# targets from this call
 	callMethodForCommand(commandName, 'perform', actor, *targets)
-def displayRange(commandName):
-	callMethodForCommand(commandName, 'displayRange')
+def determineRange(commandName):
+	callMethodForCommand(commandName, 'determineRange')
 def cost(commandName):
 	return callMethodForCommand(commandName, 'cost')
 def description(commandName):
@@ -22,7 +22,7 @@ def icon(commandName):
 
 # NOTE(kgeffen) This method is not called by any script besides the above
 # NOTE(kgeffen) The data for each command is stored in a standardized class
-# Each of those classes has identical methods like 'perform' 'displayRange' etc.
+# Each of those classes has identical methods like 'perform' 'determineRange' etc.
 # Call a method (ex: perform) for a given command
 def callMethodForCommand(commandName, methodName, *arguments):
 	# The class that contains the method to perform the given command

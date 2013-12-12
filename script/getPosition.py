@@ -32,4 +32,4 @@ def onMap(position):
 	elif logic.globalDict['yLength'] <= y:
 		position[1] = 0
 	
-	return position
+	return onGround(position)

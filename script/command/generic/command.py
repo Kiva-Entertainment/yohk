@@ -30,6 +30,12 @@ def standardAttack(target, factors):
 	
 	return damage
 
+def regen(unit):
+	dSp = unit['regen']/100 * unit['spirit']
+	dSp = round(dSp)
+
+	raiseStat(unit, 'sp', dSp)
+
 'Basic results of commands'
 # Raise one of unit's stats by an amount
 def raiseStat(unit, stat, amount):
@@ -48,6 +54,8 @@ def scaleStat(unit, stat, factor):
 	amount = v2 - v1
 	storeResult.statChange(stat, amount, unit)
 
+	return amount
+
 'Movement'
 def move(unit):
 	# First special space
@@ -57,7 +65,7 @@ def move(unit):
 	
 	
 
-'Other'
+'Checks'
 # Determine if command hits
 # If command misses, store 'miss' in commandResults
 def hitCheck(target, factors):
@@ -77,6 +85,12 @@ def hitCheck(target, factors):
 	
 	return hit
 
+# Return true 50% of the time
+def coinFlip():
+	return random.random() < 0.5
+
+
+'Other'
 # Create the given objects
 # Objects are added based on special spaces, in order
 def addObjects(*units):

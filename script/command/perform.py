@@ -19,7 +19,7 @@ def attempt():
 		
 		# Store effected special spaces in 'commandSpecialSpaces'
 		storeSpecialSpaces(cursorPosition)
-
+		
 		do(actor, targets, command)
 
 		# Indicate that command was performed

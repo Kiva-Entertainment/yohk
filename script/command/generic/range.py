@@ -1,7 +1,8 @@
-# Common types of range for commands (Ex: cardinal)
+# Common types of range for commands
 # Called by commands.py
 from bge import logic
-from script.command import markSpaceValid
+
+from script.command import storeValidSpace
 from script import getPosition
 
 # Range is free - It is not bound by actor's rotation
@@ -16,7 +17,7 @@ def free(rng):
 		targetY = actorPosition[1] + targetOffset[1]
 		targetSpace = [targetX, targetY]
 
-		markSpaceValid.attempt(actorPosition, targetSpace, rng)
+		storeValidSpace.attempt(actorPosition, targetSpace, rng)
 
 # Range is rigid - It rotates in each of 4 cardinal directions
 # Ex: Large sword slash which hits units up to 3 spaces away in line from actor
@@ -40,7 +41,7 @@ def rigid(rng):
 			targetY = actorPosition[1] + targetOffset[1] + dv[1]
 			targetSpace = [targetX, targetY]
 
-			markSpaceValid.attempt(actorPosition, targetSpace, rng)
+			storeValidSpace.attempt(actorPosition, targetSpace, rng)
 
 'Utilities'
 # Rotate each space in command's range (aoe, specials, range) by 90

@@ -1,10 +1,7 @@
 # Select command from list of commands
 from bge import logic
 
-from script import sceneControl, commandControl, objectControl
-
-# Message sent to battlefield that causes range to display
-MESSAGE_TO_BATTLEFIELD = 'displayCommandRange'
+from script import sceneControl, commandControl
 
 def attempt(cont):
 	if cont.sensors['spaceKey'].positive:
@@ -39,11 +36,11 @@ def getSelectedCommand():
 def selectCommand(command):
 	logic.globalDict['cursor'] = command
 	
+	commandControl.determineRange(command)
+
 	sceneControl.resume('battlefield')
 	sceneControl.show('battlefieldOverlay')
 	sceneControl.hide('commandSelect')
-	
-	sendMessageToBattlefield(MESSAGE_TO_BATTLEFIELD)
 
 def commandIsAllowed(command):
 	unit = logic.globalDict['actor']
@@ -58,9 +55,3 @@ def commandIsAllowed(command):
 		return False
 	
 	return True
-
-def sendMessageToBattlefield(message):
-	# Sender must be in same scene (battlefield) as receiver of message
-	# Sender object is arbitrarily 'ground'
-	object = objectControl.getFromScene('ground', 'battlefield')
-	object.sendMessage(message)
