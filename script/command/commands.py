@@ -1647,7 +1647,7 @@ class focus:
 'Food'
 class eatMeat:
 	def perform(actor, target):
-		generic.command.raiseStat(actor, 'hp', 50)
+		generic.command.raiseStat(actor, 'hp', 100)
 		generic.command.raiseStat(actor, 'strength', 5)
 	
 	def determineRange():
@@ -1667,7 +1667,7 @@ class eatMeat:
 		return 'I_C_Meat.png'
 class eatPie:
 	def perform(actor, target):
-		generic.command.raiseStat(actor, 'hp', 50)
+		generic.command.raiseStat(actor, 'hp', 100)
 		generic.command.raiseStat(actor, 'mv', 1)
 	
 	def determineRange():
@@ -1687,7 +1687,7 @@ class eatPie:
 		return 'I_C_Pie.png'
 class eatCarrot:
 	def perform(actor, target):
-		generic.command.raiseStat(actor, 'hp', 50)
+		generic.command.raiseStat(actor, 'hp', 100)
 		generic.command.raiseStat(actor, 'focus', 5)
 	
 	def determineRange():
@@ -1705,6 +1705,32 @@ class eatCarrot:
 	
 	def icon():
 		return 'I_C_Carrot.png'
+
+'Other'
+class firstAid:
+	def perform(actor, *targets):
+		for target in targets:
+			generic.command.raiseStat(target, 'hp', 50)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['aoe'] = generic.shapes.flatLine(1)
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('IDK bandages and kisses.')
+	
+	def name():
+		return 'First Aid'
+	
+	def icon():
+		return 'I_Antidote.png'
+
 
 class strategize:
 	def perform(actor, *targets):
