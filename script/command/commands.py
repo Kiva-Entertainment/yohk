@@ -390,7 +390,6 @@ class reignOfBlades:
 
 'Spear'
 class thrust:
-	# The most basic attack
 	def perform(actor, target):
 		factors = generic.commandFactors.spear(actor, target)
 		
@@ -399,26 +398,140 @@ class thrust:
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.spear()
-		generic.range.rigid(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
 		return 0
 	
 	def description():
-		return 'Basic spear attack.'
+		return ('Basic spear attack.')
 	
 	def name():
 		return 'Thrust'
 	
 	def icon():
 		return 'W_Spear_001.png'
-class sharpRain:
+class lightningJavelin:
+	def perform(actor, target):
+		factors = generic.commandFactors.spear(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			# Attack
+			generic.command.standardAttack(target, factors)
+
+			# Raise user's act by 1
+			generic.command.raiseStat(actor, 'act', 1)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.spear()
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 20
+	
+	def description():
+		return ('Basic spear attack.')
+	
+	def name():
+		return 'Lightning Javelin'
+	
+	def icon():
+		return 'W_Spear_016.png'
+class frostSkewer:
+	def perform(actor, target):
+		factors = generic.commandFactors.spear(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			# Attack
+			generic.command.standardAttack(target, factors)
+
+			# Lower target's mv by 1
+			generic.command.raiseStat(target, 'mv', -1)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.spear()
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 10
+	
+	def description():
+		return ('Basic spear attack.')
+	
+	def name():
+		return 'Frost Skewer'
+	
+	def icon():
+		return 'W_Spear_015.png'
+class beesting:
+	def perform(actor, target):
+		factors = generic.commandFactors.spear(actor, target)
+		
+		factors['force'] *= 0.6
+		factors['force'] *= 1.5
+
+		if generic.command.hitCheck(target, factors):
+			# Attack
+			generic.command.standardAttack(target, factors)
+
+			# Lower target's defensive stats
+			generic.command.raiseStat(target, 'toughness', -10)
+			generic.command.raiseStat(target, 'willpower', -10)
+			generic.command.raiseStat(target, 'agility', -10)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.spear()
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 25
+	
+	def description():
+		return ('Lower attack than normal, but lowers defensive stats.')
+	
+	def name():
+		return 'Beesting'
+	
+	def icon():
+		return 'W_Spear_017.png'
+
+class guilltineSpiral:
 	def perform(actor, *targets):
 		for target in targets:
 			factors = generic.commandFactors.spear(actor, target)
 			
-			factors['accuracy'] *= 1.2
-			factors['force'] *= 1.2
+			factors['force'] *= 1.3
+			factors['accuracy'] *= 1.3
+
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
+	
+	def determineRange(): 
+		commandRange = generic.rangeFactors.spear()
+
+		commandRange['range'] = generic.shapes.single()
+		commandRange['aoe'] = generic.shapes.ring(2)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 29
+	
+	def description():
+		return ('Basic spear attack.')
+	
+	def name():
+		return 'Guilltine Spiral'
+	
+	def icon():
+		return 'W_Spear_008.png'
+class fallingComet:
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.spear(actor, target)
+			
+			factors['force'] = 1.6
+			factors['accuracy'] = 1.6
 
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
@@ -426,50 +539,26 @@ class sharpRain:
 	def determineRange():
 		commandRange = generic.rangeFactors.spear()
 
-		commandRange['range'] = generic.shapes.ring(2)
+		commandRange['range'] = [[0, 1]]
+
+		length = 3
+		commandRange['aoe'] = generic.shapes.line(length)
+
+		commandRange['specialSpaces'] = [[0, length]]
 
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 16
+		return 83
 	
 	def description():
-		return 'TODO.'
+		return ('Basic spear attack.')
 	
 	def name():
-		return 'Sharp Rain'
+		return 'Falling Comet'
 	
 	def icon():
-		return 'W_Spear_009.png'
-class shredLines:
-	def perform(actor, *targets):
-		for target in targets:
-			factors = generic.commandFactors.spear(actor, target)
-			
-			factors['accuracy'] *= 1.6
-			factors['force'] *= 1.4
-
-			if generic.command.hitCheck(target, factors):
-				generic.command.standardAttack(target, factors)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.spear()
-
-		commandRange['range'] = generic.shapes.cross(3, 1)
-
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return 56
-	
-	def description():
-		return 'TODO.'
-	
-	def name():
-		return 'Shred Lines'
-	
-	def icon():
-		return 'W_Spear_011.png'
+		return 'W_Spear_014.png'
 
 
 'Axe'

@@ -50,7 +50,7 @@
 'inactive' :
 [
 	{	'model' : 'soldier',
-		'name' : 'Shino, Blood Dancer',
+		'name' : 'Resh, Blood Dancer',
 		'align' : 'martialLegion',
 		'health' : 1100,
 		'hp' : 1100,
@@ -74,7 +74,7 @@
 						['dash', 'dualSharpen', 'eatPie']]
 	},
 	{ 	'model' : 'soldier',
-		'name' : 'Ao, Ashes of Glory',
+		'name' : 'Ao the Glorious',
 		'align' : 'martialLegion',
 		'health' : 1100,
 		'hp' : 1100,
@@ -117,8 +117,8 @@
 		'speed' : 24,
 		'jump' : 12,
 		'regen' : 5,
-		'commands' : 	[['thrust', 'sharpRain', 'shredLines'],
-						[],
+		'commands' : 	[['thrust', 'guilltineSpiral', 'fallingComet'],
+						['lightningJavelin', 'frostSkewer', 'beesting'],
 						['focus', 'strategize', 'eatCarrot']]
 	},
 	{	'model' : 'devoted',
