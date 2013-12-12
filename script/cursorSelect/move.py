@@ -2,7 +2,7 @@
 from bge import logic
 
 from script import check, objectControl, marker, unitControl
-from script.cursor.select import unit as selectUnit
+from script.cursorSelect import unit as selectUnit
 
 def attempt():
 	cursor = objectControl.getFromScene('cursor', 'battlefield')

@@ -2,7 +2,7 @@
 # Ex: Command target, space to move to, unit to inspect/act
 from bge import logic
 
-from script.cursor import select
+from script import cursorSelect
 
 def attempt(cont):
 	spaceKey = cont.sensors['spaceKey'].positive
@@ -16,11 +16,11 @@ def do():
 	status = logic.globalDict['cursor']
 	
 	if status == 'selecting':
-		select.unit.attempt()
+		cursorSelect.unit.attempt()
 	
 	elif status == 'move':
-		select.move.attempt()
+		cursorSelect.move.attempt()
 		
 	elif status != 'wait':
 		# Selecting the target for a command
-		select.target.attempt()
+		cursorSelect.target.attempt()

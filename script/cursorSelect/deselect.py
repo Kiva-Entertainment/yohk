@@ -4,7 +4,7 @@
 from bge import logic
 
 from script import sceneControl, marker, objectControl, getPosition
-from script.cursor.select import select
+from script.cursorSelect import select
 
 def attempt(cont):
 	# NOTE(kgeffen) sensor 'xKey' belongs to timeControl
