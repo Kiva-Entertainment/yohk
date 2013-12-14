@@ -1453,18 +1453,20 @@ class icePrison:
 	def icon():
 		return 'S_Ice_07.png'
 
-class bubble:
-	def perform(actor):
-		# Basic ice object
-		unit = generic.objects.bubble()
-		unit['align'] = actor['align']
-		
-		generic.command.addObjects(unit)
+class liquip:
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.magic(actor, target)
+			
+			factors['force'] *= 0.9
+			
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
 
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
-		commandRange['specialSpaces'] = generic.shapes.single()
+		commandRange['aoe'] = generic.shapes.line(2)
 
 		generic.range.rigid(commandRange)
 	
@@ -1472,13 +1474,13 @@ class bubble:
 		return 0
 	
 	def description():
-		return ('Make an exploding bubble.')
+		return ('Not super powerful.')
 	
 	def name():
-		return 'Bubble'
+		return 'Liquip'
 	
 	def icon():
-		return 'S_Water_07.png'
+		return 'S_Water_06.png'
 class waterSpout:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
@@ -1536,6 +1538,61 @@ class greatWave:
 	
 	def icon():
 		return 'S_Water_03.png'
+class typhoon:
+	def perform(actor, target):
+		# Raise mv
+		amount = generic.extentInfluence.polynomial(1, 1)
+		generic.command.raiseStat(target, 'mv', amount)
+
+		# Raise act
+		generic.command.raiseStat(target, 'act', 1)		
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['range'] = generic.shapes.diamond(1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(20, 20)
+	
+	def description():
+		return ('Required to move quickly.')
+	
+	def name():
+		return 'Typhoon'
+	
+	def icon():
+		return 'S_Water_05.png'
+
+# TODO(kgeffen) Add dying triggers and make bubbles burst when killed
+class bubble:
+	def perform(actor):
+		# Basic ice object
+		unit = generic.objects.bubble()
+		unit['align'] = actor['align']
+		
+		generic.command.addObjects(unit)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['specialSpaces'] = generic.shapes.single()
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Make an exploding bubble.')
+	
+	def name():
+		return 'Bubble'
+	
+	def icon():
+		return 'S_Water_07.png'
 
 
 
@@ -1866,6 +1923,26 @@ class eatCarrot:
 	
 	def icon():
 		return 'I_C_Carrot.png'
+class eatFish:
+	def perform(actor, target):
+		generic.command.raiseStat(actor, 'hp', 100)
+		generic.command.raiseStat(actor, 'intelligence', 5)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.self()
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Makes you brainy.')
+	
+	def name():
+		return 'Eat Fish'
+	
+	def icon():
+		return 'I_C_RawFish.png'
 
 'Other'
 class firstAid:

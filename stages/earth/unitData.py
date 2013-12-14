@@ -166,8 +166,8 @@
 		'jump' : 10,
 		'regen' : 10,
 		'commands' : 	[['iceShard', 'iceShrapnel', 'crystallineCluster'],
-						['bubble', 'waterSpout', 'greatWave'],
-						['blazeCloak', 'study', 'bloodRitual']]
+						['liquip', 'waterSpout', 'greatWave'],
+						['study', 'typhoon', 'eatFish']]
 	},
 	{	'model' : 'devoted',
 		'name' : 'Ezra, flickering being',
@@ -214,7 +214,7 @@
 		'jump' : 10,
 		'regen' : 10,
 		'commands' : 	[['psiStrike', 'mudshot', 'earthGrip'],
-						['stunBeam', 'stoneGarden', 'icePrison'],
+						['stunBeam', 'stoneGarden', 'icePrison', 'crystallineCluster'],
 						['study', 'stoneArmor', 'emogen']]
 	}
 ]
