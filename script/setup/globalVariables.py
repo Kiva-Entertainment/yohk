@@ -20,3 +20,7 @@ def do():
 	logic.globalDict['commandResults'] = []
 	logic.globalDict['commandSpecialSpaces'] = []
 	logic.globalDict['extent'] = 0
+	# List of all moves since last turn change/action
+	# Entries in the form:
+	# {'unit' : unit, 'start' : starting_space, 'mv' : mv_before_move_performed}
+	logic.globalDict['moveLog'] = []

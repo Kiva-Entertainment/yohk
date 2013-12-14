@@ -3,7 +3,7 @@
 # Ex: Context could be deselecting from selecting command target
 from bge import logic
 
-from script import sceneControl, marker, objectControl, getPosition
+from script import sceneControl, marker, objectControl, getPosition, undoMove
 from script.cursorSelect import select
 
 def attempt(cont):
@@ -28,13 +28,18 @@ def do():
 		fromUnitMoving()
 	
 	elif status == 'selecting':
-		# Selecting a unit
-		pass
+		# Cursor does not have a unit selected
+		fromSelectingUnit()
 	
 	else:
 		# Selecting command target
 		fromUnitActing()
 
+
+# <No unit is selected, cursor is searching for unit to selected
+# Undo the last move made
+def fromSelectingUnit():
+	undoMove.attempt()
 
 # <Unit is selected and unit menu is open
 # Return to selecting a unit (Close unit menu)
