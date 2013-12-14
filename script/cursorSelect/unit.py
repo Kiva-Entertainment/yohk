@@ -1,23 +1,22 @@
-# Select the unit that cursor is on, if any
-# Display it's basic info and move range
-# If it acts this turn, display unit menu
+# Select the unit that cursor is on if that unit acts currently
+# Display its move range and unit menu
 from bge import logic
 
 from script import check, moveRange, objectControl
 
-# If a unit is in the same space as cursor, select it
 def attempt():
 	cursor = objectControl.getFromScene('cursor', 'battlefield')
 	cursorPosition = cursor.worldPosition
 	
-	# Check each unit, if its position matches cursor position, select that unit
-	# TODO(kgeffen) Unit lookup should be standardized and more intuitive
+	# Check each unit, if its position matches cursor position,
+	# and it acts this turn, select that unit
 	for unit in logic.globalDict['units']:
-		unitPosition = unit['position']
 		
-		if check.eq2D(cursorPosition, unitPosition):
-			do(unit)
-			break
+		if check.eq2D(cursorPosition, unit['position']):
+			if unitActsThisTurn(unit):
+
+				do(unit)
+				break
 
 def do(unit):
 	# While unit is selected, unitMenu is in control, and cursor is waiting
@@ -30,12 +29,11 @@ def do(unit):
 	moveRange.determine.do(unit)
 	moveRange.display.do()
 	
-	# Open unitMenu if unit acts this turn
-	if unitActsThisTurn(unit):
-		displayMenu()
+	# Open unitMenu
+	displayMenu()
 
 
-# If unit acts on the current turn
+# Return true if unit acts this turn in first group (Turns seperated into groups by alignment)
 def unitActsThisTurn(unit):
 	currentActors = logic.globalDict['time'][0][0]
 	

@@ -1347,8 +1347,82 @@ class earthGrip:
 	def icon():
 		return 'S_Earth_02.png'
 
-
 'Water'
+class iceShard:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Pretty basic.')
+	
+	def name():
+		return 'Ice Shard'
+	
+	def icon():
+		return 'S_Ice_03.png'
+class iceShrapnel:
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.magic(actor, target)
+			
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['aoe'] = [[0,0], [1,0], [0,1], [-1,0]]
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 20
+	
+	def description():
+		return ('Pretty basic.')
+	
+	def name():
+		return 'Ice Shrapnel'
+	
+	def icon():
+		return 'S_Ice_04.png'
+class crystallineCluster:
+	def perform(actor):
+		# Basic ice object
+		unit = generic.objects.ice()
+		unit['align'] = actor['align']
+		
+		generic.command.addObjects(unit)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['specialSpaces'] = generic.shapes.single()
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 100
+	
+	def description():
+		return ('Make an ice crystal.')
+	
+	def name():
+		return 'Crystalline Cluster'
+	
+	def icon():
+		return 'S_Ice_01.png'
 class icePrison:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
@@ -1378,6 +1452,92 @@ class icePrison:
 	
 	def icon():
 		return 'S_Ice_07.png'
+
+class bubble:
+	def perform(actor):
+		# Basic ice object
+		unit = generic.objects.bubble()
+		unit['align'] = actor['align']
+		
+		generic.command.addObjects(unit)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['specialSpaces'] = generic.shapes.single()
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Make an exploding bubble.')
+	
+	def name():
+		return 'Bubble'
+	
+	def icon():
+		return 'S_Water_07.png'
+class waterSpout:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		factors['force'] *= 1.4
+		factors['accuracy'] *= 1.4
+		
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['range'] = generic.shapes.diamond(3, 1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 60
+	
+	def description():
+		return ('Pretty basic.')
+	
+	def name():
+		return 'Water Spout'
+	
+	def icon():
+		return 'S_Water_04.png'
+class greatWave:
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.magic(actor, target)
+			
+			factors['force'] *= 1.9
+			factors['accuracy'] *= 1.9
+
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['aoe'] = generic.shapes.diamond(3, 1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 175
+	
+	def description():
+		return ('Pretty basic.')
+	
+	def name():
+		return 'Great Wave'
+	
+	def icon():
+		return 'S_Water_03.png'
+
+
 
 
 'Other'
@@ -1935,5 +2095,31 @@ class deploy:
 				pair = {'value' : unit,
 						'display' : unit['name']}
 				choices.append(pair)
+class burst:
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.magic(actor, target)
+
+			# Deal damage - Attack always hits
+			generic.command.standardAttack(target, factors)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['aoe'] = generic.shapes.diamond(1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('POP!')
+	
+	def name():
+		return 'Burst'
+	
+	def icon():
+		return 'S_Water_07.png'
 
 

@@ -73,3 +73,55 @@ def flame():
 		'regen' : 25,
 		'commands' : [['pinpointHeat', 'flameBarrage', 'livingFlame']]
 		}
+
+
+def ice():
+	return {
+		'model' : 'ice',
+		'name' : 'Ice',
+		'align' : 'neutral',
+		'health' : 300,
+		'hp' : 300,
+		'spirit' : 200,
+		'sp' : 50,
+		'move' : 0,
+		'mv' : 0,
+		'actions' : 1,
+		'act' : 1,
+		'strength' : 100,
+		'intelligence' : 100,
+		'toughness' : 100,
+		'willpower' : 100,
+		'focus' : 100,
+		'agility' : 0,
+		'speed' : 20,
+		'jump' : 0,
+		'regen' : 13,
+		'commands' : [['iceShard', 'iceShrapnel', 'crystallineCluster']]
+		}
+
+def bubble():
+	return {
+		'model' : 'bubble',
+		'name' : 'Bubble',
+		'align' : 'neutral',
+		'health' : 1,
+		'hp' : 1,
+		'spirit' : 0,
+		'sp' : 0,
+		'move' : 0,
+		'mv' : 0,
+		'actions' : 1,
+		'act' : 1,
+		'strength' : 150,
+		'intelligence' : 150,
+		'toughness' : 0,
+		'willpower' : 0,
+		'focus' : 100,
+		'agility' : 0,
+		'speed' : 1,
+		'jump' : 0,
+		'regen' : 0,
+		'commands' : [['burst']]
+		}
+
