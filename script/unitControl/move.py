@@ -3,7 +3,6 @@ from script import getPosition
 from script.unitControl import object as unitObject
 
 # Move given unit's object to given space
-# In most situations, store the move in globalDict
 def toSpace(unit, space):
 	# Move object
 	# NOTE(kgeffen) This has to happen first because objects gotten based on position

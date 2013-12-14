@@ -22,7 +22,7 @@ def do(position):
 	marker.clearMoveMarkers()
 	
 	# Store move in undoList
-	# NOTE(kgeffen) Mus happen before stats are adjusted (particularly mv)
+	# NOTE(kgeffen) Must happen before stats are adjusted (particularly mv)
 	storeMove(unit)
 
 	unitControl.move.toSpace(unit, position)
