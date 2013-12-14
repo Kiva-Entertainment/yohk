@@ -97,7 +97,7 @@ def ice():
 		'speed' : 20,
 		'jump' : 0,
 		'regen' : 13,
-		'commands' : [['iceShard', 'iceShrapnel', 'crystallineCluster']]
+		'commands' : [['iceShard', 'iceShrapnel', 'icePrison', 'crystallineCluster']]
 		}
 
 def bubble():

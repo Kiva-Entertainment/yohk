@@ -27,6 +27,9 @@ def do():
 
 	churnUntilTurnWithActor(time)
 
+	# Reset log of unit movement
+	logic.globalDict['moveLog'] = []
+
 	displayTurnOrder.do()
 
 

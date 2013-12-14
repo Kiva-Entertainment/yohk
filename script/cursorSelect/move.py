@@ -21,12 +21,27 @@ def do(position):
 	# Remove markers which display unit's range of motion
 	marker.clearMoveMarkers()
 	
+	# Store move in undoList
+	# NOTE(kgeffen) Must happen before stats are adjusted (particularly mv)
+	storeMove(unit)
+
 	unitControl.move.toSpace(unit, position)
 	adjustUnitStats(unit, position)
 	
 	# Select current unit again
 	selectUnit.attempt()
 
+
+# Store the move that is occuring in globalDict 'moveList'
+def storeMove(unit):
+	start = unit['position']
+	mv = unit['mv']
+
+	move = {'unit' : unit,
+			'start' : start,
+			'mv' : mv}
+
+	logic.globalDict['moveLog'].append(move)
 
 # True if validMove dictionary has a move with same space as 'position'
 def moveAllowed(position):

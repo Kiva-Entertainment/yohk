@@ -8,6 +8,9 @@ from script.time import displayTurnOrder
 DISPLAY_COMMAND_RESULTS_MESSAGE = 'displayCommandResults'
 
 def do():
+	# Clear list of previous unit movement
+	logic.globalDict['moveLog'] = []
+
 	# Clear list of spaces that command can target
 	logic.globalDict['spaceTarget'] = []
 	
