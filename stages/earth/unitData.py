@@ -192,30 +192,6 @@
 		'commands' : 	[['psiStrike', 'mudshot', 'earthGrip'],
 						['stunBeam', 'stoneGarden', 'icePrison'],
 						['study', 'stoneArmor', 'emogen']]
-	},
-	{	'model' : 'devoted',
-		'name' : 'Lish, Sorrowmancer',
-		'align' : 'solarServants',
-		'health' : 800,
-		'hp' : 800,
-		'spirit' : 500,
-		'sp' : 0,
-		'move' : 4,
-		'mv' : 4,
-		'actions' : 1,
-		'act' : 1,
-		'strength' : 40,
-		'intelligence' : 120,
-		'toughness' : 60,
-		'willpower' : 120,
-		'focus' : 110,
-		'agility' : 90,
-		'speed' : 41,
-		'jump' : 10,
-		'regen' : 10,
-		'commands' : 	[['psiStrike', 'mudshot', 'aeroImpact'],
-						['earthGrip', 'icePrison'],
-						['study', 'stoneArmor', 'emogen']]
 	}
 ]
 }

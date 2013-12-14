@@ -411,32 +411,6 @@ class thrust:
 	
 	def icon():
 		return 'W_Spear_001.png'
-class lightningJavelin:
-	def perform(actor, target):
-		factors = generic.commandFactors.spear(actor, target)
-		
-		if generic.command.hitCheck(target, factors):
-			# Attack
-			generic.command.standardAttack(target, factors)
-
-			# Raise user's act by 1
-			generic.command.raiseStat(actor, 'act', 1)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.spear()
-		generic.range.free(commandRange)
-	
-	def cost():
-		return 20
-	
-	def description():
-		return ('Basic spear attack.')
-	
-	def name():
-		return 'Lightning Javelin'
-	
-	def icon():
-		return 'W_Spear_016.png'
 class frostSkewer:
 	def perform(actor, target):
 		factors = generic.commandFactors.spear(actor, target)
@@ -463,6 +437,32 @@ class frostSkewer:
 	
 	def icon():
 		return 'W_Spear_015.png'
+class lightningJavelin:
+	def perform(actor, target):
+		factors = generic.commandFactors.spear(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			# Attack
+			generic.command.standardAttack(target, factors)
+
+			# Raise user's act by 1
+			generic.command.raiseStat(actor, 'act', 1)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.spear()
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 28
+	
+	def description():
+		return ('Basic spear attack.')
+	
+	def name():
+		return 'Lightning Javelin'
+	
+	def icon():
+		return 'W_Spear_016.png'
 class beesting:
 	def perform(actor, target):
 		factors = generic.commandFactors.spear(actor, target)
@@ -484,7 +484,7 @@ class beesting:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 25
+		return 45
 	
 	def description():
 		return ('Lower attack than normal, but lowers defensive stats.')
@@ -494,7 +494,6 @@ class beesting:
 	
 	def icon():
 		return 'W_Spear_017.png'
-
 class guilltineSpiral:
 	def perform(actor, *targets):
 		for target in targets:
@@ -1290,8 +1289,10 @@ class stoneGarden:
 		return 'S_Earth_04.png'
 class stoneArmor:
 	def perform(actor, target):
-		amount = generic.extentInfluence.polynomial(10, 4)
-		generic.command.raiseStat(target, 'toughness', 10)
+		amount = generic.extentInfluence.polynomial(8, 5)
+
+		# Raise toughness by amount
+		generic.command.raiseStat(target, 'toughness', amount)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
@@ -1301,7 +1302,7 @@ class stoneArmor:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(20, 5, 4)
+		return generic.extentInfluence.polynomial(0, 5, 2)
 	
 	def description():
 		return ('Cloak a nearby unit in tough stone.\n\n'
