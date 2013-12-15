@@ -116,13 +116,12 @@ class doubleSlash:
 		commandRange = generic.rangeFactors.sword()
 		
 		# Empty spaces
-		# TODO(kgeffen) Make generic for this
-		commandRange['specialSpaces'] = [[1,1],[-1,1],[-1,-1],[1,-1]]
+		commandRange['specialSpaces'] = generic.shapes.x(1, 1)
 		
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 32
+		return 20
 	
 	def description():
 		return ('Slash an adjacent unit twice, because slashing once just isn\'t enough.\n\n'
@@ -558,6 +557,7 @@ class fallingComet:
 	
 	def icon():
 		return 'W_Spear_014.png'
+
 
 
 'Axe'
@@ -1302,7 +1302,7 @@ class stoneArmor:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(0, 5, 2)
+		return generic.extentInfluence.polynomial(0, 14, 7)
 	
 	def description():
 		return ('Cloak a nearby unit in tough stone.\n\n'
@@ -1565,6 +1565,49 @@ class typhoon:
 	
 	def icon():
 		return 'S_Water_05.png'
+
+'Shadow'
+class toxins:
+	def perform(actor, *targets):
+		choice = logic.globalDict['commandChoices'][0]['value']
+		loweredStat = choice
+
+		for target in targets:
+			factors = generic.commandFactors.magic(actor, target)
+			
+			if generic.command.hitCheck(target, factors):
+				# Lower unit's given stat
+				generic.command.raiseStat(target, loweredStat, -10)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['aoe'] = generic.shapes.diamond(2, 1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Lower one of several stats.')
+	
+	def name():
+		return 'Toxins'
+	
+	def icon():
+		return 'S_Poison_01.png'
+
+	def determineChoices():
+		choices = logic.globalDict['commandChoices']
+
+		for stat in ['strength', 'intelligence', 'toughness', 'willpower', 'accuracy', 'agility']:
+				
+			pair = {'value' : stat,
+					'display' : stat.capitalize()}
+
+			choices.append(pair)
+
 
 # TODO(kgeffen) Add dying triggers and make bubbles burst when killed
 class bubble:

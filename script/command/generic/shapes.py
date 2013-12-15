@@ -60,6 +60,20 @@ def cross(length, offset = 0):
 	
 	return spaces
 
+# Two diagonal lines crossing in an X
+# Each line extends _length_ space in each direction from center space
+# Ex: length = 1 describes an x with 5 spaces
+# If _offset_ is provided, exclude that many spaces in each direction
+def x(length, offset = 0):
+	spaces = []
+	
+	# Describes space in rings of radius r
+	for r in range(offset, length + 1):
+		for space in [[r,r], [r,-r], [-r,r], [-r,-r]]:
+			spaces.append(space)
+	
+	return spaces
+
 # Straight line going out from center _length_ spaces
 # If _offset_ is provided, put that many empty spaces before the line begins
 def line(length, offset = 0):

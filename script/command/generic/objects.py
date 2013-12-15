@@ -42,7 +42,7 @@ def bird():
 		'toughness' : 20,
 		'willpower' : 20,
 		'focus' : 0,
-		'agility' : 30,
+		'agility' : 0,
 		'speed' : 30,
 		'jump' : 100,
 		'regen' : 0,
@@ -68,7 +68,7 @@ def flame():
 		'willpower' : 0,
 		'focus' : 100,
 		'agility' : 0,
-		'speed' : 30,
+		'speed' : 20,
 		'jump' : 0,
 		'regen' : 25,
 		'commands' : [['pinpointHeat', 'flameBarrage', 'livingFlame']]
