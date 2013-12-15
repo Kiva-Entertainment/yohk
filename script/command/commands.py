@@ -33,6 +33,9 @@ class slash:
 	
 	def icon():
 		return 'W_Sword_001.png'
+
+	def tags():
+		return ['targets']
 class gloryStrike:
 	# Hit adjacent unit, raise user's strength
 	def perform(actor, target):
@@ -62,6 +65,9 @@ class gloryStrike:
 	
 	def icon():
 		return 'S_Sword_06.png'
+
+	def tags():
+		return ['targets']
 class predatorsDescent:
 	# Move actor forward to space in front of unit in sightline, attack that unit
 	# Important counter to mudshot/aeroblast
@@ -102,6 +108,9 @@ class predatorsDescent:
 	
 	def icon():
 		return 'W_Sword_009.png'
+
+	def tags():
+		return ['targets']
 class doubleSlash:
 	# Powerful sword skill that relies on open space around target
 	# Most classes can't use it every turn
@@ -132,6 +141,9 @@ class doubleSlash:
 	
 	def icon():
 		return 'W_Sword_013.png'
+
+	def tags():
+		return ['targets']
 class ribbonDash:
 	def perform(actor, *targets):
 		for target in targets:
@@ -168,6 +180,9 @@ class ribbonDash:
 	
 	def icon():
 		return 'W_Sword_004.png'
+
+	def tags():
+		return ['targets']
 class frontlineSlash:
 	def perform(actor, *targets):
 		for target in targets:
@@ -195,6 +210,9 @@ class frontlineSlash:
 	
 	def icon():
 		return 'W_Sword_007.png'
+
+	def tags():
+		return ['targets']
 class ebber:
 	def perform(actor, target):
 		factors = generic.commandFactors.sword(actor, target)
@@ -230,6 +248,9 @@ class ebber:
 	
 	def icon():
 		return 'S_Sword_09.png'
+
+	def tags():
+		return ['targets']
 class cleave:
 	# Basic powerful attack
 	def perform(actor, target):
@@ -257,6 +278,9 @@ class cleave:
 	
 	def icon():
 		return 'W_Sword_011.png'
+
+	def tags():
+		return ['targets']
 class stormsEye:
 	def perform(actor, *targets):
 		for target in targets:
@@ -291,6 +315,9 @@ class stormsEye:
 	
 	def icon():
 		return 'W_Sword_021.png'
+
+	def tags():
+		return ['targets']
 class grandCross:
 	def perform(actor, *targets):
 		for target in targets:
@@ -320,6 +347,9 @@ class grandCross:
 	
 	def icon():
 		return 'S_Sword_03.png'
+
+	def tags():
+		return ['targets']
 class hugeSlash:
 	def perform(actor, *targets):
 		for target in targets:
@@ -348,6 +378,9 @@ class hugeSlash:
 	
 	def icon():
 		return 'W_Sword_006.png'
+
+	def tags():
+		return ['targets']
 class reignOfBlades:
 	# The most basic attack
 	def perform(actor, *targets):
@@ -386,6 +419,9 @@ class reignOfBlades:
 	def icon():
 		return 'W_Sword_003.png'
 
+	def tags():
+		return ['targets']
+
 
 'Spear'
 class thrust:
@@ -410,6 +446,9 @@ class thrust:
 	
 	def icon():
 		return 'W_Spear_001.png'
+
+	def tags():
+		return ['targets']
 class frostSkewer:
 	def perform(actor, target):
 		factors = generic.commandFactors.spear(actor, target)
@@ -436,6 +475,9 @@ class frostSkewer:
 	
 	def icon():
 		return 'W_Spear_015.png'
+
+	def tags():
+		return ['targets']
 class lightningJavelin:
 	def perform(actor, target):
 		factors = generic.commandFactors.spear(actor, target)
@@ -462,6 +504,9 @@ class lightningJavelin:
 	
 	def icon():
 		return 'W_Spear_016.png'
+
+	def tags():
+		return ['targets']
 class beesting:
 	def perform(actor, target):
 		factors = generic.commandFactors.spear(actor, target)
@@ -493,6 +538,9 @@ class beesting:
 	
 	def icon():
 		return 'W_Spear_017.png'
+
+	def tags():
+		return ['targets']
 class guilltineSpiral:
 	def perform(actor, *targets):
 		for target in targets:
@@ -523,6 +571,9 @@ class guilltineSpiral:
 	
 	def icon():
 		return 'W_Spear_008.png'
+
+	def tags():
+		return ['targets']
 class fallingComet:
 	def perform(actor, *targets):
 		for target in targets:
@@ -557,6 +608,9 @@ class fallingComet:
 	
 	def icon():
 		return 'W_Spear_014.png'
+
+	def tags():
+		return ['targets']
 class momentousDescent:
 	def perform(actor, *targets):
 		for target in targets:
@@ -589,6 +643,9 @@ class momentousDescent:
 	def icon():
 		return 'W_Spear_003.png'
 
+	def tags():
+		return ['targets']
+
 
 'Axe'
 class chop:
@@ -615,6 +672,9 @@ class chop:
 	
 	def icon():
 		return 'W_Axe_001.png'
+
+	def tags():
+		return ['targets']
 class quakeImpact:
 	# The most basic attack
 	def perform(actor, *targets):
@@ -643,6 +703,9 @@ class quakeImpact:
 	
 	def icon():
 		return 'W_Mace_004.png'
+
+	def tags():
+		return ['targets']
 class grandSwath:
 	# The most basic attack
 	def perform(actor, *targets):
@@ -674,6 +737,9 @@ class grandSwath:
 	def icon():
 		return 'W_Axe_014.png'
 
+	def tags():
+		return ['targets']
+
 class skullShatter:
 	# The most basic attack
 	def perform(actor, target):
@@ -704,6 +770,9 @@ class skullShatter:
 	
 	def icon():
 		return 'W_Axe_008.png'
+
+	def tags():
+		return ['targets']
 class murderTwist:
 	def perform(actor, *targets):
 		for target in targets:
@@ -737,6 +806,9 @@ class murderTwist:
 	
 	def icon():
 		return 'W_Axe_010.png'
+
+	def tags():
+		return ['targets']
 class concentratedChaos:
 	def perform(actor, target):
 		factors = generic.commandFactors.axe(actor, target)
@@ -772,6 +844,9 @@ class concentratedChaos:
 	def icon():
 		return 'W_Axe_013.png'
 
+	def tags():
+		return ['targets']
+
 
 'Wand'
 class psiStrike:
@@ -806,6 +881,9 @@ class psiStrike:
 	def icon():
 		return 'W_Wand_06.png'
 
+	def tags():
+		return ['targets']
+
 '''Magic'''
 'Fire'
 class pinpointHeat:
@@ -833,6 +911,9 @@ class pinpointHeat:
 	
 	def icon():
 		return 'S_Fire_01.png'
+
+	def tags():
+		return ['targets']
 class flameBarrage:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
@@ -864,6 +945,9 @@ class flameBarrage:
 	
 	def icon():
 		return 'S_Fire_03.png'
+
+	def tags():
+		return ['targets']
 class meteor:
 	def perform(actor, *targets):
 		for target in targets:
@@ -902,6 +986,9 @@ class meteor:
 	
 	def icon():
 		return 'S_Fire_05.png'
+
+	def tags():
+		return ['targets']
 class livingFlame:
 	def perform(actor):
 		# Make a copy of target and place it
@@ -953,6 +1040,9 @@ class blazeCloak:
 	
 	def icon():
 		return 'S_Fire_04.png'
+
+	def tags():
+		return ['targets']
 class infernoEmbrace:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
@@ -985,6 +1075,9 @@ class infernoEmbrace:
 	
 	def icon():
 		return 'S_Fire_06.png'
+
+	def tags():
+		return ['targets']
 class infernoSwath:
 	def perform(actor, *targets):
 		for target in targets:
@@ -1015,6 +1108,9 @@ class infernoSwath:
 	def icon():
 		return 'S_Fire_07.png'
 
+	def tags():
+		return ['targets']
+
 'Light'
 class lightningBolt:
 	def perform(actor, target):
@@ -1039,6 +1135,9 @@ class lightningBolt:
 	
 	def icon():
 		return 'S_Thunder_01.png'
+
+	def tags():
+		return ['targets']
 class chainLightning:
 	def perform(actor, target):
 		factors = generic.commandFactors.lightning(actor, target)
@@ -1066,6 +1165,9 @@ class chainLightning:
 	
 	def icon():
 		return 'S_Thunder_05.png'
+
+	def tags():
+		return ['targets']
 class passageBolt:
 	def perform(actor, target):
 		factors = generic.commandFactors.lightning(actor, target)
@@ -1103,6 +1205,9 @@ class passageBolt:
 	
 	def icon():
 		return 'S_Thunder_04.png'
+
+	def tags():
+		return ['targets']
 class stunBeam:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
@@ -1126,6 +1231,9 @@ class stunBeam:
 	
 	def icon():
 		return 'S_Light_01.png'
+
+	def tags():
+		return ['targets']
 
 'Wind'
 class birdcall:
@@ -1196,6 +1304,9 @@ class aeroImpact:
 	
 	def icon():
 		return 'S_Physic_02.png'
+
+	def tags():
+		return ['targets']
 class galeCloak:
 	def perform(actor, target):
 		generic.command.raiseStat(target, 'toughness', 50)
@@ -1222,6 +1333,9 @@ class galeCloak:
 	
 	def icon():
 		return 'S_Wind_02.png'
+
+	def tags():
+		return ['targets']
 class fly:
 	def perform(actor):
 		generic.command.move(actor)
@@ -1288,6 +1402,9 @@ class mudshot:
 	
 	def icon():
 		return 'S_Earth_05.png'
+
+	def tags():
+		return ['targets']
 class stoneGarden:
 	def perform(actor, target):
 		# Add a barrel on each side
@@ -1343,6 +1460,9 @@ class stoneArmor:
 	
 	def icon():
 		return 'S_Earth_06.png'
+
+	def tags():
+		return ['targets']
 class earthGrip:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
@@ -1377,6 +1497,9 @@ class earthGrip:
 	def icon():
 		return 'S_Earth_02.png'
 
+	def tags():
+		return ['targets']
+
 'Water'
 class iceShard:
 	def perform(actor, target):
@@ -1401,6 +1524,9 @@ class iceShard:
 	
 	def icon():
 		return 'S_Ice_03.png'
+
+	def tags():
+		return ['targets']
 class iceShrapnel:
 	def perform(actor, *targets):
 		for target in targets:
@@ -1427,6 +1553,9 @@ class iceShrapnel:
 	
 	def icon():
 		return 'S_Ice_04.png'
+
+	def tags():
+		return ['targets']
 class crystallineCluster:
 	def perform(actor):
 		# Basic ice object
@@ -1483,6 +1612,9 @@ class icePrison:
 	def icon():
 		return 'S_Ice_07.png'
 
+	def tags():
+		return ['targets']
+
 class liquip:
 	def perform(actor, *targets):
 		for target in targets:
@@ -1511,6 +1643,9 @@ class liquip:
 	
 	def icon():
 		return 'S_Water_06.png'
+
+	def tags():
+		return ['targets']
 class waterSpout:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
@@ -1539,6 +1674,9 @@ class waterSpout:
 	
 	def icon():
 		return 'S_Water_04.png'
+
+	def tags():
+		return ['targets']
 class greatWave:
 	def perform(actor, *targets):
 		for target in targets:
@@ -1568,6 +1706,9 @@ class greatWave:
 	
 	def icon():
 		return 'S_Water_03.png'
+
+	def tags():
+		return ['targets']
 class typhoon:
 	def perform(actor, target):
 		# Raise mv
@@ -1595,6 +1736,9 @@ class typhoon:
 	
 	def icon():
 		return 'S_Water_05.png'
+
+	def tags():
+		return ['targets']
 
 'Shadow'
 class toxins:
@@ -1637,6 +1781,9 @@ class toxins:
 					'display' : stat.capitalize()}
 
 			choices.append(pair)
+
+	def tags():
+		return ['targets']
 
 
 # TODO(kgeffen) Add dying triggers and make bubbles burst when killed
@@ -1704,6 +1851,9 @@ class divineReflection:
 	
 	def icon():
 		return 'I_Mirror.png'
+
+	def tags():
+		return ['targets']
 class emogen:
 	def perform(actor, *targets):
 		# Amount of healing
@@ -1731,6 +1881,9 @@ class emogen:
 	
 	def icon():
 		return 'S_Magic_01.png'
+
+	def tags():
+		return ['targets']
 
 
 
@@ -1776,6 +1929,9 @@ class tutor:
 	
 	def icon():
 		return 'W_Book_06.png'
+
+	def tags():
+		return ['targets']
 
 'Boots'
 class dash:
@@ -2042,32 +2198,8 @@ class firstAid:
 	def icon():
 		return 'I_Antidote.png'
 
-
-class strategize:
-	def perform(actor, *targets):
-		amount = 4 + len(targets) * 3
-
-		for target in targets:
-			generic.command.raiseStat(target, 'focus', amount)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.self()
-
-		commandRange['aoe'] = generic.shapes.diamond(1)
-
-		generic.range.free(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return ('TODO.')
-	
-	def name():
-		return 'Strategize'
-	
-	def icon():
-		return 'I_Map.png'
+	def tags():
+		return ['targets']
 
 class dualSharpen:
 	def perform(actor, target):
@@ -2090,6 +2222,9 @@ class dualSharpen:
 	
 	def icon():
 		return 'S_Dagger_01.png'
+
+	def tags():
+		return ['targets']
 
 class craft:
 	def perform(actor):
@@ -2143,33 +2278,6 @@ class bloodRitual:
 	
 	def icon():
 		return 'I_Ruby.png'
-class bloodlust:
-	def perform(actor, target):
-		# Empty target's sp
-		amount = generic.command.scaleStat(target, 'sp', 0)
-
-		# Raise target's sp by same amount
-		generic.command.raiseStat(target, 'strength', -amount)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['range'] = generic.shapes.diamond(1)
-
-		generic.range.free(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return ('Make them see blood.\n\n'
-			'TOODO.')
-	
-	def name():
-		return 'Bloodlust'
-	
-	def icon():
-		return 'S_Death_01.png'
 class riteOfImmortality:
 	def perform(actor):
 		# Hurt self

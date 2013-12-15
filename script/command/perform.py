@@ -10,21 +10,25 @@ def attempt():
 	cursorPosition = cursor.worldPosition
 	
 	effectedUnits = unitsInSpacesAoe(cursorPosition)
-	
-	if effectedUnits is not None:
-		
-		actor = logic.globalDict['actor']
-		targets = effectedUnits
-		command = logic.globalDict['cursor']
-		
+
+	commandName = logic.globalDict['cursor']
+	requiresTarget = commandControl.hasTag(commandName, 'targets')
+
+	if requiresTarget and effectedUnits == []:
+		return False
+	else:
 		# Store effected special spaces in 'commandSpecialSpaces'
 		storeSpecialSpaces(cursorPosition)
 		
-		do(actor, targets, command)
+		do(effectedUnits)
 
 		# Indicate that command was performed
 		return True
-def do(actor, targets, command):
+
+def do(targets):
+	actor = logic.globalDict['actor']
+	command = logic.globalDict['cursor']
+
 	# Perform the command
 	commandControl.perform(command, actor, targets)
 	
