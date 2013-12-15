@@ -17,7 +17,7 @@ def alter(cont):
 		logic.globalDict['extent'] += 1
 	
 	# Display the new cost of the command
-	setup.costText()
+	setup.screen()
 
 def max(cont):
 	command = getSelectedCommand()
@@ -39,7 +39,7 @@ def max(cont):
 					logic.globalDict['extent'] += 1
 
 			# Display the new cost of the command
-			setup.costText()
+			setup.screen()
 
 # Get command selected in commandSelect
 def getSelectedCommand():
