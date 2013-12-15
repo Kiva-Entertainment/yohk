@@ -649,7 +649,6 @@ class momentousDescent:
 
 'Axe'
 class chop:
-	# The most basic attack
 	def perform(actor, target):
 		factors = generic.commandFactors.axe(actor, target)
 		
@@ -664,7 +663,7 @@ class chop:
 		return 0
 	
 	def description():
-		return ('Chope down an adjacent unit with your axe.\n\n'
+		return ('Chop down an adjacent unit with your axe.\n\n'
 		 		'Basic physical attack.')
 	
 	def name():
@@ -675,6 +674,38 @@ class chop:
 
 	def tags():
 		return ['targets']
+
+class viciousQuake:
+	def perform(actor, target):
+		factors = generic.commandFactors.axe(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.axe()
+
+		hollowSquare = generic.shapes.rectangle(1, 1, True)
+		# Push square to be centered space behind (space in front of user)
+		commandRange['aoe'] = generic.shapes.push(hollowSquare, [0,-1])
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('TODO.')
+	
+	def name():
+		return 'Vicious Quake'
+	
+	def icon():
+		return 'W_Mace_004.png'
+
+	def tags():
+		return ['targets']
+
 class quakeImpact:
 	# The most basic attack
 	def perform(actor, *targets):
@@ -721,6 +752,7 @@ class grandSwath:
 		commandRange = generic.rangeFactors.axe()
 
 		commandRange['aoe'] = generic.shapes.diamond(2,1)
+		commandRange['specialSpaces'] = []
 
 		generic.range.free(commandRange)
 	
@@ -791,6 +823,7 @@ class murderTwist:
 		commandRange = generic.rangeFactors.axe()
 
 		commandRange['aoe'] = generic.shapes.ring(1)
+		commandRange['specialSpaces'] = []
 
 		generic.range.free(commandRange)
 	

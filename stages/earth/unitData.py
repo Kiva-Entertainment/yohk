@@ -121,6 +121,30 @@
 						['lightningJavelin', 'frostSkewer', 'beesting'],
 						['focus', 'firstAid', 'eatCarrot']]
 	},
+	{ 	'model' : 'soldier',
+		'name' : 'Axeman',
+		'align' : 'martialLegion',
+		'health' : 1100,
+		'hp' : 1100,
+		'spirit' : 400,
+		'sp' : 0,
+		'move' : 5,
+		'mv' : 5,
+		'actions' : 1,
+		'act' : 1,
+		'strength' : 120,
+		'intelligence' : 70,
+		'toughness' : 120,
+		'willpower' : 60,
+		'focus' : 110,
+		'agility' : 90,
+		'speed' : 25,
+		'jump' : 12,
+		'regen' : 5,
+		'commands' : 	[['chop', 'quakeImpact', 'viciousQuake', 'fallingComet'],
+						['skullShatter', 'murderTwist', 'concentratedChaos'],
+						['focus', 'firstAid', 'eatCarrot']]
+	},
 	{	'model' : 'devoted',
 		'name' : 'Afth the Destroyer',
 		'align' : 'solarServants',
@@ -191,7 +215,7 @@
 		'regen' : 10,
 		'commands' : 	[['lightningBolt', 'chainLightning', 'passageBolt'],
 						['birdcall', 'aeroImpact', 'divineReflection'],
-						['dash', 'fly', 'galeCloak']]
+						['dash', 'fly', 'typhoon', 'galeCloak']]
 	},
 	{	'model' : 'devoted',
 		'name' : 'Mudd Urchin',
@@ -213,9 +237,9 @@
 		'speed' : 25,
 		'jump' : 10,
 		'regen' : 10,
-		'commands' : 	[['psiStrike', 'mudshot', 'earthGrip'],
+		'commands' : 	[['psiStrike', 'mudshot', 'earthGrip', 'aeroImpact'],
 						['stoneGarden', 'icePrison', 'crystallineCluster'],
-						['study', 'stoneArmor', 'emogen']]
+						['study', 'stoneArmor', 'emogen', 'fly']]
 	}
 ]
 }

@@ -38,13 +38,17 @@ def diamond(length, offset = 0):
 # Rectangle that extends left/right by _width_ spaces and up/down by _height_ spaces
 # Ex: rectangle(0,1) Describes a 1x3 rectangle with height 3
 # If offset is given, exclude that many rings from center
-def rectangle(width, height, offset = 0):
+# If hollow, exclude center space
+def rectangle(width, height, hollow = False):
 	spaces = []
-	
+
 	for x in range(-width, width + 1):
 		for y in range(-height, height + 1):
 			spaces.append([x,y])
-	
+
+	if hollow:
+		spaces.remove([0,0])
+
 	return spaces
 
 # Cross that includes all spaces _length_ spaces from center cardinally
@@ -98,12 +102,15 @@ def line(length, offset = 0):
 # Extends _length_ spaces to the right/left of center
 # 'length' = the max offset from the center
 # Ex: length = 1 describes a line with 3 spaces, one left of center, one right
-def flatLine(length):
-	spaces = [[0,0]]
-	
-	for l in range(1, length + 1):
+def flatLine(length, offset = 0):
+	spaces = []
+
+	for l in range(offset, length + 1):
 		spaces.append([l, 0])
-		spaces.append([-l, 0])
+		
+		# Don't add duplicate l=0
+		if -l != l:
+			spaces.append([-l, 0])
 	
 	return spaces
 

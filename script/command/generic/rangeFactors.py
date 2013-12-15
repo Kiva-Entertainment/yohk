@@ -33,7 +33,7 @@ def axe():
 	return {'okDz' : {'max' : 1.2, 'min' : -1.2},
 			'range' : shapes.single(),
 			'aoe' : shapes.single(),
-			'specialSpaces' : []}
+			'specialSpaces' : [[0, -2]]}
 
 def dagger():
 	return {'okDz' : {'max' : 1.2, 'min' : -1.2},

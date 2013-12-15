@@ -15,9 +15,9 @@ def sword(actor, target):
 	 		'evasion' : target['agility']}
 
 def axe(actor, target):
-	return {'force' : actor['strength'] * 1.1,
+	return {'force' : actor['strength'] * 1.2,
 			'resist' : target['toughness'],
-			'accuracy' : actor['focus'] * 0.9,
+			'accuracy' : actor['focus'] * 0.8,
 			'evasion' : target['agility']}
 
 def dagger(actor, target):
