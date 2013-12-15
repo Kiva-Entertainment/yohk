@@ -1,6 +1,8 @@
 # Add unit to time list at next turn when unit acts
 # Units act sooner/more often if they have higher speed
 from bge import logic
+import random
+import math
 
 from script.time import displayTurnOrder
 
@@ -9,18 +11,29 @@ def unitAction(unit):
 	if unit['speed'] <= 0:
 		return
 
-	# The number of tics between each of unit's actions
-	ticsBetween = round(100/unit['speed'])
-	
-	# Next action should never be added to current turn (Turn 0)
-	firstTurnNumber = ticsBetween
-	if ticsBetween == 0:
-		firstTurnNumber = 1
-
+	firstTurnNumber = getFirstTurnNumber(unit['speed'])
 	addUnitToTurn(unit, firstTurnNumber)
 
 	displayTurnOrder.do()
 
+
+def getFirstTurnNumber(speed):
+	# The number of tics between each of unit's actions
+	ticsBetween = 100/speed
+
+	# Round randomly with linear weight towards whichever side number is closer to
+	# Ex: 6.1 rounds to 6 10% and to 7 90% of the time
+	roundUp = random.random() < ticsBetween - int(ticsBetween)
+	if roundUp:
+		ticsBetween = math.ceil(ticsBetween)
+	else:
+		ticsBetween = math.floor(ticsBetween)
+
+	# Next action should never be added to current turn (Turn 0)
+	if ticsBetween == 0:
+		return 1
+	else:
+		return ticsBetween
 
 def addUnitToTurn(unit, turnNumber):
 	time = logic.globalDict['time']
