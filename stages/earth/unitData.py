@@ -117,7 +117,7 @@
 		'speed' : 25,
 		'jump' : 12,
 		'regen' : 5,
-		'commands' : 	[['thrust', 'guilltineSpiral', 'fallingComet'],
+		'commands' : 	[['thrust', 'guilltineSpiral', 'momentousDescent', 'fallingComet'],
 						['lightningJavelin', 'frostSkewer', 'beesting'],
 						['focus', 'firstAid', 'eatCarrot']]
 	},

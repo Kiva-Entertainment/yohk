@@ -557,7 +557,37 @@ class fallingComet:
 	
 	def icon():
 		return 'W_Spear_014.png'
+class momentousDescent:
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.spear(actor, target)
+			
+			factors['force'] *= 1.4
+			factors['accuracy'] *= 1.4
 
+			if target != actor:
+				if generic.command.hitCheck(target, factors):
+					generic.command.standardAttack(target, factors)
+	
+	def determineRange(): 
+		commandRange = generic.rangeFactors.spear()
+
+		commandRange['range'] = generic.shapes.ring(2)
+		commandRange['aoe'] = generic.shapes.x(1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 33
+	
+	def description():
+		return ('Basic spear attack.')
+	
+	def name():
+		return 'Momentous Descent'
+	
+	def icon():
+		return 'W_Spear_003.png'
 
 
 'Axe'
