@@ -110,7 +110,7 @@ class predatorsDescent:
 		return 'W_Sword_009.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class doubleSlash:
 	# Powerful sword skill that relies on open space around target
 	# Most classes can't use it every turn
@@ -182,7 +182,7 @@ class ribbonDash:
 		return 'W_Sword_004.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class frontlineSlash:
 	def perform(actor, *targets):
 		for target in targets:
@@ -250,7 +250,7 @@ class ebber:
 		return 'S_Sword_09.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class cleave:
 	# Basic powerful attack
 	def perform(actor, target):
@@ -772,7 +772,7 @@ class skullShatter:
 		return 'W_Axe_008.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class murderTwist:
 	def perform(actor, *targets):
 		for target in targets:
@@ -808,7 +808,7 @@ class murderTwist:
 		return 'W_Axe_010.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class concentratedChaos:
 	def perform(actor, target):
 		factors = generic.commandFactors.axe(actor, target)
@@ -947,7 +947,7 @@ class flameBarrage:
 		return 'S_Fire_03.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class meteor:
 	def perform(actor, *targets):
 		for target in targets:
@@ -988,7 +988,7 @@ class meteor:
 		return 'S_Fire_05.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class livingFlame:
 	def perform(actor):
 		# Make a copy of target and place it
@@ -1109,7 +1109,7 @@ class infernoSwath:
 		return 'S_Fire_07.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 
 'Light'
 class lightningBolt:
@@ -1207,7 +1207,7 @@ class passageBolt:
 		return 'S_Thunder_04.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class stunBeam:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
@@ -1306,7 +1306,7 @@ class aeroImpact:
 		return 'S_Physic_02.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class galeCloak:
 	def perform(actor, target):
 		generic.command.raiseStat(target, 'toughness', 50)
@@ -1363,6 +1363,9 @@ class fly:
 	def icon():
 		return 'S_Wind_06.png'
 
+	def tags():
+		return ['extends']
+
 'Earth'
 class mudshot:
 	def perform(actor, *targets):
@@ -1404,7 +1407,7 @@ class mudshot:
 		return 'S_Earth_05.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class stoneGarden:
 	def perform(actor, target):
 		# Add a barrel on each side
@@ -1462,7 +1465,7 @@ class stoneArmor:
 		return 'S_Earth_06.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class earthGrip:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
@@ -1498,7 +1501,7 @@ class earthGrip:
 		return 'S_Earth_02.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 
 'Water'
 class iceShard:
@@ -1613,7 +1616,7 @@ class icePrison:
 		return 'S_Ice_07.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 
 class liquip:
 	def perform(actor, *targets):
@@ -1738,7 +1741,7 @@ class typhoon:
 		return 'S_Water_05.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 
 'Shadow'
 class toxins:
@@ -1883,7 +1886,7 @@ class emogen:
 		return 'S_Magic_01.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 
 
 
