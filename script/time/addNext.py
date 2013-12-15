@@ -5,16 +5,25 @@ from bge import logic
 from script.time import displayTurnOrder
 
 def unitAction(unit):
-	time = logic.globalDict['time']
-
 	# If unit has no/negative speed, it cannot act
 	if unit['speed'] <= 0:
 		return
 
-	# The turn number of the first turn in which unit acts
-	turnNumber = 100 - unit['speed']
-	if turnNumber < 1:
-		turnNumber = 1
+	# The number of tics between each of unit's actions
+	ticsBetween = round(100/unit['speed'])
+	
+	# Next action should never be added to current turn (Turn 0)
+	firstTurnNumber = ticsBetween
+	if ticsBetween == 0:
+		firstTurnNumber = 1
+
+	addUnitToTurn(unit, firstTurnNumber)
+
+	displayTurnOrder.do()
+
+
+def addUnitToTurn(unit, turnNumber):
+	time = logic.globalDict['time']
 
 	turn = time[turnNumber]
 
@@ -23,8 +32,6 @@ def unitAction(unit):
 	addUnitToAlignGroup(unit, turn)
 
 	time[turnNumber] = turn
-
-	displayTurnOrder.do()
 
 # Add unit to the group within turn that matchs unit's alignment
 def addUnitToAlignGroup(unit, turn):

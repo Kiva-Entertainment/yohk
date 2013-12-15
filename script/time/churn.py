@@ -4,7 +4,9 @@ from bge import logic
 from script.time import addNext, upkeep, displayTurnOrder
 
 # Number of entries in time array
-QUANTITY_ENTRIES = 100
+# NOTE(kgeffen) Add 1 because turn[0] is current turn,
+# and a unit with speed 1 would need to be put in turn 100 (0 + 100)
+QUANTITY_ENTRIES = 100 + 1
 
 def attempt(cont):
 	if cont.sensors['xKey'].positive:
