@@ -11,6 +11,7 @@ COST_OBJECT_NAME = 'commandSelect_cost'
 DESCRIPTION_OBJECT_NAME = 'commandSelect_description'
 ICON_OBJECT_NAME = 'commandSelect_icon'
 CHOICE_OBJECT_NAME = 'commandSelect_choice'
+EXTENT_OBJECT_NAME = 'commandSelect_extent'
 SCENE_NAME = 'commandSelect'
 
 # Setup the entire screen in commandSelect
@@ -20,6 +21,7 @@ def screen():
 	costText()
 	descriptionText()
 	choiceText()
+	extentText()
 
 
 # Alter the icon diplayed
@@ -111,6 +113,19 @@ def choiceText():
 	object = objectControl.getFromScene(CHOICE_OBJECT_NAME, SCENE_NAME)
 	object['Text'] = text
 
+# Alter the text of the 'current extent' text object
+def extentText():
+	# Get the command currently being considered
+	command = getCommandsList()[0][0]
+
+	text = ''
+	if commandControl.hasTag(command, 'extends'):
+		extent = logic.globalDict['extent']
+		text = 'Extent: ' + str(extent)
+	
+	# Set the text of the object
+	object = objectControl.getFromScene(EXTENT_OBJECT_NAME, SCENE_NAME)
+	object['Text'] = text
 
 def getCommandsList():
 	unit = logic.globalDict['actor']
