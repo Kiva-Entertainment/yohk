@@ -1,6 +1,13 @@
 # Call methods for given commands dynamically
 from script.command import commands
 
+def hasTag(commandName, tag):
+	tags = callMethodForCommand(commandName, 'tags')
+
+	# Command might have no tags
+	if tags is not None:
+		if tags.count(tag) != 0:
+			return True
 def determineChoices(commandName):
 	callMethodForCommand(commandName, 'determineChoices')
 def perform(commandName, actor, targets):

@@ -53,9 +53,33 @@ def rectangle(width, height, offset = 0):
 def cross(length, offset = 0):
 	spaces = []
 	
-	# Describes space in rings of radius r
+	# Add center if shape has it
+	if offset == 0:
+		spaces.append([0,0])
+		# Do not add center in below for loop
+		offset += 1
+
 	for r in range(offset, length + 1):
 		for space in [[0,r], [0,-r], [r,0], [-r,0]]:
+			spaces.append(space)
+	
+	return spaces
+
+# Two diagonal lines crossing in an X
+# Each line extends _length_ space in each direction from center space
+# Ex: length = 1 describes an x with 5 spaces
+# If _offset_ is provided, exclude that many spaces in each direction
+def x(length, offset = 0):
+	spaces = []
+
+	# Add center if shape has it
+	if offset == 0:
+		spaces.append([0,0])
+		# Do not add center in below for loop
+		offset += 1
+	
+	for r in range(offset, length + 1):
+		for space in [[r,r], [r,-r], [-r,r], [-r,-r]]:
 			spaces.append(space)
 	
 	return spaces
