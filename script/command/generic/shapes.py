@@ -79,10 +79,11 @@ def x(length, offset = 0):
 	# Add center if shape has it
 	if offset == 0:
 		spaces.append([0,0])
-		# Do not add center in below for loop
-		offset += 1
 	
 	for r in range(offset, length + 1):
+		# center added in above
+		if r == 0:
+			continue
 		for space in [[r,r], [r,-r], [-r,r], [-r,-r]]:
 			spaces.append(space)
 	

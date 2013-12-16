@@ -141,9 +141,9 @@
 		'speed' : 25,
 		'jump' : 12,
 		'regen' : 5,
-		'commands' : 	[['chop', 'quakeImpact', 'viciousQuake', 'fallingComet'],
-						['skullShatter', 'murderTwist', 'concentratedChaos'],
-						['focus', 'firstAid', 'eatCarrot']]
+		'commands' : 	[['chop', 'hurricaneSwath', 'chasmMaw', 'viciousQuake'],
+						['skullShatter', 'kneeCrack', 'forceDegeneration'],
+						['dash', 'bloodRitual', 'vileRitual']]
 	},
 	{	'model' : 'devoted',
 		'name' : 'Afth the Destroyer',
