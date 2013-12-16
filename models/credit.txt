@@ -5,3 +5,5 @@ The publisher for each model is as follows:
 
 Soldier - lsmft
 Devoted - CGCookie
+Bird - Nodelete
+Rock - JoJoJoy

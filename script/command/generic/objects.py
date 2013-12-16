@@ -1,7 +1,7 @@
 # Stats for common objects added to field
 def barrel():
 	return {
-		'model' : 'barrel',
+		'model' : 'rock',
 		'name' : 'Barrel',
 		'align' : 'neutral',
 		'health' : 200,
