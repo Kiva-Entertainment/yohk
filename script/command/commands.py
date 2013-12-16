@@ -680,8 +680,8 @@ class hurricaneSwath:
 		for target in targets:
 			factors = generic.commandFactors.axe(actor, target)
 
-			force['force'] *= 1.1
-			force['accuracy'] *= 1.2
+			factors['force'] *= 1.1
+			factors['accuracy'] *= 1.2
 			
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
@@ -743,14 +743,15 @@ class chasmMaw:
 	def tags():
 		return ['targets']
 class viciousQuake:
-	def perform(actor, target):
-		factors = generic.commandFactors.axe(actor, target)
-		
-		factors['force'] *= 1.7
-		factors['accuracy'] *= 1.8
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.axe(actor, target)
+			
+			factors['force'] *= 1.7
+			factors['accuracy'] *= 1.8
 
-		if generic.command.hitCheck(target, factors):
-			generic.command.standardAttack(target, factors)
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.axe()
@@ -807,17 +808,18 @@ class skullShatter:
 	def tags():
 		return ['targets']
 class kneeCrack:
-	def perform(actor, target):
-		factors = generic.commandFactors.axe(actor, target)
-		
-		factors['accuracy'] *= 1.2
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.axe(actor, target)
+			
+			factors['accuracy'] *= 1.2
 
-		if generic.command.hitCheck(target, factors):
-			generic.command.standardAttack(target, factors)
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
 
-			# Lower target's agility
-			generic.command.raiseStat(target, 'move', -1)
-			generic.command.raiseStat(target, 'mv', -1)
+				# Lower target's agility
+				generic.command.raiseStat(target, 'move', -1)
+				generic.command.raiseStat(target, 'mv', -1)
 
 	def determineRange():
 		commandRange = generic.rangeFactors.axe()
@@ -842,16 +844,17 @@ class kneeCrack:
 	def tags():
 		return ['targets']
 class forceDegeneration:
-	def perform(actor, target):
-		factors = generic.commandFactors.axe(actor, target)
-		
-		factors['accuracy'] *= 1.5
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.axe(actor, target)
+			
+			factors['accuracy'] *= 1.5
 
-		if generic.command.hitCheck(target, factors):
-			generic.command.standardAttack(target, factors)
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
 
-			# Lower target's regen
-			generic.command.raiseStat(target, 'regen', -1)
+				# Lower target's regen
+				generic.command.raiseStat(target, 'regen', -1)
 
 	def determineRange():
 		commandRange = generic.rangeFactors.axe()
@@ -1024,6 +1027,7 @@ class livingFlame:
 		# Make a copy of target and place it
 		unit = generic.objects.flame()
 		unit['align'] = actor['align']
+		unit['intelligence'] = actor['intelligence']
 		
 		generic.command.addObjects(unit)
 	
@@ -2188,7 +2192,7 @@ class dualSharpen:
 class bloodRitual:
 	def perform(actor, target):
 		# Lower hp
-		dHp = -round( actor['health'] / 10 )
+		dHp = -round( actor['health'] / 8 )
 		generic.command.raiseStat(actor, 'hp', dHp)
 
 		generic.command.raiseStat(actor, 'strength', 20)
@@ -2222,6 +2226,8 @@ class vileRitual:
 		unit['hp'] = 1
 		unit['health'] = 1
 		unit['sp'] = 0
+		unit['mv'] = unit['move']
+		unit['act'] = unit['actions']
 		unit['name'] = 'Husk'
 
 		generic.command.addObjects(unit)
@@ -2236,7 +2242,7 @@ class vileRitual:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 0
+		return 100
 	
 	def description():
 		return ('Split your body and soul!\n\n'
