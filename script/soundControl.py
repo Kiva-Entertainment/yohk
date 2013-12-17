@@ -2,10 +2,13 @@
 from bge import logic
 import aud
 
-# Play a soundEffect sound once
+device = aud.device()
+
+# Play a sound with given name once
+# Sound wav file must exist in audio
 def play(soundName):
-	filepath = logic.expandPath('//audio/soundEffects/') + soundName + '.wav'
+	filepath = logic.expandPath('//audio/') + soundName + '.wav'
 
-	sound = aud.Factory.file(filepath)
+	sound = aud.Factory(filepath)
 
-	aud.device().play(sound)
+	device.play(sound)

@@ -2,6 +2,7 @@
 # since turn switch/command was performed
 from bge import logic
 
+from script import soundControl
 from script.unitControl import move
 
 def attempt():
@@ -21,3 +22,6 @@ def do():
 
 	# Return unit's mv to previous amount
 	unit['mv'] = oldMv
+
+	# Play sound
+	soundControl.play('return')

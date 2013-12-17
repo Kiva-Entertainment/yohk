@@ -1,7 +1,7 @@
 # Select command from list of commands
 from bge import logic
 
-from script import sceneControl, commandControl
+from script import sceneControl, commandControl, soundControl
 
 def attempt(cont):
 	if cont.sensors['spaceKey'].positive:
@@ -14,9 +14,9 @@ def do():
 		
 		if commandIsAllowed(selectedCommand):
 			selectCommand(selectedCommand)
+			
 		else:
-			pass
-			#utility.playSound('negative')
+			soundControl.play('negative')
 
 
 # Get command selected in commandSelect

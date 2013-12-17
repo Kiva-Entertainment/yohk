@@ -1,7 +1,7 @@
 # Move actor to selected space if move is allowed
 from bge import logic
 
-from script import check, objectControl, marker, unitControl
+from script import check, objectControl, marker, unitControl, soundControl
 from script.cursorSelect import unit as selectUnit
 
 def attempt():
@@ -12,8 +12,7 @@ def attempt():
 		do(cursorPosition)
 
 	else:
-		pass
-		#utility.playSound('negative')
+		soundControl.play('negative')
 
 def do(position):
 	unit = logic.globalDict['actor']

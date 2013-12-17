@@ -1,4 +1,5 @@
 # Attempt to perform command on target cursor is selecting
+from script import soundControl
 from script.command import perform
 
 def attempt():
@@ -7,9 +8,7 @@ def attempt():
 	success = perform.attempt()
 	
 	if success:
-		pass
-		#utility.playSound('attack')
+		soundControl.play('attack')
 	
 	else:
-		pass
-		#utility.playSound('negative')
+		soundControl.play('negative')
