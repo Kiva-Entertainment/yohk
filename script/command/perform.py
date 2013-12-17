@@ -9,7 +9,13 @@ def attempt():
 	cursor = objectControl.getFromScene('cursor', 'battlefield')
 	cursorPosition = cursor.worldPosition
 	
+	# List of units effected by command happening at given position
 	effectedUnits = unitsInSpacesAoe(cursorPosition)
+
+	# If list is None (None, not empty list) command cannot target given position, thus can't be performed
+	# TODO(kgeffen) This is an implementation detail, make the check for valid space more obvious
+	if effectedUnits is None:
+		return False
 
 	commandName = logic.globalDict['cursor']
 	requiresTarget = commandControl.hasTag(commandName, 'targets')
