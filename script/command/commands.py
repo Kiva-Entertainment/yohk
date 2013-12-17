@@ -1444,11 +1444,11 @@ class mudshot:
 		return ['targets', 'extends']
 class stoneGarden:
 	def perform(actor, target):
-		# Add a barrel on each side
-		# 4 barrels in total
+		# Add a rock on each side
+		# 4 rocks in total
 		units = []
 		for i in range(0,4):
-			units.append(generic.objects.barrel())
+			units.append(generic.objects.rock())
 
 		generic.command.addObjects(*units)
 	
