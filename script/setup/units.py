@@ -1,29 +1,26 @@
-# Create all units that start on the field and store their data in globalDict['units']
+# Create all units that start on the field (Their data stored in gd['units'])
+# Store in list all units that don't start on field
 from bge import logic
+import json
 
 from script import unitControl
 
+STAGE_DATA_FILENAME = 'stageData.json'
 # TODO(kgeffen) Remove once stage selection has been enabled
 TEMP_STAGE_NAME = 'earth'
 
-# TODO(kgeffen) Unit loading will change drastically (Probably in version 0.5)
-# Until then, scaffolding is acceptable
 def do():
-	# TODO(kgeffen) Remove once stage selection has been enabled
-	filepath = logic.expandPath('//stages/') + TEMP_STAGE_NAME + '/'
+	filepath = logic.expandPath('//stages/') + TEMP_STAGE_NAME + '/' + STAGE_DATA_FILENAME
 	
-	unitData = getUnitData(filepath)
+	# Load all of stage's data from file
+	data = None
+	with open(filepath) as stageDataFile:
+		data = json.load(stageDataFile)
 
 	# Add active units to field
-	for unit in unitData['active']:
+	for unit in data['activeUnits']:
 		unitControl.object.add(unit)
 
 	# Add inactive units to list
-	for unit in unitData['inactive']:
+	for unit in data['inactiveUnits']:
 		logic.globalDict['inactiveUnits'].append(unit)
-
-# Store unit data loaded from file in stage's dir
-def getUnitData(filepath):
-	with open(filepath + 'unitData.py') as unitsFile:
-		# TODO(kgeffen) This is tamperable, improve means of loading/storing data
-		return eval(unitsFile.read())
