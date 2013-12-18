@@ -4,18 +4,22 @@ from bge import logic
 
 from script.scene.commandSelect import setup
 
+# NOTE(kgeffen) For now, choice cycling happens with directional keys because the only
+# unit with a choice skill is the base, which only has 1 skill.
+# This may change in the future
+
 # Cycle through choices forwards/backwards 1 choice
 def cycle(cont):
-	zKey = cont.sensors['zKey'].positive
-	cKey = cont.sensors['cKey'].positive
+	leftKey = cont.sensors['leftKey'].positive
+	rightKey = cont.sensors['rightKey'].positive
 	
 	choices = logic.globalDict['commandChoices']
 
-	if zKey:
+	if leftKey:
 		choice = choices.pop()
 		choices.insert(0, choice)
 		
-	elif cKey:
+	elif rightKey:
 		choice = choices.pop(0)
 		choices.append(choice)
 		
