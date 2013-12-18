@@ -49,6 +49,12 @@ def toNextActor():
 				
 				moveToPosition(position)
 
+		# NOTE(kgeffen) Necessarily cycle each time to ensure that
+		# if cursor moves to unit A, then I act with it, move cursor,
+		# next time I press fKey, the cursor moves to unit B
+		cycleList(actors)
+			
+
 # Move cursor to next space that could be selected as command target
 # TODO(kgeffen) Moves to any space in range, even if that space is not a valid target
 # Ex: lance can hit faraway spaces, but not if they are empty.
