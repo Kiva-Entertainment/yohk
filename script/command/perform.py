@@ -5,10 +5,7 @@ from bge import logic
 from script import check, objectControl, commandControl
 from script.command import cleanup
 
-def attempt():
-	cursor = objectControl.getFromScene('cursor', 'battlefield')
-	cursorPosition = cursor.worldPosition
-	
+def attempt(cursorPosition):
 	# List of units effected by command happening at given position
 	effectedUnits = unitsInSpacesAoe(cursorPosition)
 

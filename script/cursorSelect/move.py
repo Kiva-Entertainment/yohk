@@ -4,12 +4,9 @@ from bge import logic
 from script import check, objectControl, marker, unitControl, soundControl
 from script.cursorSelect import unit as selectUnit
 
-def attempt():
-	cursor = objectControl.getFromScene('cursor', 'battlefield')
-	cursorPosition = cursor.worldPosition
-	
-	if moveAllowed(cursorPosition):
-		do(cursorPosition)
+def attempt(position):
+	if moveAllowed(position):
+		do(position)
 
 	else:
 		soundControl.play('negative')
@@ -28,7 +25,7 @@ def do(position):
 	adjustUnitStats(unit, position)
 	
 	# Select current unit again
-	selectUnit.attempt()
+	selectUnit.attempt(position)
 
 
 # Store the move that is occuring in globalDict 'moveList'

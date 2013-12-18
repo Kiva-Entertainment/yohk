@@ -15,14 +15,16 @@ def cycle(cont):
 	
 	choices = logic.globalDict['commandChoices']
 
-	if leftKey:
-		choice = choices.pop()
-		choices.insert(0, choice)
-		
-	elif rightKey:
-		choice = choices.pop(0)
-		choices.append(choice)
-		
-	# Display the new cost of the command
-	setup.choiceText()
+	if choices != []:
+
+		if leftKey:
+			choice = choices.pop()
+			choices.insert(0, choice)
+			
+		elif rightKey:
+			choice = choices.pop(0)
+			choices.append(choice)
+			
+		# Display the new cost of the command
+		setup.choiceText()
 

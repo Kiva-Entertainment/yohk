@@ -19,11 +19,7 @@ def do():
 	# What the cursor is doing currently
 	status = logic.globalDict['cursor']
 	
-	if status == 'wait':
-		# Unit is selected and unitMenu is open
-		fromUnitSelected()
-	
-	elif status == 'move':
+	if status == 'move':
 		# Selecting a space for unit to move to
 		fromUnitMoving()
 	
@@ -41,32 +37,16 @@ def do():
 def fromSelectingUnit():
 	undoMove.attempt()
 
-# <Unit is selected and unit menu is open
-# Return to selecting a unit (Close unit menu)
-def fromUnitSelected():
+# <Cursor is selecting a space for unit to move to
+# Deselect unit and allow cursor to select another unit
+def fromUnitMoving():
 	logic.globalDict['cursor'] = 'selecting'
 	logic.globalDict['actor'] = None
 	logic.globalDict['extent'] = 0
 	logic.globalDict['commandChoices'] = []
 	
-	# Clear movement range markers
-	marker.clearMoveMarkers()
-	
-	# Hide unitMenu
-	menu = objectControl.getFromScene('unitMenu', 'battlefield')
-	objectControl.hide(menu)
-
-# <Cursor is selecting a space for unit to move to
-# Return cursor to actor, open unit menu
-def fromUnitMoving():
-	moveCursorToActor()
-	
 	# NOTE(kgeffen) Clear because movement range markers added when unit is reselected
 	marker.clearMoveMarkers()
-	
-	# NOTE(kgeffen) Cursor status must be 'selecting' to select a unit
-	logic.globalDict['cursor'] = 'selecting'
-	select.do()
 
 # <Cursor is selecting a a target for actor's command
 # Return cursor to actor, open commandSelect
