@@ -14,6 +14,8 @@ def do():
 	status = logic.globalDict['cursor']
 	
 	selectingActor = status == 'selecting'
+	# TODO(kgeffen) Status should be 'command' instead of the specific command
+	# and seperate gd should exist for which command
 	selectingCommandTarget = status != 'wait' and status != 'move'
 
 	if selectingActor:
@@ -40,7 +42,7 @@ def toNextActor():
 			# NOTE(kgeffen) If cursor didn't move (is already at position),
 			# cycle actors once, then get new first unit's position
 			if not cursorMoved:
-				cycleEntries(actors)
+				cycleList(actors)
 				
 				# This is the position of the newly cycled list of actors
 				position = getPosition.onGround(actors[0]['position'])
