@@ -3,7 +3,7 @@
 # Ex: To next unit acting this turn if selecting actor
 from bge import logic
 
-from script import check, getPosition, objectControl
+from script import check, getPosition, objectControl, commandControl
 
 def attempt(cont):
 	if cont.sensors['fKey'].positive:
@@ -58,16 +58,30 @@ def toNextTargetableSpace():
 	targets = logic.globalDict['spaceTarget']
 	
 	if targets != []:
+
+		# Cycle list until first entry is a valid target for command
+		validTargetExists = cycleUntilValidTarget(targets)
+		if not validTargetExists:
+			return
+
+		# Position that cursor will move to
+		position = getPosition.onGround(targets[0]['space'])
+
 		# Cursor moved (Wasn't already in position)
-		cursorMoved = moveToPosition(targets[0]['space'])
+		cursorMoved = moveToPosition(position)
 		
 		# NOTE(kgeffen) If cursor is already at position (Didn't move),
-		# cycle targets once, then get new first target's position
+		# cycle targets at least once, then get new first target's position
 		if cursorMoved == False:
-			cycleEntries(targets)
+			# Cycle once so fresh entry is chosen
+			cycleList(targets)
+			# Cycle until valid target is found
+			cycleUntilValidTarget(targets)
 			
 			# Move to newly cycled first entry in list of spaces
-			moveToPosition(targets[0]['space'])
+			position = getPosition.onGround(targets[0]['space'])
+
+			moveToPosition(position)
 
 # Move cursor to position of first entry in list of unitNumbers
 # If cursor is already there, return False to say that no movement occured
@@ -83,6 +97,29 @@ def moveToPosition(position):
 		
 		return True # Movement happened
 
-def cycleEntries(list):
+# Cycle the given list until first entry is valid target for command
+def cycleUntilValidTarget(targets):
+	commandName = logic.globalDict['cursor']
+	# If command can only be performed if it targets units
+	# Conversely, if requiresUnits is False, command MUST not target any units
+	requiresUnits = commandControl.hasTag(commandName, 'targets')
+
+	# NOTE(kgeffen) For loop runs up to length times, but since targets list is cycling,
+	# first entry of targets is always the one being considered
+	for i in range(len(targets)):
+
+		# If no units are hit for first entry in targets
+		if targets[0]['units'] == []:
+			if requiresUnits:
+				cycleList(targets)
+			else:
+				return True
+		else:
+			if requiresUnits:
+				return True
+			else:
+				cycleList(targets)
+
+def cycleList(list):
 	entry = list.pop(0)
 	list.append(entry)
