@@ -1946,6 +1946,9 @@ class study:
 	
 	def icon():
 		return 'W_Book_01.png'
+
+	def tags():
+		return ['targets']
 class tutor:
 	def perform(actor, target):
 		generic.command.regen(target)
@@ -1992,6 +1995,9 @@ class dash:
 	def icon():
 		return 'E_Shoes_01.png'
 
+	def tags():
+		return ['targets']
+
 
 '''Skill'''
 'Boosts'
@@ -2015,6 +2021,9 @@ class strengthen:
 	
 	def icon():
 		return 'S_Buff_01.png'
+
+	def tags():
+		return ['targets']
 class smarten:
 	def perform(actor, target):
 		generic.command.raiseStat(actor, 'intelligence', 10)
@@ -2035,6 +2044,9 @@ class smarten:
 	
 	def icon():
 		return 'S_Buff_03.png'
+
+	def tags():
+		return ['targets']
 class focus:
 	def perform(actor, target):
 		generic.command.raiseStat(actor, 'focus', 10)
@@ -2055,6 +2067,9 @@ class focus:
 	
 	def icon():
 		return 'S_Buff_06.png'
+
+	def tags():
+		return ['targets']
 
 'Food'
 class eatMeat:
@@ -2077,6 +2092,9 @@ class eatMeat:
 	
 	def icon():
 		return 'I_C_Meat.png'
+
+	def tags():
+		return ['targets']
 class eatPie:
 	def perform(actor, target):
 		generic.command.raiseStat(actor, 'hp', 100)
@@ -2097,6 +2115,9 @@ class eatPie:
 	
 	def icon():
 		return 'I_C_Pie.png'
+
+	def tags():
+		return ['targets']
 class eatCarrot:
 	def perform(actor, target):
 		generic.command.raiseStat(actor, 'hp', 100)
@@ -2117,6 +2138,9 @@ class eatCarrot:
 	
 	def icon():
 		return 'I_C_Carrot.png'
+
+	def tags():
+		return ['targets']
 class eatFish:
 	def perform(actor, target):
 		generic.command.raiseStat(actor, 'hp', 100)
@@ -2137,6 +2161,9 @@ class eatFish:
 	
 	def icon():
 		return 'I_C_RawFish.png'
+
+	def tags():
+		return ['targets']
 
 'Other'
 class firstAid:
@@ -2215,6 +2242,9 @@ class bloodRitual:
 	
 	def icon():
 		return 'I_Ruby.png'
+		
+	def tags():
+		return ['targets']
 class vileRitual:
 	def perform(actor):
 		# Hurt self
