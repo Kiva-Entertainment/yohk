@@ -31,17 +31,8 @@ def do():
 			cursorSelect.move.attempt(cursorPosition)
 		# Else, open commandSelect screen
 		else:
-			openCommandSelect()
+			cursorSelect.actor.attempt()
 
 	elif status != 'wait':
 		# Selecting the target for a command
 		cursorSelect.target.attempt(cursorPosition)
-
-
-def openCommandSelect():
-	# Clear all movement range markers
-	marker.clearMoveMarkers()
-		
-	sceneControl.show('commandSelect')
-	sceneControl.hide('battlefieldOverlay')
-	sceneControl.suspend('battlefield') # Battlefield is still visible
