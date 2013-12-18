@@ -807,7 +807,7 @@ class skullShatter:
 
 	def tags():
 		return ['targets']
-class kneeCrack:
+class crackFoundation:
 	def perform(actor, *targets):
 		for target in targets:
 			factors = generic.commandFactors.axe(actor, target)
@@ -817,9 +817,8 @@ class kneeCrack:
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
 
-				# Lower target's agility
-				generic.command.raiseStat(target, 'move', -1)
-				generic.command.raiseStat(target, 'mv', -1)
+				# Lower target's toughness
+				generic.command.raiseStat(target, 'toughness', -20)
 
 	def determineRange():
 		commandRange = generic.rangeFactors.axe()
@@ -836,7 +835,7 @@ class kneeCrack:
 		 		'Basic physical attack plus lowered int.')
 	
 	def name():
-		return 'Knee Crack'
+		return 'Crack Foundation'
 	
 	def icon():
 		return 'W_Mace_012.png'
@@ -1426,7 +1425,7 @@ class mudshot:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(17, 16, 9)
+		return generic.extentInfluence.polynomial(0, 16, 9)
 	
 	def description():
 		return ('Send mud cardinally. Hit all units in its path.\n\n'
@@ -2242,7 +2241,7 @@ class bloodRitual:
 	
 	def icon():
 		return 'I_Ruby.png'
-		
+
 	def tags():
 		return ['targets']
 class vileRitual:
