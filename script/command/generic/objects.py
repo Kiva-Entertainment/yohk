@@ -1,3 +1,6 @@
+# TODO(kgeffen) This should be made into a json file,
+# many of the other generic pys should as well
+
 # Stats for common objects added to field
 def rock():
 	return {
@@ -68,10 +71,10 @@ def flame():
 		'willpower' : 0,
 		'focus' : 100,
 		'agility' : 0,
-		'speed' : 20,
+		'speed' : 50,
 		'jump' : 0,
 		'regen' : 25,
-		'commands' : [['pinpointHeat', 'flameBarrage', 'livingFlame']]
+		'commands' : [['flameBarrage', 'livingFlame']]
 		}
 
 
@@ -94,10 +97,10 @@ def ice():
 		'willpower' : 100,
 		'focus' : 100,
 		'agility' : 0,
-		'speed' : 20,
+		'speed' : 50,
 		'jump' : 0,
 		'regen' : 13,
-		'commands' : [['iceShard', 'iceShrapnel', 'icePrison', 'crystallineCluster']]
+		'commands' : [['iceShard', 'icePrison', 'crystallineCluster']]
 		}
 
 def bubble():

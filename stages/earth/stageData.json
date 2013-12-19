@@ -371,7 +371,7 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["pinpointHeat", "flameBarrage", "aeroImpact"],
+		"commands" : 	[["flameBarrage", "aeroImpact"],
 						["livingFlame", "meteor"],
 						["study", "blazeCloak"]]
 	},
@@ -395,7 +395,7 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["pinpointHeat", "flameBarrage", "aeroImpact"],
+		"commands" : 	[["flameBarrage", "aeroImpact"],
 						["livingFlame", "meteor"],
 						["study", "blazeCloak"]]
 	},
@@ -419,7 +419,7 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["pinpointHeat", "flameBarrage", "aeroImpact"],
+		"commands" : 	[["flameBarrage", "aeroImpact"],
 						["livingFlame", "meteor"],
 						["study", "blazeCloak"]]
 	},
@@ -443,7 +443,7 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["iceShard", "iceShrapnel", "waterSpout"],
+		"commands" : 	[["iceShard", "aeroImpact"],
 						["icePrison", "crystallineCluster"],
 						["study", "typhoon"]]
 	},
@@ -467,7 +467,7 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["iceShard", "iceShrapnel", "waterSpout"],
+		"commands" : 	[["iceShard", "aeroImpact"],
 						["icePrison", "crystallineCluster"],
 						["study", "typhoon"]]
 	},
@@ -491,7 +491,7 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["iceShard", "iceShrapnel", "waterSpout"],
+		"commands" : 	[["iceShard", "aeroImpact"],
 						["icePrison", "crystallineCluster"],
 						["study", "typhoon"]]
 	},
@@ -515,9 +515,9 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["chainLightning", "aeroImpact"],
+		"commands" : 	[["aeroImpact", "pacify"],
 						["birdcall", "divineReflection"],
-						["typhoon", "galeCloak", "emogen"]]
+						["study", "emogen"]]
 	},
 	{	"model" : "devoted",
 		"name" : "Gheist Phantasm",
@@ -539,9 +539,9 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["chainLightning", "aeroImpact"],
+		"commands" : 	[["aeroImpact", "pacify"],
 						["birdcall", "divineReflection"],
-						["typhoon", "galeCloak", "emogen"]]
+						["study", "emogen"]]
 	},
 	{	"model" : "devoted",
 		"name" : "Half-Jaw Phantasm",
@@ -563,9 +563,9 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["chainLightning", "aeroImpact"],
+		"commands" : 	[["aeroImpact", "pacify"],
 						["birdcall", "divineReflection"],
-						["typhoon", "galeCloak", "emogen"]]
+						["study", "emogen"]]
 	},
 	{	"model" : "devoted",
 		"name" : "Mudd Urchin",
@@ -587,8 +587,8 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["mudshot", "aeroImpact"],
-						["stoneGarden", "icePrison", "crystallineCluster"],
+		"commands" : 	[["mudshot", "icePrison"],
+						["stoneGarden", "crystallineCluster"],
 						["study", "emogen"]]
 	},
 	{	"model" : "devoted",
@@ -611,8 +611,8 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["mudshot", "aeroImpact"],
-						["stoneGarden", "icePrison", "crystallineCluster"],
+		"commands" : 	[["mudshot", "icePrison"],
+						["stoneGarden", "crystallineCluster"],
 						["study", "emogen"]]
 	},
 	{	"model" : "devoted",
@@ -635,8 +635,8 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["mudshot", "aeroImpact"],
-						["stoneGarden", "icePrison", "crystallineCluster"],
+		"commands" : 	[["mudshot", "icePrison"],
+						["stoneGarden", "crystallineCluster"],
 						["study", "emogen"]]
 	}
 ]

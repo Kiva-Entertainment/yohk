@@ -960,13 +960,13 @@ class flameBarrage:
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
-		# A diamond centered on user, but center ([0,0]) is omitted (1 = # of rings omitted)
-		commandRange['range'] = shapes.diamond(2, 1)
+		reach = generic.extentInfluence.polynomial(1, 1)
+		commandRange['range'] = shapes.diamond(reach, 1)
 
 		generic.range.free(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(12, 36, 27)
+		return generic.extentInfluence.polynomial(0, 44, 6)
 	
 	def description():
 		return ('Send a barrage of flame at a nearby unit.\n\n'
@@ -1145,6 +1145,99 @@ class infernoSwath:
 		return ['targets', 'extends']
 
 'Light'
+class pacify:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+		
+		if generic.command.hitCheck(target, factors):
+			# Lower target's actions by 1
+			generic.command.raiseStat(target, 'act', -1)
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 100
+	
+	def description():
+		return ('Lower targets actions by 1 for next turn.')
+	
+	def name():
+		return 'Pacify'
+	
+	def icon():
+		return 'S_Holy_01.png'
+
+	def tags():
+		return ['targets']
+class divineReflection:
+	def perform(actor, target):
+		factors = generic.commandFactors.magic(actor, target)
+
+		if generic.command.hitCheck(target, factors):
+			# Make a copy of target and place it
+			unit = copy.deepcopy(target)
+			unit['hp'] = 1
+			unit['sp'] = 0
+			unit['align'] = actor['align']
+			unit['name'] = 'Reflection'
+			
+			generic.command.addObjects(unit)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['specialSpaces'] = [[0,1]]
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 150
+	
+	def description():
+		return ('To reflect is divine.\n\n'
+			'TODO.')
+	
+	def name():
+		return 'Divine Reflection'
+	
+	def icon():
+		return 'I_Mirror.png'
+
+	def tags():
+		return ['targets']
+class emogen:
+	def perform(actor, *targets):
+		# Amount of healing
+		amount = generic.extentInfluence.polynomial(50, 50)
+
+		for target in targets:
+			generic.command.raiseStat(target, 'hp', amount)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.self()
+
+		commandRange['aoe'] = shapes.diamond(1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(0, 20, 10)
+	
+	def description():
+		return ('The healing is good.\n\n'
+			'TODO.')
+	
+	def name():
+		return 'Emogen'
+	
+	def icon():
+		return 'S_Magic_01.png'
+
+	def tags():
+		return ['targets', 'extends']
+
 class lightningBolt:
 	def perform(actor, target):
 		factors = generic.commandFactors.lightning(actor, target)
@@ -1547,10 +1640,13 @@ class iceShard:
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
-		generic.range.rigid(commandRange)
+		reach = generic.extentInfluence.polynomial(1, 1)
+		commandRange['range'] = shapes.diamond(reach, 1)
+
+		generic.range.free(commandRange)
 	
 	def cost():
-		return 0
+		return generic.extentInfluence.polynomial(0, 5, 5)
 	
 	def description():
 		return ('Pretty basic.')
@@ -1562,7 +1658,7 @@ class iceShard:
 		return 'S_Ice_03.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class iceShrapnel:
 	def perform(actor, *targets):
 		for target in targets:
@@ -1623,20 +1719,20 @@ class icePrison:
 		factors = generic.commandFactors.magic(actor, target)
 		
 		if generic.command.hitCheck(target, factors):
-			generic.command.raiseStat(target, 'move', -2)
-			generic.command.raiseStat(target, 'mv', -2)
+			generic.command.raiseStat(target, 'move', -1)
+			generic.command.raiseStat(target, 'mv', -1)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
 		# Max distance to target
-		distance = generic.extentInfluence.polynomial(2, 1)
+		distance = generic.extentInfluence.polynomial(1, 1)
 		commandRange['range'] = shapes.diamond(distance, 1)
 
 		generic.range.free(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(40, 6, 17)
+		return generic.extentInfluence.polynomial(14, 8, 5)
 	
 	def description():
 		return ('Enclose nearby unit in ice, lowering their movement.' + '\n\n'
@@ -1850,76 +1946,6 @@ class bubble:
 	def icon():
 		return 'S_Water_07.png'
 
-
-
-
-'Other'
-class divineReflection:
-	def perform(actor, target):
-		factors = generic.commandFactors.magic(actor, target)
-
-		if generic.command.hitCheck(target, factors):
-			# Make a copy of target and place it
-			unit = copy.deepcopy(target)
-			unit['hp'] = 1
-			unit['sp'] = 0
-			unit['align'] = actor['align']
-			unit['name'] = 'Reflection'
-			
-			generic.command.addObjects(unit)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['specialSpaces'] = [[0,1]]
-
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return 100
-	
-	def description():
-		return ('To reflect is divine.\n\n'
-			'TODO.')
-	
-	def name():
-		return 'Divine Reflection'
-	
-	def icon():
-		return 'I_Mirror.png'
-
-	def tags():
-		return ['targets']
-class emogen:
-	def perform(actor, *targets):
-		# Amount of healing
-		amount = generic.extentInfluence.polynomial(100, 50)
-
-		for target in targets:
-			generic.command.raiseStat(target, 'hp', amount)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.self()
-
-		commandRange['aoe'] = shapes.diamond(1)
-
-		generic.range.free(commandRange)
-	
-	def cost():
-		return generic.extentInfluence.polynomial(30, 10, 10)
-	
-	def description():
-		return ('The healing is good.\n\n'
-			'TODO.')
-	
-	def name():
-		return 'Emogen'
-	
-	def icon():
-		return 'S_Magic_01.png'
-
-	def tags():
-		return ['targets', 'extends']
 
 
 

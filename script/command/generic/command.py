@@ -86,8 +86,11 @@ def hitCheck(target, factors):
 	return hit
 
 # Return true 50% of the time
-def coinFlip():
-	return random.random() < 0.5
+# If _times_ is given, flip that many times and return True if any are heads
+def coinFlip(times = 1):
+	for i in range(times):
+		if random.random() < 0.5:
+			return True
 
 
 'Other'
