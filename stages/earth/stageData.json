@@ -84,7 +84,7 @@
 		"jump" : 12,
 		"regen" : 5,
 		"commands" :	[["slash", "cleave"],
-						["ebber", "ribbonDash", "predatorsDescent"],
+						["ebber", "predatorsDescent"],
 						["dash", "dualSharpen"]]
 	},
 	{	"model" : "soldier",
@@ -108,7 +108,7 @@
 		"jump" : 12,
 		"regen" : 5,
 		"commands" :	[["slash", "cleave"],
-						["ebber", "ribbonDash", "predatorsDescent"],
+						["ebber", "predatorsDescent"],
 						["dash", "dualSharpen"]]
 	},
 	{	"model" : "soldier",
@@ -132,7 +132,7 @@
 		"jump" : 12,
 		"regen" : 5,
 		"commands" :	[["slash", "cleave"],
-						["ebber", "ribbonDash", "predatorsDescent"],
+						["ebber", "predatorsDescent"],
 						["dash", "dualSharpen"]]
 	},
 	{	"model" : "soldier",
@@ -156,7 +156,7 @@
 		"jump" : 12,
 		"regen" : 5,
 		"commands" :	[["slash", "gloryStrike", "cleave"],
-						["hugeSlash", "reignOfBlades"],
+						["hugeSlash"],
 						["strengthen", "dualSharpen"]]
 	},
 	{	"model" : "soldier",
@@ -180,7 +180,7 @@
 		"jump" : 12,
 		"regen" : 5,
 		"commands" :	[["slash", "gloryStrike", "cleave"],
-						["hugeSlash", "reignOfBlades"],
+						["hugeSlash"],
 						["strengthen", "dualSharpen"]]
 	},
 	{	"model" : "soldier",
@@ -204,7 +204,7 @@
 		"jump" : 12,
 		"regen" : 5,
 		"commands" :	[["slash", "gloryStrike", "cleave"],
-						["hugeSlash", "reignOfBlades"],
+						["hugeSlash"],
 						["strengthen", "dualSharpen"]]
 	},
 	{ 	"model" : "soldier",
@@ -227,7 +227,7 @@
 		"speed" : 25,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" : 	[["thrust", "guilltineSpiral", "fallingComet"],
+		"commands" : 	[["thrust", "guilltineSpiral"],
 						["lightningJavelin", "beesting"],
 						["focus", "firstAid"]]
 	},
@@ -251,7 +251,7 @@
 		"speed" : 25,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" : 	[["thrust", "guilltineSpiral", "fallingComet"],
+		"commands" : 	[["thrust", "guilltineSpiral"],
 						["lightningJavelin", "beesting"],
 						["focus", "firstAid"]]
 	},
@@ -275,7 +275,7 @@
 		"speed" : 25,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" : 	[["thrust", "guilltineSpiral", "fallingComet"],
+		"commands" : 	[["thrust", "guilltineSpiral"],
 						["lightningJavelin", "beesting"],
 						["focus", "firstAid"]]
 	},
@@ -300,8 +300,8 @@
 		"jump" : 12,
 		"regen" : 5,
 		"commands" : 	[["chop", "chasmMaw", "viciousQuake"],
-						["crackFoundation"],
-						["strengthen", "bloodRitual", "vileRitual"]]
+						["brainTrauma", "crackFoundation"],
+						["bloodRitual"]]
 	},
 	{ 	"model" : "soldier",
 		"name" : "Kiva the Bloodied",
@@ -324,8 +324,8 @@
 		"jump" : 12,
 		"regen" : 5,
 		"commands" : 	[["chop", "chasmMaw", "viciousQuake"],
-						["crackFoundation"],
-						["strengthen", "bloodRitual", "vileRitual"]]
+						["brainTrauma", "crackFoundation"],
+						["bloodRitual"]]
 	},
 	{ 	"model" : "soldier",
 		"name" : "Scarlight the Bloodied",
@@ -348,8 +348,8 @@
 		"jump" : 12,
 		"regen" : 5,
 		"commands" : 	[["chop", "chasmMaw", "viciousQuake"],
-						["crackFoundation"],
-						["strengthen", "bloodRitual", "vileRitual"]]
+						["brainTrauma", "crackFoundation"],
+						["bloodRitual"]]
 	},
 	{	"model" : "devoted",
 		"name" : "Afth the Destroyer",

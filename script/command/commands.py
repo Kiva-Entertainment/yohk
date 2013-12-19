@@ -675,40 +675,6 @@ class chop:
 
 	def tags():
 		return ['targets']
-class hurricaneSwath:
-	def perform(actor, *targets):
-		for target in targets:
-			factors = generic.commandFactors.axe(actor, target)
-
-			factors['force'] *= 1.1
-			factors['accuracy'] *= 1.2
-			
-			if generic.command.hitCheck(target, factors):
-				generic.command.standardAttack(target, factors)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.axe()
-
-		diamond = shapes.diamond(1, 1)
-		commandRange['aoe'] = shapes.push(diamond, [0,-1])
-
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return 19
-	
-	def description():
-		return ('Chop down an adjacent unit with your axe.\n\n'
-		 		'Basic physical attack.')
-	
-	def name():
-		return 'Hurricane Swath'
-	
-	def icon():
-		return 'W_Axe_003.png'
-
-	def tags():
-		return ['targets']
 class chasmMaw:
 	def perform(actor, *targets):
 		for target in targets:
@@ -776,7 +742,7 @@ class viciousQuake:
 
 	def tags():
 		return ['targets']
-class skullShatter:
+class brainTrauma:
 	def perform(actor, target):
 		factors = generic.commandFactors.axe(actor, target)
 
@@ -786,10 +752,12 @@ class skullShatter:
 			generic.command.standardAttack(target, factors)
 
 			# Lower target's intelligence
+			generic.command.raiseStat(target, 'willpower', -20)
 			generic.command.raiseStat(target, 'intelligence', -20)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.axe()
+
 		generic.range.rigid(commandRange)
 	
 	def cost():
@@ -800,7 +768,7 @@ class skullShatter:
 		 		'Basic physical attack plus lowered int.')
 	
 	def name():
-		return 'Skull Shatter'
+		return 'Brain Trauma'
 	
 	def icon():
 		return 'W_Axe_008.png'
@@ -817,8 +785,9 @@ class crackFoundation:
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
 
-				# Lower target's toughness
+				# Lower target's physical stats
 				generic.command.raiseStat(target, 'toughness', -20)
+				generic.command.raiseStat(target, 'strength', -20)
 
 	def determineRange():
 		commandRange = generic.rangeFactors.axe()
@@ -839,42 +808,6 @@ class crackFoundation:
 	
 	def icon():
 		return 'W_Mace_012.png'
-
-	def tags():
-		return ['targets']
-class forceDegeneration:
-	def perform(actor, *targets):
-		for target in targets:
-			factors = generic.commandFactors.axe(actor, target)
-			
-			factors['accuracy'] *= 1.5
-
-			if generic.command.hitCheck(target, factors):
-				generic.command.standardAttack(target, factors)
-
-				# Lower target's regen
-				generic.command.raiseStat(target, 'regen', -1)
-
-	def determineRange():
-		commandRange = generic.rangeFactors.axe()
-
-		diamond = shapes.diamond(1)
-		commandRange['aoe'] = shapes.push(diamond, [0,1])
-
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return 57
-	
-	def description():
-		return ('Shatter an adjacent unit\'s skull with a mighty swing of your axe.\n\n'
-		 		'Basic physical attack plus lowered int.')
-	
-	def name():
-		return 'Forced Degeneration'
-	
-	def icon():
-		return 'W_Mace_014.png'
 
 	def tags():
 		return ['targets']
@@ -1732,7 +1665,7 @@ class icePrison:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(14, 8, 5)
+		return generic.extentInfluence.polynomial(14, 6, 6)
 	
 	def description():
 		return ('Enclose nearby unit in ice, lowering their movement.' + '\n\n'

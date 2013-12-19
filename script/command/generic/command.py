@@ -41,6 +41,9 @@ def regen(unit):
 def raiseStat(unit, stat, amount):
 	unit[stat] += round(amount)
 	
+	if unit[stat] < 0:
+		unit[stat] = 0
+
 	storeResult.statChange(stat, amount, unit)
 
 # Multiply a stat by an amount
