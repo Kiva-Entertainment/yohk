@@ -744,6 +744,10 @@ class pacify:
 	def perform(actor, target):
 		factors = generic.commandFactors.magic(actor, target)
 		
+		# If target is a base, command should miss
+		if target['model'] == 'base':
+			factors = generic.commandFactors.miss()
+
 		if generic.command.hitCheck(target, factors):
 			# Lower target's actions by 1
 			generic.command.raiseStat(target, 'act', -1)

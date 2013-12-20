@@ -45,3 +45,12 @@ def magic(actor, target):
 			'resist' : target['willpower'],
 			'accuracy' : actor['focus'],
 			'evasion' : target['agility']}
+
+'Other'
+# Command should necessarily miss
+def miss():
+	return {'force' : 0,
+			'resist' : 0,
+			'accuracy' : 0,
+			'evasion' : 1000}
+
