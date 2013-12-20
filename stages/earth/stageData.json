@@ -83,9 +83,9 @@
 		"speed" : 25,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["slash", "cleave"],
+		"commands" :	[["slash", "hugeSlash", "cleave"],
 						["ebber", "predatorsDescent"],
-						["dash", "dualSharpen"]]
+						["dualSharpen"]]
 	},
 	{	"model" : "soldier",
 		"name" : "Karis, Blade Dancer",
@@ -107,9 +107,9 @@
 		"speed" : 25,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["slash", "cleave"],
+		"commands" :	[["slash", "hugeSlash", "cleave"],
 						["ebber", "predatorsDescent"],
-						["dash", "dualSharpen"]]
+						["dualSharpen"]]
 	},
 	{	"model" : "soldier",
 		"name" : "Rish, Blade Dancer",
@@ -131,9 +131,9 @@
 		"speed" : 25,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["slash", "cleave"],
+		"commands" :	[["slash", "hugeSlash", "cleave"],
 						["ebber", "predatorsDescent"],
-						["dash", "dualSharpen"]]
+						["dualSharpen"]]
 	},
 	{	"model" : "soldier",
 		"name" : "Ao the General",

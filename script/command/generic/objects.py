@@ -46,7 +46,7 @@ def bird():
 		'willpower' : 20,
 		'focus' : 0,
 		'agility' : 0,
-		'speed' : 30,
+		'speed' : 25,
 		'jump' : 100,
 		'regen' : 0,
 		'commands' : [[]]
@@ -57,8 +57,8 @@ def flame():
 		'model' : 'flame',
 		'name' : 'Flame',
 		'align' : 'neutral',
-		'health' : 200,
-		'hp' : 200,
+		'health' : 300,
+		'hp' : 300,
 		'spirit' : 200,
 		'sp' : 0,
 		'move' : 0,
@@ -71,7 +71,7 @@ def flame():
 		'willpower' : 0,
 		'focus' : 100,
 		'agility' : 0,
-		'speed' : 50,
+		'speed' : 25,
 		'jump' : 0,
 		'regen' : 25,
 		'commands' : [['flameBarrage', 'livingFlame']]
@@ -97,7 +97,7 @@ def ice():
 		'willpower' : 100,
 		'focus' : 100,
 		'agility' : 0,
-		'speed' : 50,
+		'speed' : 25,
 		'jump' : 0,
 		'regen' : 13,
 		'commands' : [['iceShard', 'icePrison', 'crystallineCluster']]

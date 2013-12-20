@@ -118,3 +118,19 @@ def addObjects(*units):
 
 		storeResult.storeText(unit['position'], 'Poof!')
 
+# Make given unit lose any occurences of the given skill
+def loseCommand(unit, commandName):
+	# New list of lists of commands that unit has
+	newCommands = []
+
+	# Units commands are seperated into lists, go through each of those lists
+	for commandList in unit['commands']:
+
+		# Change the list to not include the given commandName
+		newList = list(filter((commandName).__ne__, commandList))
+		# Only add list if it isn't empty
+		if newList != []:
+			newCommands.append(newList)
+
+	unit['commands'] = newCommands
+
