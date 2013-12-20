@@ -51,8 +51,6 @@ def fromUnitMoving():
 # <Cursor is selecting a a target for actor's command
 # Return cursor to actor, open commandSelect
 def fromUnitActing():
-	moveCursorToActor()
-	
 	# Clear data about which spaces can be targetted
 	logic.globalDict['spaceTarget'] = []
 	
