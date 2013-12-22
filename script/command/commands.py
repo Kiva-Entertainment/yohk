@@ -1822,6 +1822,9 @@ class deploy:
 	def perform(actor):
 		choice = logic.globalDict['commandChoices'][0]['value']
 		unit = choice
+		# TODO(kgeffen) This is included because, as scaffolding, generic units are deployed, and aren't removed
+		# from list of undeployed units. Once units can only be added once, remove the followind line
+		unit = copy.deepcopy(choice)
 
 		generic.command.addObjects(unit)
 	

@@ -113,7 +113,9 @@ def addObjects(*units):
 		inactiveUnits = logic.globalDict['inactiveUnits']
 		for i in range(0, len(inactiveUnits)):
 			if unit == inactiveUnits[i]:
-				del inactiveUnits[i]
+				# TODO(kgeffen) In version 0.3, as scaffolding, generic units are created instead of
+				# specific characters. Once specific characters exist, uncomment deletion
+				#del inactiveUnits[i]
 				break
 
 		storeResult.storeText(unit['position'], 'Poof!')
