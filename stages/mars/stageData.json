@@ -119,7 +119,7 @@
 		"regen" : 5,
 		"commands" :	[["slash", "hugeSlash", "cleave"],
 						["ebber", "predatorsDescent"],
-						["dualSharpen"]]
+						["dualSharpen", "dash"]]
 	},
 	{	"model" : "soldier",
 		"name" : "Glorious Captain",
@@ -237,12 +237,12 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["iceShard", "aeroImpact"],
+		"commands" : 	[["iceShard", "blessedWave"],
 						["icePrison", "crystallineCluster"],
 						["study", "typhoon"]]
 	},
 	{	"model" : "devoted",
-		"name" : "Phantasm Mage",
+		"name" : "Luminous Mage",
 		"align" : "solarServants",
 		"health" : 800,
 		"hp" : 800,
@@ -261,9 +261,9 @@
 		"speed" : 25,
 		"jump" : 10,
 		"regen" : 10,
-		"commands" : 	[["aeroImpact", "pacify"],
-						["birdcall", "divineReflection"],
-						["study", "emogen"]]
+		"commands" : 	[["aeroImpact", "chainLightning", "passageBolt"],
+						["birdcall"],
+						["study", "typhoon"]]
 	},
 	{	"model" : "devoted",
 		"name" : "Bog Mage",

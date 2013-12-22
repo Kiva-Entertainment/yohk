@@ -549,7 +549,7 @@ class brainTrauma:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 27
+		return 21
 	
 	def description():
 		return ('Shatter an adjacent unit\'s skull with a mighty swing of your axe.\n\n'
@@ -585,7 +585,7 @@ class crackFoundation:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 22
+		return 28
 	
 	def description():
 		return ('Shatter an adjacent unit\'s skull with a mighty swing of your axe.\n\n'
@@ -640,12 +640,14 @@ class flameBarrage:
 		return ['targets', 'extends']
 class meteor:
 	def perform(actor, *targets):
+		multiplier = generic.extentInfluence.polynomial(1, 1/2)
+
 		for target in targets:
 			factors = generic.commandFactors.magic(actor, target)
 			
 			# Raise atack's force and accuracy
-			factors['force'] *= generic.extentInfluence.polynomial(1, 1/2)
-			factors['accuracy'] *= generic.extentInfluence.polynomial(1, 1/2)
+			factors['force'] *= multiplier
+			factors['accuracy'] *= multiplier
 			
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
@@ -665,7 +667,7 @@ class meteor:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(38, 49, 20, 8)
+		return generic.extentInfluence.polynomial(10, 49, 20, 8)
 	
 	def description():
 		return ('Call down a huge meteor from outer space.\n\n'
@@ -1017,7 +1019,7 @@ class aeroImpact:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(0, 13, 11)
+		return generic.extentInfluence.polynomial(0, 3, 9)
 	
 	def description():
 		return ('Send a burst of air at an adjacent unit.\n\n'
@@ -1273,12 +1275,15 @@ class crystallineCluster:
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
+		reach = generic.extentInfluence.polynomial(1, 1)
+		commandRange['range'] = shapes.diamond(reach, 1)
+
 		commandRange['specialSpaces'] = shapes.single()
 
-		generic.range.rigid(commandRange)
+		generic.range.free(commandRange)
 	
 	def cost():
-		return 100
+		return generic.extentInfluence.polynomial(100, 5, 5)
 	
 	def description():
 		return ('Make an ice crystal.')
@@ -1350,6 +1355,50 @@ class typhoon:
 
 	def tags():
 		return ['targets', 'extends']
+class blessedWave:
+	def perform(actor, *targets):
+		multiplier = generic.extentInfluence.polynomial(1, 1/3)
+
+		for target in targets:
+			factors = generic.commandFactors.magic(actor, target)
+			
+			factors['force'] *= multiplier
+			factors['accuracy'] *= multiplier
+
+			if generic.command.hitCheck(target, factors):
+				# If target is an enemy, damage it
+				# If target is an ally, heal it
+				if target['align'] != actor['align']:
+					generic.command.standardAttack(target, factors)
+				
+				else:
+					amount = 100 * multiplier
+					generic.command.raiseStat(target, 'hp', amount)
+
+
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		reach = generic.extentInfluence.polynomial(0, 1)
+		commandRange['aoe'] = shapes.diamond(reach)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(0, 24, 17, 7)
+	
+	def description():
+		return ('Pretty basic.')
+	
+	def name():
+		return 'Blessed Wave'
+	
+	def icon():
+		return 'S_Water_03.png'
+
+	def tags():
+		return ['targets', 'extends']
+
 
 'Shadow'
 class toxins:
