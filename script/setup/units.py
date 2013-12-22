@@ -7,7 +7,7 @@ from script import unitControl
 
 STAGE_DATA_FILENAME = 'stageData.json'
 # TODO(kgeffen) Remove once stage selection has been enabled
-TEMP_STAGE_NAME = 'earth'
+TEMP_STAGE_NAME = 'mars'
 
 def do():
 	filepath = logic.expandPath('//stages/') + TEMP_STAGE_NAME + '/' + STAGE_DATA_FILENAME
