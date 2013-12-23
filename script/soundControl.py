@@ -13,7 +13,7 @@ import aud
 # Play a sound with given name once
 # Sound wav file must exist in audio
 def play(soundName):
-	filepath = logic.expandPath('//audio/') + 'soundName' + '.wav'
+	filepath = logic.expandPath('//audio/') + soundName + '.wav'
 
 	device = aud.device()
 	factory = aud.Factory(filepath)
