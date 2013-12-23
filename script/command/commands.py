@@ -83,7 +83,7 @@ class gloryStrike:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 14
+		return 6
 	
 	def description():
 		return ('Strike an adjacent unit and gain strength from the glory of a righteous battle.' + '\n\n'
@@ -126,7 +126,7 @@ class predatorsDescent:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(15, 3, 1)
+		return generic.extentInfluence.polynomial(10, 3, 1)
 	
 	def description():
 		return ('Jump forward and slash a unit in your sightline.\n\n'
@@ -165,7 +165,7 @@ class ebber:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(2, 1, 1)
+		return generic.extentInfluence.polynomial(2, 0, 1)
 	
 	def description():
 		return ('Slash forward as you step backwards (Very zen).\n\n'
@@ -184,7 +184,7 @@ class hugeSlash:
 		for target in targets:
 			factors = generic.commandFactors.sword(actor, target)
 			
-			factors['force'] *= 1.5
+			factors['force'] *= 1.4
 
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
@@ -197,7 +197,7 @@ class hugeSlash:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 32
+		return 24
 	
 	def description():
 		return ('.')
@@ -258,7 +258,7 @@ class lightningJavelin:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(30, 30)
+		return generic.extentInfluence.polynomial(20, 20)
 	
 	def description():
 		return ('Basic spear attack.')
@@ -275,24 +275,24 @@ class beesting:
 	def perform(actor, target):
 		factors = generic.commandFactors.spear(actor, target)
 		
-		factors['force'] *= 0.6
-		factors['force'] *= 1.5
+		factors['force'] *= 0.5
+		factors['accuracy'] *= 1.5
 
 		if generic.command.hitCheck(target, factors):
 			# Attack
 			generic.command.standardAttack(target, factors)
 
 			# Lower target's defensive stats
-			generic.command.raiseStat(target, 'toughness', -10)
-			generic.command.raiseStat(target, 'willpower', -10)
-			generic.command.raiseStat(target, 'agility', -10)
+			generic.command.raiseStat(target, 'toughness', -20)
+			generic.command.raiseStat(target, 'willpower', -20)
+			generic.command.raiseStat(target, 'agility', -20)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.spear()
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 45
+		return 30
 	
 	def description():
 		return ('Lower attack than normal, but lowers defensive stats.')
@@ -310,8 +310,8 @@ class guilltineSpiral:
 		for target in targets:
 			factors = generic.commandFactors.spear(actor, target)
 			
-			factors['force'] *= 1.3
-			factors['accuracy'] *= 1.3
+			factors['force'] *= 1.4
+			factors['accuracy'] *= 1.4
 
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
@@ -325,7 +325,7 @@ class guilltineSpiral:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 29
+		return 30
 	
 	def description():
 		return ('Basic spear attack.')
@@ -385,7 +385,7 @@ class chasmMaw:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 36
+		return 20
 	
 	def description():
 		return ('Chop down an adjacent unit with your axe.\n\n'
@@ -404,7 +404,7 @@ class viciousQuake:
 		for target in targets:
 			factors = generic.commandFactors.axe(actor, target)
 			
-			factors['force'] *= 1.7
+			factors['force'] *= 1.8
 			factors['accuracy'] *= 1.8
 
 			if generic.command.hitCheck(target, factors):
@@ -413,14 +413,14 @@ class viciousQuake:
 	def determineRange():
 		commandRange = generic.rangeFactors.axe()
 
-		hollowSquare = shapes.rectangle(1, 1, True)
+		hollowSquare = shapes.rectangle(1, 1, hollow = True)
 		# Push square to be centered space behind (space in front of user)
 		commandRange['aoe'] = shapes.push(hollowSquare, [0,-1])
 
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 77
+		return 70
 	
 	def description():
 		return ('TODO.')
@@ -452,7 +452,7 @@ class brainTrauma:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 21
+		return 16
 	
 	def description():
 		return ('Shatter an adjacent unit\'s skull with a mighty swing of your axe.\n\n'
@@ -488,7 +488,7 @@ class crackFoundation:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 28
+		return 22
 	
 	def description():
 		return ('Shatter an adjacent unit\'s skull with a mighty swing of your axe.\n\n'
@@ -1305,84 +1305,6 @@ class blessedWave:
 	def tags():
 		return ['targets', 'extends']
 
-
-'Shadow'
-class toxins:
-	def perform(actor, *targets):
-		choice = logic.globalDict['commandChoices'][0]['value']
-		loweredStat = choice
-
-		for target in targets:
-			factors = generic.commandFactors.magic(actor, target)
-			
-			if generic.command.hitCheck(target, factors):
-				# Lower unit's given stat
-				generic.command.raiseStat(target, loweredStat, -10)
-
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['aoe'] = shapes.diamond(2, 1)
-
-		generic.range.free(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return ('Lower one of several stats.')
-	
-	def name():
-		return 'Toxins'
-	
-	def icon():
-		return 'S_Poison_01.png'
-
-	def determineChoices():
-		choices = logic.globalDict['commandChoices']
-
-		for stat in ['strength', 'intelligence', 'toughness', 'willpower', 'accuracy', 'agility']:
-				
-			pair = {'value' : stat,
-					'display' : stat.capitalize()}
-
-			choices.append(pair)
-
-	def tags():
-		return ['targets']
-
-
-# TODO(kgeffen) Add dying triggers and make bubbles burst when killed
-class bubble:
-	def perform(actor):
-		# Basic ice object
-		unit = generic.objects.bubble()
-		unit['align'] = actor['align']
-		
-		generic.command.addObjects(unit)
-
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['specialSpaces'] = shapes.single()
-
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return ('Make an exploding bubble.')
-	
-	def name():
-		return 'Bubble'
-	
-	def icon():
-		return 'S_Water_07.png'
-
-
-
-
 '''Items'''
 'Books'
 class study:
@@ -1405,29 +1327,6 @@ class study:
 	
 	def icon():
 		return 'W_Book_01.png'
-
-	def tags():
-		return ['targets']
-class tutor:
-	def perform(actor, target):
-		generic.command.regen(target)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return ('Teach an adjacent unit about life.\n\n'
-			'Regenerate the sp of user and an adjacent unit.')
-	
-	def name():
-		return 'Tutor'
-	
-	def icon():
-		return 'W_Book_06.png'
 
 	def tags():
 		return ['targets']
@@ -1628,7 +1527,7 @@ class eatFish:
 class firstAid:
 	def perform(actor, *targets):
 		for target in targets:
-			generic.command.raiseStat(target, 'hp', 50)
+			generic.command.raiseStat(target, 'hp', 100)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
@@ -1704,72 +1603,6 @@ class bloodRitual:
 
 	def tags():
 		return ['targets']
-class vileRitual:
-	def perform(actor):
-		# Hurt self
-		generic.command.raiseStat(actor, 'hp', -100)
-
-		# Make a Husk
-		unit = copy.deepcopy(actor)
-
-		unit['hp'] = 1
-		unit['health'] = 1
-		unit['sp'] = 0
-		unit['mv'] = unit['move']
-		unit['act'] = unit['actions']
-		unit['name'] = 'Husk'
-
-		generic.command.addObjects(unit)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['range'] = shapes.line(3)
-
-		commandRange['specialSpaces'] = shapes.single()
-
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return 100
-	
-	def description():
-		return ('Split your body and soul!\n\n'
-			'TODO.')
-	
-	def name():
-		return 'Vile Ritual'
-	
-	def icon():
-		return 'I_Bone.png'
-
-
-class craft:
-	def perform(actor):
-		unit = generic.objects.barrel()
-
-		generic.command.addObjects(unit)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['specialSpaces'] = shapes.single()
-
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return ('Make a barrel like pow!\n\n'
-			'TODO.')
-	
-	def name():
-		return 'Craft'
-	
-	def icon():
-		return 'I_Rock_01.png'
-
 
 
 '''Special'''
@@ -1813,31 +1646,4 @@ class deploy:
 				pair = {'value' : unit,
 						'display' : unit['name']}
 				choices.append(pair)
-class burst:
-	def perform(actor, *targets):
-		for target in targets:
-			factors = generic.commandFactors.magic(actor, target)
-
-			# Deal damage - Attack always hits
-			generic.command.standardAttack(target, factors)
-
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['aoe'] = shapes.diamond(1)
-
-		generic.range.free(commandRange)
-	
-	def cost():
-		return 0
-	
-	def description():
-		return ('POP!')
-	
-	def name():
-		return 'Burst'
-	
-	def icon():
-		return 'S_Water_07.png'
-
 
