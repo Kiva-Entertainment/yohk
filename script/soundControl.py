@@ -10,26 +10,16 @@ import aud
 # However, the bug rarely emerges, so it's not clear if it's solved
 # When it happens, all dynamically loaded images stop working
 
-if 'device' not in dir(logic):
-	logic.soundDevice = aud.device()
-if 'storedSounds' not in dir(logic):
-	logic.storedSounds = {}
-
 # Play a sound with given name once
 # Sound wav file must exist in audio
 def play(soundName):
-	# Determine if a factory for sound already exists
-	soundAlreadyStored = soundName in logic.storedSounds
+	filepath = logic.expandPath('//audio/') + 'soundName' + '.wav'
 
-	if not soundAlreadyStored:
-		storeSound(soundName)
+	device = aud.device()
+	factory = aud.Factory(filepath)
 
-	logic.soundDevice.play(logic.storedSounds[soundName])
+	try:
+		device.play(factory)
 
-# Store in storedSounds a pairing of the sound's name and its aud.Factory
-def storeSound(soundName):
-	# Make an aud.factory for sound
-	filepath = logic.expandPath('//audio/') + soundName + '.wav'
-	soundFactory = aud.Factory.file(filepath)
-
-	logic.storedSounds[soundName] = soundFactory
+	except aud.error:
+		print('Audio file {soundName} could not be read.')
