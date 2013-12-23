@@ -2,24 +2,38 @@
 from bge import logic
 import aud
 
-# TODO(kgeffen) When sounds are loaded, the files sometimes aren't handled correctly
-# Specifically, the error is "AUD_FileFactory: File couldn't be read"
-# I'm assuming that the file isn't closed properly, and I am unable to use
-# with statemenets because Factory doesn't have an __exit__ method.
-# Hopefully this new solution works because it only loads each sound once
-# However, the bug rarely emerges, so it's not clear if it's solved
-# When it happens, all dynamically loaded images stop working
+# The device which plays all sounds
+device = aud.device()
+# A dictionary of stored sounds in the form
+# { soundName : soundHandle }
+# NOTE(kgeffen) Handle is buffered
+storedSounds = {}
 
 # Play a sound with given name once
 # Sound wav file must exist in audio
 def play(soundName):
-	filepath = logic.expandPath('//audio/') + soundName + '.wav'
+	# Determine if a factory for sound already exists
+	soundAlreadyStored = soundName in storedSounds
 
-	device = aud.device()
+	if not soundAlreadyStored:
+		storeSound(soundName)
+
+	# Play sound from start
+	storedSounds[soundName].position = 0
+	storedSounds[soundName].resume()
+
+# Store in storedSounds a pairing of the sound's name and its handle
+def storeSound(soundName):
+	# Make a factory for sound
+	filepath = logic.expandPath('//audio/') + soundName + '.wav'
 	factory = aud.Factory(filepath)
 
-	try:
-		device.play(factory)
+	# Buffer the factory
+	bufferedFactory = aud.Factory.buffer(factory)
 
-	except aud.error:
-		print('Audio file {soundName} could not be read.')
+	# Get a handle for buffered factory
+	bufferedHandle = device.play(bufferedFactory, keep = True)
+	bufferedHandle.pause()
+
+	# Store the handle
+	storedSounds[soundName] = bufferedHandle
