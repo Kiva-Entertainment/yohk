@@ -238,52 +238,27 @@ class thrust:
 
 	def tags():
 		return ['targets']
-class frostSkewer:
-	def perform(actor, target):
-		factors = generic.commandFactors.spear(actor, target)
-		
-		if generic.command.hitCheck(target, factors):
-			# Attack
-			generic.command.standardAttack(target, factors)
-
-			# Lower target's mv by 1
-			generic.command.raiseStat(target, 'mv', -1)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.spear()
-		generic.range.free(commandRange)
-	
-	def cost():
-		return 10
-	
-	def description():
-		return ('Basic spear attack.')
-	
-	def name():
-		return 'Frost Skewer'
-	
-	def icon():
-		return 'W_Spear_015.png'
-
-	def tags():
-		return ['targets']
 class lightningJavelin:
 	def perform(actor, target):
 		factors = generic.commandFactors.spear(actor, target)
-		
-		if generic.command.hitCheck(target, factors):
-			# Attack
-			generic.command.standardAttack(target, factors)
 
-			# Raise user's act by 1
-			generic.command.raiseStat(actor, 'act', 1)
+		# Attack N times
+		numberTimes = generic.extentInfluence.polynomial(1, 1)
+		for i in range(numberTimes):
+
+			# Attack once
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
+
+		# Grant user an additional act this turn
+		generic.command.raiseStat(actor, 'act', 1)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.spear()
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 28
+		return generic.extentInfluence.polynomial(30, 30)
 	
 	def description():
 		return ('Basic spear attack.')
@@ -295,7 +270,7 @@ class lightningJavelin:
 		return 'W_Spear_016.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class beesting:
 	def perform(actor, target):
 		factors = generic.commandFactors.spear(actor, target)
@@ -363,78 +338,6 @@ class guilltineSpiral:
 
 	def tags():
 		return ['targets']
-class fallingComet:
-	def perform(actor, *targets):
-		for target in targets:
-			factors = generic.commandFactors.spear(actor, target)
-			
-			factors['force'] = 1.6
-			factors['accuracy'] = 1.6
-
-			if generic.command.hitCheck(target, factors):
-				generic.command.standardAttack(target, factors)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.spear()
-
-		commandRange['range'] = [[0, 1]]
-
-		length = 3
-		commandRange['aoe'] = shapes.line(length)
-
-		commandRange['specialSpaces'] = [[0, length]]
-
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return 83
-	
-	def description():
-		return ('Basic spear attack.')
-	
-	def name():
-		return 'Falling Comet'
-	
-	def icon():
-		return 'W_Spear_014.png'
-
-	def tags():
-		return ['targets']
-class momentousDescent:
-	def perform(actor, *targets):
-		for target in targets:
-			factors = generic.commandFactors.spear(actor, target)
-			
-			factors['force'] *= 1.4
-			factors['accuracy'] *= 1.4
-
-			if target != actor:
-				if generic.command.hitCheck(target, factors):
-					generic.command.standardAttack(target, factors)
-	
-	def determineRange(): 
-		commandRange = generic.rangeFactors.spear()
-
-		commandRange['range'] = shapes.ring(2)
-		commandRange['aoe'] = shapes.x(1)
-
-		generic.range.free(commandRange)
-	
-	def cost():
-		return 33
-	
-	def description():
-		return ('Basic spear attack.')
-	
-	def name():
-		return 'Momentous Descent'
-	
-	def icon():
-		return 'W_Spear_003.png'
-
-	def tags():
-		return ['targets']
-
 
 'Axe'
 class chop:
@@ -869,12 +772,15 @@ class chainLightning:
 	def perform(actor, target):
 		factors = generic.commandFactors.lightning(actor, target)
 
-		if generic.command.hitCheck(target, factors):
-			# Attack
-			generic.command.standardAttack(target, factors)
-			
-			# Grant user +1 action
-			generic.command.raiseStat(actor, 'act', 1)
+		# Attack N times
+		numberTimes = generic.extentInfluence.polynomial(1, 1)
+		for i in range(numberTimes):
+			# Attack once
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
+		
+		# Grant user +1 action
+		generic.command.raiseStat(actor, 'act', 1)
 
 	def determineRange():
 		commandRange = generic.rangeFactors.lightning()
@@ -882,7 +788,7 @@ class chainLightning:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 23
+		return generic.extentInfluence.polynomial(25, 25)
 	
 	def description():
 		return ('.')
@@ -894,7 +800,7 @@ class chainLightning:
 		return 'S_Thunder_05.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class passageBolt:
 	def perform(actor, target):
 		factors = generic.commandFactors.lightning(actor, target)
