@@ -22,18 +22,21 @@ def play(soundName):
 	storedSounds[soundName].position = 0
 	storedSounds[soundName].resume()
 
+# Stop any sound handles to prevent memory leak
+# Called by exit.py as game exits
+def exit():
+	for sound in storedSounds.values():
+		sound.stop()
+
 # Store in storedSounds a pairing of the sound's name and its handle
 def storeSound(soundName):
 	# Make a factory for sound
 	filepath = logic.expandPath('//audio/') + soundName + '.wav'
 	factory = aud.Factory(filepath)
 
-	# Buffer the factory
-	bufferedFactory = aud.Factory.buffer(factory)
-
 	# Get a handle for buffered factory
-	bufferedHandle = device.play(bufferedFactory, keep = True)
-	bufferedHandle.pause()
+	handle = device.play(factory, keep = True)
+	handle.pause()
 
 	# Store the handle
-	storedSounds[soundName] = bufferedHandle
+	storedSounds[soundName] = handle
