@@ -12,9 +12,6 @@ def attempt(cont):
 	if cont.sensors['xKey'].positive:
 		do()
 
-		# Also perform cleanup between turns
-		cleanup.do()
-
 def do():
 	time = logic.globalDict['time']
 	
@@ -32,11 +29,10 @@ def do():
 
 	churnUntilTurnWithActor(time)
 
-	# Reset log of unit movement
-	logic.globalDict['moveLog'] = []
-
 	displayTurnOrder.do()
 
+	# Perform any necessary cleanup between turns
+	cleanup.do()
 
 # Remove turns with no actors until current turn has actor(s)
 def churnUntilTurnWithActor(time):

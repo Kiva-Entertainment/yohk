@@ -11,6 +11,9 @@ from script import marker
 def do():
 	status = logic.globalDict['cursor']
 
+	# Reset log of unit movement
+	logic.globalDict['moveLog'] = []
+
 	if status == 'selecting':
 		return
 
