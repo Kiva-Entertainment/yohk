@@ -39,11 +39,12 @@ def regen(unit):
 'Basic results of commands'
 # Raise one of unit's stats by an amount
 def raiseStat(unit, stat, amount):
+	# Don't lower stat to less than 0
+	if -amount > unit[stat]:
+		amount = -unit[stat]
+
 	unit[stat] += round(amount)
 	
-	if unit[stat] < 0:
-		unit[stat] = 0
-
 	storeResult.statChange(stat, amount, unit)
 
 # Multiply a stat by an amount
