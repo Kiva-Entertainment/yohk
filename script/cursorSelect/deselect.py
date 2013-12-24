@@ -7,17 +7,11 @@ from script import sceneControl, marker, objectControl, getPosition, undoMove
 from script.cursorSelect import select
 
 def attempt(cont):
-	# NOTE(kgeffen) sensor 'xKey' belongs to timeControl
-	# To avoid unintuive implementation detail, it is connected to
-	# cursorSelection controller that calls this script instead
-	# of churn.py calling deselect.do()
-	if cont.sensors['xKey'].positive:
-		do(turnChanging = True)
-	elif cont.sensors['wKey'].positive:
+	if cont.sensors['wKey'].positive:
 		do()
 
 # Handle deselection from different contexts (Choosing target, moving, etc.)
-def do(turnChanging = False):
+def do():
 	# What the cursor is doing currently
 	status = logic.globalDict['cursor']
 	
@@ -31,7 +25,7 @@ def do(turnChanging = False):
 	
 	else:
 		# Selecting command target
-		fromUnitActing(turnChanging)
+		fromUnitActing()
 
 
 # <No unit is selected, cursor is searching for unit to selected
@@ -52,11 +46,7 @@ def fromUnitMoving():
 
 # <Cursor is selecting a a target for actor's command
 # Return cursor to actor, open commandSelect
-# If deselect caused by turn ending, don't move cursor
-def fromUnitActing(turnChanging):
-	if not turnChanging:
-		moveCursorToActor()
-	
+def fromUnitActing():
 	# Clear data about which spaces can be targetted
 	logic.globalDict['spaceTarget'] = []
 	

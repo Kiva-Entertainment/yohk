@@ -1,7 +1,7 @@
 # Churn through entries in time until turn with actors comes up
 from bge import logic
 
-from script.time import addNext, upkeep, displayTurnOrder
+from script.time import addNext, upkeep, displayTurnOrder, cleanup
 
 # Number of entries in time array
 # NOTE(kgeffen) Add 1 because turn[0] is current turn,
@@ -11,6 +11,9 @@ QUANTITY_ENTRIES = 100 + 1
 def attempt(cont):
 	if cont.sensors['xKey'].positive:
 		do()
+
+		# Also perform cleanup between turns
+		cleanup.do()
 
 def do():
 	time = logic.globalDict['time']
