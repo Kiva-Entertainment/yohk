@@ -22,12 +22,6 @@ def play(soundName):
 	storedSounds[soundName].position = 0
 	storedSounds[soundName].resume()
 
-# Stop any sound handles to prevent memory leak
-# Called by exit.py as game exits
-def exit():
-	for sound in storedSounds.values():
-		sound.stop()
-
 # Store in storedSounds a pairing of the sound's name and its handle
 def storeSound(soundName):
 	# Make a factory for sound
