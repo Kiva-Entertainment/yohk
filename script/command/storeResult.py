@@ -10,14 +10,18 @@ def storeText(space, text):
 
 # Store result of stat change in commandResults dictionary
 def statChange(stat, delta, unit):
-	# Space that result should be displayed
-	space = unit['position']
 
-	# Form the (amount of change) portion of the text
-	deltaText = formDeltaText(delta)
-	text = stat + ' ' + deltaText
-	
-	storeText(space, text)
+	# Don't store stat change of 0
+	if round(delta) != 0:
+
+		# Space that result should be displayed
+		space = unit['position']
+
+		# Form the (amount of change) portion of the text
+		deltaText = formDeltaText(delta)
+		text = stat + ' ' + deltaText
+		
+		storeText(space, text)
 
 # Form the 'amount changed' portion of the displayed text
 # Ex: '+12' portion of display 'Agility +12'
