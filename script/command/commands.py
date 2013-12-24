@@ -1,5 +1,8 @@
 # Contains all of the damage and range calculations for all commands
 
+# TODO(kgeffen) Remove range descriptions in command descriptions once
+# visual display of range exists
+
 # Dynamically called by commandControl.py
 # NOTE(kgeffen) Class names start with lowercase for ease of use
 from bge import logic
@@ -25,8 +28,8 @@ class slash:
 		return 0
 	
 	def description():
-		return ('Slash an adjacent unit with your sword.' + '\n\n'
-		 		'Basic sword attack.')
+		return ('Is there ever an escape from the familiarity and guilty comfort of conflict?\n\n'
+		 		'Basic sword attack')
 	
 	def name():
 		return 'Slash'
@@ -53,8 +56,8 @@ class cleave:
 		return 52
 	
 	def description():
-		return ('Cleave the body of a unit beside you.\n\n'
-		 		'Powerful sword attack.\n'
+		return ('With a mighty swing, cleave anything beside you in 2.\n\n'
+				'Basic sword attack\n'
 		 		'200% damage')
 	
 	def name():
@@ -81,12 +84,12 @@ class gloryStrike:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 6
+		return 8
 	
 	def description():
-		return ('Strike an adjacent unit and gain strength from the glory of a righteous battle.\n\n'
-		 		'Basic sword attack.\n'
-		 		'User strength +8')
+		return ('The battle rages against the unjust and the vile. In such a time, can glory be found anywhere but in battle?\n\n'
+		 		'Basic sword attack\n'
+		 		'+8 Strength')
 	
 	def name():
 		return 'Glory Strike'
@@ -114,20 +117,22 @@ class predatorsDescent:
 		commandRange = generic.rangeFactors.sword()
 		
 		# Hit units in sightline from actor that are not adjacent (to actor)
-		offset = [0, generic.extentInfluence.polynomial(1, 1)]
+		offset = [0, generic.extentInfluence.polynomial(0, 1)]
 		commandRange['range'] = shapes.push(shapes.single(), offset)
 
 		# Space to move to
-		commandRange['specialSpaces'] = [[0,-1]]
+		# TODO(kgeffen) Allow 'specialSpace' to be in same space as user
+		if logic.globalDict['extent'] > 0:
+			commandRange['specialSpaces'] = [[0,-1]]
 		
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(10, 3, 1)
+		return generic.extentInfluence.polynomial(10, 2, 1)
 	
 	def description():
-		return ('Something poetic and deep about birds and stuff lol.\n\n'
-				'Move forward X spaces, strike unit in front.\n'
+		return ('The world is yours to conquer and control. Descend as a bird would upon its prey.\n\n'
+				'Jump forward X spaces, strike the unit in front of you\n'
 				'120% Damage')
 	
 	def name():
@@ -142,31 +147,36 @@ class ebber:
 	def perform(actor, target):
 		factors = generic.commandFactors.sword(actor, target)
 		
-		factors['force'] *= generic.extentInfluence.polynomial(1, 1/10)
+		factors['accuracy'] *= 1.2
 
 		if generic.command.hitCheck(target, factors):
 			generic.command.standardAttack(target, factors)
 		
-		# Step backwards 1 space
-		generic.command.move(actor)
+		# Move backwards
+		# TODO(kgeffen) Remove conditional once special space can be in same space as actor
+		if logic.globalDict['extent'] > 0:
+			generic.command.move(actor)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.sword()
 		
 		# Space X spaces behind actor
-		distance = generic.extentInfluence.polynomial(1, 1)
+		distance = generic.extentInfluence.polynomial(0, 1)
 		# NOTE(kgeffen) distance + 1 since -1 = actor's space,
 		# not space behind actor
-		commandRange['specialSpaces'] = [[0, -( distance + 1 )]]
+		# TODO(kgeffen) Allow special space to be on same space as actor
+		if distance > 0:
+			commandRange['specialSpaces'] = [[0, -( distance + 1 )]]
 		
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(2, 0, 1)
+		return generic.extentInfluence.polynomial(1, 1, 1)
 	
 	def description():
-		return ('Slash forward as you step backwards (Very zen).\n\n'
-				'Strike unit in front, move back X spaces.')
+		return ('Even as you enter the fray, you feel the ineffable pull from the horrors of battle.\n\n'
+				'Strike unit beside you, move back X spaces\n'
+				'120% Accuracy')
 	
 	def name():
 		return 'Ebber'
@@ -194,11 +204,11 @@ class hugeSlash:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 32
+		return 36
 	
 	def description():
-		return ('Big like huge.\n\n'
-				'Hits all units in 3 spaces in front.\n'
+		return ('Bring your huge sword down upon your foes.\n\n'
+				'Hit up to 3 units in your sightline\n'
 				'130% Damage')
 	
 	def name():
@@ -226,8 +236,8 @@ class thrust:
 		return 0
 	
 	def description():
-		return ('Thrust your spear at somebody.\n\n'
-				'Basic spear damage against unit 2 spaces away')
+		return ('Thrust your spear at a nearby unit.\n\n'
+				'Hits any unit 2 spaces away')
 	
 	def name():
 		return 'Thrust'
@@ -261,8 +271,8 @@ class lightningJavelin:
 	
 	def description():
 		return ('Channel the storm into your spear and strike!\n\n'
-				'Basic spear attack X times.\n'
-				'User can act one more time this turn.')
+				'Basic spear attack X + 1 times\n'
+				'+1 Act')
 	
 	def name():
 		return 'Lightning Javelin'
@@ -293,13 +303,13 @@ class beesting:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 35
+		return 32
 	
 	def description():
-		return ('Venomous spear strike.\n\n'
-				'-20% Toughness, willpower, agility on contact.\n'
+		return ('Venomous spear strike. Sting like a bee.\n\n'
 				'50% Damage\n'
-				'150% Accuracy')
+				'150% Accuracy\n'
+				'-20% Toughness, willpower, agility for target')
 	
 	def name():
 		return 'Beesting'
@@ -329,11 +339,11 @@ class guilltineSpiral:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 30
+		return 38
 	
 	def description():
-		return ('Drop the guilltine on all units 2 spaces away.\n\n'
-				'Powerful spear attack against all units 2 spaces away.\n'
+		return ('Judgement is made and the punishment is delivered.\n\n'
+				'Powerful spear attack against all units 2 spaces from you\n'
 				'140% Damage\n'
 				'140% Accuracy')
 	
@@ -362,8 +372,8 @@ class chop:
 		return 0
 	
 	def description():
-		return ('Chop down an adjacent unit with your axe.\n\n'
-		 		'Basic axe attack.')
+		return ('Chop down anything beside you with your axe.\n\n'
+		 		'Basic axe attack')
 	
 	def name():
 		return 'Chop'
@@ -392,11 +402,11 @@ class chasmMaw:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 43
+		return 38
 	
 	def description():
-		return ('Chop down an adjacent unit with your axe.\n\n'
-		 		'Hit all units up to 3 spaces away with your axe.\n'
+		return ('Split the ground to create a gaping maw, hungry for blood.\n\n'
+		 		'Hit up to 3 units in your sightline\n'
 		 		'120% Damage\n'
 		 		'120% Accuracy')
 	
@@ -432,8 +442,8 @@ class viciousQuake:
 		return 88
 	
 	def description():
-		return ('Break the earth with a powerful swing of your axe.\n\n'
-				'Axe damage against all unit surrounding user.\n'
+		return ('Break the earth with an incedibly powerful swing of your axe.\n\n'
+				'Hit all units surrounding you\n'
 				'180% Damage\n'
 				'180% Accuracy')
 	
@@ -468,9 +478,8 @@ class brainTrauma:
 	
 	def description():
 		return ('Shatter an adjacent unit\'s skull with a mighty swing of your axe.\n\n'
-		 		'Axe attack.\n'
-		 		'-20% Willpower, intelligence on contact.\n'
-		 		'120% Accuracy')
+		 		'120% Accuracy\n'
+		 		'-20% Willpower, intelligence for target.')
 	
 	def name():
 		return 'Brain Trauma'
@@ -505,10 +514,10 @@ class crackFoundation:
 		return 27
 	
 	def description():
-		return ('Shatter an adjacent unit\'s skull with a mighty swing of your axe.\n\n'
-		 		'Axe attack.\n'
-		 		'-20% Toughness, strength on contact.\n'
-		 		'120% Accuracy')
+		return ('Shatter everything those before you hold as true. Leave them weak and wounded.\n\n'
+		 		'Hit up to 3 units in line in front of you\n'
+		 		'120% Accuracy\n'
+		 		'-20% Toughness, strength for target')
 	
 	def name():
 		return 'Crack Foundation'
@@ -1357,8 +1366,8 @@ class dash:
 		return 0
 	
 	def description():
-		return ('Hightail it out of there.\n\n'
-				'Move an additional 2 spaces this turn.')
+		return ('Concentrate on moving. If you can run, you can survive.\n\n'
+				'+2 Mv')
 	
 	def name():
 		return 'Dash'
@@ -1384,8 +1393,8 @@ class strengthen:
 		return 0
 	
 	def description():
-		return ('Got strong, son.\n\n'
-			'Raise user\'s strength by 10.')
+		return ('Reject weakness and grow strong.\n\n'
+				'+10 Strength')
 	
 	def name():
 		return 'Strengthen'
@@ -1431,7 +1440,7 @@ class focus:
 	
 	def description():
 		return ('Just breath, you can do this.\n\n'
-			'Raise user\'s focus by 10.')
+				'+10 Focus')
 	
 	def name():
 		return 'Focus'
@@ -1553,7 +1562,9 @@ class firstAid:
 		return 0
 	
 	def description():
-		return ('IDK bandages and kisses.')
+		return ('Treat the wounded.\n\n'
+				'Heal up to 3 units in line in front of you\n'
+				'Heal each unit by 100 hp')
 	
 	def name():
 		return 'First Aid'
@@ -1576,8 +1587,8 @@ class dualSharpen:
 		return 0
 	
 	def description():
-		return ('Sharpen you weapon against a unit beside you.\n\n'
-				'+8 Strength for self and target.')
+		return ('Sharpen your blade against the weapon of a unit beside you.\n\n'
+				'+8 Strength for both units')
 	
 	def name():
 		return 'Dual-Sharpen'
@@ -1605,8 +1616,11 @@ class bloodRitual:
 		return 0
 	
 	def description():
-		return ('Pay for power in blood.\n\n'
-			'TOODO.')
+		return ('To be powerful, to be great, you must suffer.\n\n'
+				'Pay 1/6th of your hp\n'
+				'Regenerate you sp\n'
+				'+20 Strength\n'
+				'+20 Intelligence')
 	
 	def name():
 		return 'Blood Ritual'
