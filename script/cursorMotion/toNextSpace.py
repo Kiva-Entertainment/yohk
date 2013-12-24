@@ -6,48 +6,98 @@ from bge import logic
 from script import check, getPosition, objectControl, commandControl
 
 def attempt(cont):
-	if cont.sensors['fKey'].positive:
-		do()
+	fKey = cont.sensors['fKey'].positive
+	gKey = cont.sensors['gKey'].positive
 
-def do():
+	if fKey:
+		do(strict = False)
+	elif gKey:
+		do(strict = True)
+
+def do(strict):
 	# What the cursor is doing
 	status = logic.globalDict['cursor']
 	
-	selectingActor = status == 'selecting'
-	# TODO(kgeffen) Status should be 'command' instead of the specific command
-	# and seperate gd should exist for which command
-	selectingCommandTarget = status != 'wait' and status != 'move'
+	# Cursor is selecting a unit to act/move
+	if status == 'selecting':
+		toNextActor(strict)
 
-	if selectingActor:
-		toNextActor()
-	
-	elif selectingCommandTarget:
+	# Cursor is selecting a space for selected unit to move to
+	elif status == 'move':
+		toActor()
+
+	# Cursor is selecting a space to target with selected command
+	else:
 		toNextTargetableSpace()
 
+# Move cursor to selected unit
+def toActor():
+	actor = logic.globalDict['actor']
+
+	position = getPosition.onGround(actor['position'])
+
+	moveToPosition(position)
 
 # Move cursor to the space where the (next acting unit this turn) is
-def toNextActor():
-	# Actors are grouped based on alignment
-	groups = logic.globalDict['time'][0]
-	if groups != []:
+def toNextActor(strict):
+	# Units that act this turn (First turn, first group in turn)
+	# NOTE(kgeffen) This relies on current turn always having actors
+	actors = logic.globalDict['time'][0][0]
 
-		actors = groups[0]
-		if actors != []:
-			# Position that cursor will move to
-			position = getPosition.onGround(actors[0]['position'])
-			
-			# Cursor moved (Wasn't already in position)
-			cursorMoved = moveToPosition(position)
-			
-			# NOTE(kgeffen) If cursor didn't move (is already at position),
-			# cycle actors once, then get new first unit's position
-			if not cursorMoved:
-				cycleList(actors)
-				
-				# This is the position of the newly cycled list of actors
-				position = getPosition.onGround(actors[0]['position'])
-				
-				moveToPosition(position)
+	# Cycle the list of actors until the first actor in list can move/act
+	# If strict is True, first actor must have remaining act, not just mv
+	# If no units are valid, return
+	validUnitExists = cycleUntilFirstUnitActs(actors, strict)
+	if not validUnitExists:
+		return
+
+	# Position that cursor will move to
+	position = getPosition.onGround(actors[0]['position'])
+	
+	# cursorMoves == True if cursor didn't start at _position_
+	cursorMoved = moveToPosition(position)
+
+	# NOTE(kgeffen) If cursor didn't move (was already at position),
+	# cycle units once, then get new first unit's position
+	if not cursorMoved:
+
+		# Cycle once so fresh entry is chosen
+		cycleList(actors)	
+		# NOTE(kgeffen) If code has gotten this far, valid unit must exist
+		# because last cycle would have returned if not
+		cycleUntilFirstUnitActs(actors, strict)
+		
+		# This is the position of the first unit in newly cycled list of actors
+		position = getPosition.onGround(actors[0]['position'])
+		
+		moveToPosition(position)
+
+	# NOTE(kgeffen) Necessarily cycle each time to ensure that
+	# if cursor moves to unit A, then I act with it, move cursor,
+	# next time I toNext, the cursor moves to unit B not A
+	cycleList(actors)
+
+# Cycle list of units until the first unit in the list can act or move this turn
+# If strict is True, first unit must act this turn (Not just mv)
+# Ex: strict == false will stop at a unit with 4mv + 0act, strict == true won't
+def cycleUntilFirstUnitActs(units, strict):
+
+	# NOTE(kgeffen) For loop runs up to length times, but since list is cycling,
+	# first entry of list is always the one being considered
+	for i in range(len(units)):
+
+		# Unit is valid if it has remaining actions
+		# If not strict, unit can also be valid if unit has remaining mv
+		valid = units[0]['act'] > 0
+		if not strict:
+			valid = valid or units[0]['mv'] > 0
+
+		# If first unit is valid, return true, otherwise, cycle list and try again
+		# NOTE(kgeffen) For loop ends after each unit checked, and returns False
+		if valid:
+			return True
+		else:
+			cycleList(units)
 
 # Move cursor to next space that could be selected as command target
 # TODO(kgeffen) Moves to any space in range, even if that space is not a valid target

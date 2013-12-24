@@ -6,14 +6,34 @@ from mathutils import Vector
 
 from script import getPosition, objectControl
 
-def attempt():
+# The number of game tics to wait between cursor movement if user if
+# holding down key
+WAIT_TIME = 6
+
+def attempt(cont):
+	# Wait time is the number of game tics that occur between cardinal movement
+	waitTime = cont.owner['waitTime']
+
 	cursor = objectControl.getFromScene('cursor', 'battlefield')
 
 	offset = getOffset()
 
-	if logic.globalDict['cursor'] != 'wait':
-		if offset is not None:
+	# If cursor isn't trying to move, keys have been released and wait time should reset
+	# to allow user to move by tapping directionals
+	if offset is None:
+		waitTime = 0
+
+	else:
+		# If cursor must wait before it can move, wait and decrement the wait time
+		if waitTime > 0:
+			waitTime -= 1
+		else:
 			do(cursor, offset)
+			# Reset timer till cursor can move again
+			waitTime = WAIT_TIME
+
+	# Reassign new waitime to owner's property
+	cont.owner['waitTime'] = waitTime
 
 def do(cursor, offset):
 	position = getNewPosition(cursor, offset)

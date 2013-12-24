@@ -41,6 +41,9 @@ def regen(unit):
 def raiseStat(unit, stat, amount):
 	unit[stat] += round(amount)
 	
+	if unit[stat] < 0:
+		unit[stat] = 0
+
 	storeResult.statChange(stat, amount, unit)
 
 # Multiply a stat by an amount
@@ -86,8 +89,11 @@ def hitCheck(target, factors):
 	return hit
 
 # Return true 50% of the time
-def coinFlip():
-	return random.random() < 0.5
+# If _times_ is given, flip that many times and return True if any are heads
+def coinFlip(times = 1):
+	for i in range(times):
+		if random.random() < 0.5:
+			return True
 
 
 'Other'
@@ -107,8 +113,26 @@ def addObjects(*units):
 		inactiveUnits = logic.globalDict['inactiveUnits']
 		for i in range(0, len(inactiveUnits)):
 			if unit == inactiveUnits[i]:
-				del inactiveUnits[i]
+				# TODO(kgeffen) In version 0.3, as scaffolding, generic units are created instead of
+				# specific characters. Once specific characters exist, uncomment deletion
+				#del inactiveUnits[i]
 				break
 
 		storeResult.storeText(unit['position'], 'Poof!')
+
+# Make given unit lose any occurences of the given skill
+def loseCommand(unit, commandName):
+	# New list of lists of commands that unit has
+	newCommands = []
+
+	# Units commands are seperated into lists, go through each of those lists
+	for commandList in unit['commands']:
+
+		# Change the list to not include the given commandName
+		newList = list(filter((commandName).__ne__, commandList))
+		# Only add list if it isn't empty
+		if newList != []:
+			newCommands.append(newList)
+
+	unit['commands'] = newCommands
 

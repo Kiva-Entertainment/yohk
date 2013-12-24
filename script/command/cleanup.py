@@ -21,6 +21,11 @@ def do():
 	actor = logic.globalDict['actor']
 	actor['act'] -= 1
 	consumeSp(actor)
+
+	# Reset extent
+	# NOTE(kgeffen) This must happen after sp consumed because
+	# sp consumption based on extent
+	logic.globalDict['extent'] = 0
 	
 	# Kill any units with hp <= 0
 	killDeadUnits()

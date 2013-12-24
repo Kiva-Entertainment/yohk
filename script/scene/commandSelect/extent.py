@@ -1,7 +1,7 @@
 # Alter the extent of the current command
 from bge import logic
 
-from script import commandControl
+from script import commandControl, soundControl
 from script.scene.commandSelect import setup
 
 # Raise or lower the extent of the current command by 1
@@ -33,6 +33,8 @@ def max(cont):
 				if commandControl.cost(command) > logic.globalDict['actor']['sp']:
 					if logic.globalDict['extent'] != 0:
 						logic.globalDict['extent'] -= 1
+					else:
+						soundControl.play('negative')
 					break
 
 				else:

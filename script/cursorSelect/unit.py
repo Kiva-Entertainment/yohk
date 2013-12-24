@@ -2,36 +2,24 @@
 # Display its move range and unit menu
 from bge import logic
 
-from script import check, moveRange, objectControl
+from script import moveRange, objectControl, unitControl
 
-def attempt():
-	cursor = objectControl.getFromScene('cursor', 'battlefield')
-	cursorPosition = cursor.worldPosition
-	
-	# Check each unit, if its position matches cursor position,
-	# and it acts this turn, select that unit
-	for unit in logic.globalDict['units']:
-		
-		if check.eq2D(cursorPosition, unit['position']):
-			if unitActsThisTurn(unit):
+def attempt(position):
+	unit = unitControl.get.inSpace(position)
 
-				do(unit)
-				break
+	if unit is not None and unitActsThisTurn(unit):
+		do(unit)
 
 def do(unit):
-	# While unit is selected, unitMenu is in control, and cursor is waiting
-	logic.globalDict['cursor'] = 'wait'
+	# Unit can now select a space to move to
+	logic.globalDict['cursor'] = 'move'
 	
-	# Set 'selected unit' to the number of the unit being selected
+	# Set unit selected as the current actor
 	logic.globalDict['actor'] = unit
 	
 	# Display and store list of spaces unit can move to
 	moveRange.determine.do(unit)
 	moveRange.display.do()
-	
-	# Open unitMenu
-	displayMenu()
-
 
 # Return true if unit acts this turn in first group (Turns seperated into groups by alignment)
 def unitActsThisTurn(unit):
@@ -41,7 +29,3 @@ def unitActsThisTurn(unit):
 	unitActsThisTurn = currentActors.count(unit) == 1
 	if unitActsThisTurn:
 		return True
-
-def displayMenu():
-	menu = objectControl.getFromScene('unitMenu', 'battlefield')
-	objectControl.show(menu)

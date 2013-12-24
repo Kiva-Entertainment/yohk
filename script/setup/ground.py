@@ -6,7 +6,7 @@ from script import objectControl
 
 STAGE_DATA_FILENAME = 'stageData.json'
 # TODO(kgeffen) Remove once stage selection has been enabled
-TEMP_STAGE_NAME = 'earth'
+TEMP_STAGE_NAME = 'mars'
 
 # Setup the ground mesh and all ground vars
 def do():

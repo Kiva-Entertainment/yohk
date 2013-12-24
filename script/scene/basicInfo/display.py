@@ -6,7 +6,7 @@ from script import dynamicMaterial, objectControl, alignControl, unitControl, sc
 
 TEXT_OBJECT_NAME = 'basicInfo_text'
 FACE_OBJECT_NAME = 'basicInfo_face'
-ICON_OBJECT_NAME = 'basicInfo_icon'
+ALIGN_ICON_OBJECT_NAME = 'basicInfo_iconAlign'
 BACKDROP_OBJECT_NAME = 'basicInfo_backdrop'
 
 def attempt():
@@ -39,10 +39,12 @@ def statsText(unit):
 	# <alignment>
 	# hp: <hp>/<health>
 	# sp: <sp>/<spirit>
+	# MV_ICON x<mv> ACT_ICON x<act
 	text = unit['name'] + '\n'
 	text += alignControl.name(unit['align']) + '\n\n'
 	text += 'hp: ' + str(unit['hp']) + '/' + str(unit['health']) + '\n'
-	text += 'sp: ' + str(unit['sp']) + '/' + str(unit['spirit'])
+	text += 'sp: ' + str(unit['sp']) + '/' + str(unit['spirit']) + '\n'
+	text += '     x' + str(unit['mv']) + '       x' + str(unit['act'])
 	
 	obj = objectControl.getFromScene(TEXT_OBJECT_NAME, 'basicInfo')
 	obj['Text'] = text
@@ -61,7 +63,7 @@ def alignmentIcon(unit):
 
 	path = logic.expandPath('//images/icons/' + filename)
 	
-	dynamicMaterial.switchMaterialsImage(path, ICON_OBJECT_NAME)
+	dynamicMaterial.switchMaterialsImage(path, ALIGN_ICON_OBJECT_NAME)
 
 # Change the color of the backdrop to match unit's alignment
 def backdropColor(unit):
