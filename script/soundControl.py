@@ -28,9 +28,12 @@ def storeSound(soundName):
 	filepath = logic.expandPath('//audio/') + soundName + '.wav'
 	factory = aud.Factory(filepath)
 
+	# Buffer the factory
+	bufferedFactory = aud.Factory.buffer(factory)
+
 	# Get a handle for buffered factory
-	handle = device.play(factory, keep = True)
-	handle.pause()
+	bufferedHandle = device.play(bufferedFactory, keep = True)
+	bufferedHandle.pause()
 
 	# Store the handle
-	storedSounds[soundName] = handle
+	storedSounds[soundName] = bufferedHandle
