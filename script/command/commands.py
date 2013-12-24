@@ -11,7 +11,6 @@ from script.command.generic import shapes
 '''Weapons'''
 'Sword'
 class slash:
-	# The most basic attack
 	def perform(actor, target):
 		factors = generic.commandFactors.sword(actor, target)
 		
@@ -27,7 +26,7 @@ class slash:
 	
 	def description():
 		return ('Slash an adjacent unit with your sword.' + '\n\n'
-		 		'Basic physical attack against adjacent unit.')
+		 		'Basic sword attack.')
 	
 	def name():
 		return 'Slash'
@@ -38,7 +37,6 @@ class slash:
 	def tags():
 		return ['targets']
 class cleave:
-	# Basic powerful attack
 	def perform(actor, target):
 		factors = generic.commandFactors.sword(actor, target)
 		
@@ -55,8 +53,9 @@ class cleave:
 		return 52
 	
 	def description():
-		return ('Strike an adjacent unit with a powerful sword technique.' + '\n\n'
-		 		'Powerful physical attack which deals twice as much damage as normal.')
+		return ('Cleave the body of a unit beside you.\n\n'
+		 		'Powerful sword attack.\n'
+		 		'200% damage')
 	
 	def name():
 		return 'Cleave'
@@ -67,7 +66,6 @@ class cleave:
 	def tags():
 		return ['targets']
 class gloryStrike:
-	# Hit adjacent unit, raise user's strength
 	def perform(actor, target):
 		factors = generic.commandFactors.sword(actor, target)
 		
@@ -86,9 +84,9 @@ class gloryStrike:
 		return 6
 	
 	def description():
-		return ('Strike an adjacent unit and gain strength from the glory of a righteous battle.' + '\n\n'
-		 		'Basic physical attack.' + '\n'
-				'Raises user\'s strength by 8 after it hits.')
+		return ('Strike an adjacent unit and gain strength from the glory of a righteous battle.\n\n'
+		 		'Basic sword attack.\n'
+		 		'User strength +8')
 	
 	def name():
 		return 'Glory Strike'
@@ -116,9 +114,8 @@ class predatorsDescent:
 		commandRange = generic.rangeFactors.sword()
 		
 		# Hit units in sightline from actor that are not adjacent (to actor)
-		reach = generic.extentInfluence.polynomial(1, 1)
-		offset = 1 # Spaces adjacent to (1 space away from) actor is not valid target
-		commandRange['range'] = shapes.line(reach, offset)
+		offset = [0, generic.extentInfluence.polynomial(1, 1)]
+		commandRange['range'] = shapes.push(shapes.single(), offset)
 
 		# Space to move to
 		commandRange['specialSpaces'] = [[0,-1]]
@@ -129,9 +126,9 @@ class predatorsDescent:
 		return generic.extentInfluence.polynomial(10, 3, 1)
 	
 	def description():
-		return ('Jump forward and slash a unit in your sightline.\n\n'
-				'Standard physical damage to a unit, move in front of that unit.' + '\n'
-				'Move farther if you spend more.')
+		return ('Something poetic and deep about birds and stuff lol.\n\n'
+				'Move forward X spaces, strike unit in front.\n'
+				'120% Damage')
 	
 	def name():
 		return "Predator's Descent"
@@ -169,7 +166,7 @@ class ebber:
 	
 	def description():
 		return ('Slash forward as you step backwards (Very zen).\n\n'
-			'Standard physical attack, move back X spaces.')
+				'Strike unit in front, move back X spaces.')
 	
 	def name():
 		return 'Ebber'
@@ -184,7 +181,7 @@ class hugeSlash:
 		for target in targets:
 			factors = generic.commandFactors.sword(actor, target)
 			
-			factors['force'] *= 1.4
+			factors['force'] *= 1.3
 
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
@@ -197,10 +194,12 @@ class hugeSlash:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 24
+		return 32
 	
 	def description():
-		return ('.')
+		return ('Big like huge.\n\n'
+				'Hits all units in 3 spaces in front.\n'
+				'130% Damage')
 	
 	def name():
 		return 'Huge Slash'
@@ -210,7 +209,6 @@ class hugeSlash:
 
 	def tags():
 		return ['targets']
-
 
 'Spear'
 class thrust:
@@ -228,7 +226,8 @@ class thrust:
 		return 0
 	
 	def description():
-		return ('Basic spear attack.')
+		return ('Thrust your spear at somebody.\n\n'
+				'Basic spear damage against unit 2 spaces away')
 	
 	def name():
 		return 'Thrust'
@@ -261,7 +260,9 @@ class lightningJavelin:
 		return generic.extentInfluence.polynomial(20, 20)
 	
 	def description():
-		return ('Basic spear attack.')
+		return ('Channel the storm into your spear and strike!\n\n'
+				'Basic spear attack X times.\n'
+				'User can act one more time this turn.')
 	
 	def name():
 		return 'Lightning Javelin'
@@ -283,19 +284,22 @@ class beesting:
 			generic.command.standardAttack(target, factors)
 
 			# Lower target's defensive stats
-			generic.command.raiseStat(target, 'toughness', -20)
-			generic.command.raiseStat(target, 'willpower', -20)
-			generic.command.raiseStat(target, 'agility', -20)
+			generic.command.scaleStat(target, 'toughness', 0.8)
+			generic.command.scaleStat(target, 'willpower', 0.8)
+			generic.command.scaleStat(target, 'agility', 0.8)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.spear()
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 30
+		return 35
 	
 	def description():
-		return ('Lower attack than normal, but lowers defensive stats.')
+		return ('Venomous spear strike.\n\n'
+				'-20% Toughness, willpower, agility on contact.\n'
+				'50% Damage\n'
+				'150% Accuracy')
 	
 	def name():
 		return 'Beesting'
@@ -328,7 +332,10 @@ class guilltineSpiral:
 		return 30
 	
 	def description():
-		return ('Basic spear attack.')
+		return ('Drop the guilltine on all units 2 spaces away.\n\n'
+				'Powerful spear attack against all units 2 spaces away.\n'
+				'140% Damage\n'
+				'140% Accuracy')
 	
 	def name():
 		return 'Guilltine Spiral'
@@ -356,7 +363,7 @@ class chop:
 	
 	def description():
 		return ('Chop down an adjacent unit with your axe.\n\n'
-		 		'Basic physical attack.')
+		 		'Basic axe attack.')
 	
 	def name():
 		return 'Chop'
@@ -371,8 +378,8 @@ class chasmMaw:
 		for target in targets:
 			factors = generic.commandFactors.axe(actor, target)
 
-			factors['force'] *= 1.3
-			factors['accuracy'] *= 1.3
+			factors['force'] *= 1.2
+			factors['accuracy'] *= 1.2
 			
 			if generic.command.hitCheck(target, factors):
 				generic.command.standardAttack(target, factors)
@@ -385,11 +392,13 @@ class chasmMaw:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 20
+		return 43
 	
 	def description():
 		return ('Chop down an adjacent unit with your axe.\n\n'
-		 		'Basic physical attack.')
+		 		'Hit all units up to 3 spaces away with your axe.\n'
+		 		'120% Damage\n'
+		 		'120% Accuracy')
 	
 	def name():
 		return 'Chasm Maw'
@@ -420,10 +429,13 @@ class viciousQuake:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 70
+		return 88
 	
 	def description():
-		return ('TODO.')
+		return ('Break the earth with a powerful swing of your axe.\n\n'
+				'Axe damage against all unit surrounding user.\n'
+				'180% Damage\n'
+				'180% Accuracy')
 	
 	def name():
 		return 'Vicious Quake'
@@ -443,8 +455,8 @@ class brainTrauma:
 			generic.command.standardAttack(target, factors)
 
 			# Lower target's intelligence
-			generic.command.raiseStat(target, 'willpower', -20)
-			generic.command.raiseStat(target, 'intelligence', -20)
+			generic.command.scaleStat(target, 'willpower', 0.8)
+			generic.command.scaleStat(target, 'intelligence', 0.8)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.axe()
@@ -452,11 +464,13 @@ class brainTrauma:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 16
+		return 18
 	
 	def description():
 		return ('Shatter an adjacent unit\'s skull with a mighty swing of your axe.\n\n'
-		 		'Basic physical attack plus lowered int.')
+		 		'Axe attack.\n'
+		 		'-20% Willpower, intelligence on contact.\n'
+		 		'120% Accuracy')
 	
 	def name():
 		return 'Brain Trauma'
@@ -477,8 +491,8 @@ class crackFoundation:
 				generic.command.standardAttack(target, factors)
 
 				# Lower target's physical stats
-				generic.command.raiseStat(target, 'toughness', -20)
-				generic.command.raiseStat(target, 'strength', -20)
+				generic.command.scaleStat(target, 'toughness', 0.8)
+				generic.command.scaleStat(target, 'strength', 0.8)
 
 	def determineRange():
 		commandRange = generic.rangeFactors.axe()
@@ -488,11 +502,13 @@ class crackFoundation:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 22
+		return 27
 	
 	def description():
 		return ('Shatter an adjacent unit\'s skull with a mighty swing of your axe.\n\n'
-		 		'Basic physical attack plus lowered int.')
+		 		'Axe attack.\n'
+		 		'-20% Toughness, strength on contact.\n'
+		 		'120% Accuracy')
 	
 	def name():
 		return 'Crack Foundation'
@@ -913,11 +929,6 @@ class aeroImpact:
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 		
-		# Can hit very low targets so they can land lower
-		# TODO(kgeffen) Make landing space ok to be low,
-		# but not the target hit
-		commandRange['okDz'] = {'max' : 1.0, 'min' : -10.0}
-		
 		# Move target back Number of spaces equal to extent
 		distance = generic.extentInfluence.polynomial(1, 1)
 		commandRange['specialSpaces'] = [[0, distance]]
@@ -1005,6 +1016,8 @@ class mudshot:
 		for target in targets:
 			factors = generic.commandFactors.magic(actor, target)
 			
+			factors['force'] *= 0.8
+
 			if generic.command.hitCheck(target, factors):
 				
 				# Lower mv
@@ -1345,7 +1358,7 @@ class dash:
 	
 	def description():
 		return ('Hightail it out of there.\n\n'
-			'Move an additional 2 spaces this turn.')
+				'Move an additional 2 spaces this turn.')
 	
 	def name():
 		return 'Dash'
@@ -1563,8 +1576,8 @@ class dualSharpen:
 		return 0
 	
 	def description():
-		return ('Sharpen you weapon against an adjacent unit\'s.\n\n'
-			'Raise the strength of user and adjacent unit')
+		return ('Sharpen you weapon against a unit beside you.\n\n'
+				'+8 Strength for self and target.')
 	
 	def name():
 		return 'Dual-Sharpen'
@@ -1577,7 +1590,7 @@ class dualSharpen:
 class bloodRitual:
 	def perform(actor, target):
 		# Lower hp
-		dHp = -round( actor['health'] / 8 )
+		dHp = -round( actor['health'] / 6 )
 		generic.command.raiseStat(actor, 'hp', dHp)
 
 		generic.command.raiseStat(actor, 'strength', 20)

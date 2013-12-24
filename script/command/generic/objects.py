@@ -7,8 +7,8 @@ def rock():
 		'model' : 'rock',
 		'name' : 'Rock',
 		'align' : 'neutral',
-		'health' : 400,
-		'hp' : 400,
+		'health' : 500,
+		'hp' : 500,
 		'spirit' : 0,
 		'sp' : 0,
 		'move' : 0,
@@ -17,7 +17,7 @@ def rock():
 		'act' : 0,
 		'strength' : 0,
 		'intelligence' : 0,
-		'toughness' : 100,
+		'toughness' : 130,
 		'willpower' : 0,
 		'focus' : 0,
 		'agility' : 0,
@@ -46,7 +46,7 @@ def bird():
 		'willpower' : 20,
 		'focus' : 100,
 		'agility' : 100,
-		'speed' : 25,
+		'speed' : 50,
 		'jump' : 100,
 		'regen' : 0,
 		'commands' : [[]]
@@ -71,7 +71,7 @@ def flame():
 		'willpower' : 0,
 		'focus' : 100,
 		'agility' : 0,
-		'speed' : 25,
+		'speed' : 50,
 		'jump' : 0,
 		'regen' : 25,
 		'commands' : [['flameBarrage', 'livingFlame']]
@@ -97,34 +97,8 @@ def ice():
 		'willpower' : 100,
 		'focus' : 100,
 		'agility' : 0,
-		'speed' : 25,
+		'speed' : 50,
 		'jump' : 0,
 		'regen' : 13,
 		'commands' : [['iceShard', 'icePrison', 'crystallineCluster']]
 		}
-
-def bubble():
-	return {
-		'model' : 'bubble',
-		'name' : 'Bubble',
-		'align' : 'neutral',
-		'health' : 1,
-		'hp' : 1,
-		'spirit' : 0,
-		'sp' : 0,
-		'move' : 0,
-		'mv' : 0,
-		'actions' : 1,
-		'act' : 1,
-		'strength' : 150,
-		'intelligence' : 150,
-		'toughness' : 0,
-		'willpower' : 0,
-		'focus' : 100,
-		'agility' : 0,
-		'speed' : 1,
-		'jump' : 0,
-		'regen' : 0,
-		'commands' : [['burst']]
-		}
-
