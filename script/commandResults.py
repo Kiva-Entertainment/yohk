@@ -26,7 +26,15 @@ def endDisplay():
 	# just waits until messaged (And must be actively awaiting the message)
 	textObj.setVisible(False)
 	textObj.state = logic.KX_STATE1
-	
+
+# Play any effects that happen on commandResult
+# Called every tic while text is visible
+def playEffects():
+	textObj = objectControl.getFromScene('commandResult', 'battlefield')
+
+	# Raise
+	textObj.worldPosition += Vector((0.0, 0.0, 0.01))
+
 # NOTE(kgeffen) Speed of cycling is controlled by frequency of controller
 # Cycle to the next result to be displayed and display it. If none left, end
 def cycle():
@@ -42,7 +50,7 @@ def cycle():
 # Display the given result in the correct location
 def displayResult(result):
 	textObj = objectControl.getFromScene('commandResult', 'battlefield')
-	
+
 	# Set text
 	textObj['Text'] = result['text'].capitalize()
 	
