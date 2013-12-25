@@ -26,13 +26,6 @@ def dagger(actor, target):
 			'accuracy' : actor['focus'],
 			'evasion' : target['agility']}
 
-'Magic Elements'
-def lightning(actor, target):
-	return {'force' : actor['intelligence'] * 0.5,
-			'resist' : target['willpower'],
-			'accuracy' : actor['focus'] * 2,
-			'evasion' : target['agility']}
-
 'Standard'
 def physical(actor, target):
 	return {'force' : actor['strength'],
