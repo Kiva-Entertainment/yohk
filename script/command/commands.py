@@ -1135,7 +1135,7 @@ class study:
 	
 	def description():
 		return ('Ascend the ivory tower with no purpose and you will find it empty.\n\n'
-				'Regenrate sp')
+				'Regenerate sp')
 	
 	def name():
 		return 'Study'

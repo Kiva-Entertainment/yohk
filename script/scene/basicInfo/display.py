@@ -44,7 +44,7 @@ def statsText(unit):
 	text += alignControl.name(unit['align']) + '\n\n'
 	text += 'hp: ' + str(unit['hp']) + '/' + str(unit['health']) + '\n'
 	text += 'sp: ' + str(unit['sp']) + '/' + str(unit['spirit']) + '\n'
-	text += '     x' + str(unit['mv']) + '       x' + str(unit['act'])
+	text += '      x' + str(unit['mv']) + '          x' + str(unit['act'])
 	
 	obj = objectControl.getFromScene(TEXT_OBJECT_NAME, 'basicInfo')
 	obj['Text'] = text
