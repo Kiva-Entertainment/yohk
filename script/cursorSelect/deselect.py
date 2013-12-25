@@ -50,6 +50,8 @@ def fromUnitActing():
 	# Clear data about which spaces can be targetted
 	logic.globalDict['spaceTarget'] = []
 	
+	# Reselect the actor
+	moveCursorToActor()
 	# NOTE(kgeffen) Cursor status must be 'selecting' to select a unit
 	logic.globalDict['cursor'] = 'selecting'
 	select.do()
