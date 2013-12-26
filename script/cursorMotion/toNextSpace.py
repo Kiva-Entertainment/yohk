@@ -57,12 +57,9 @@ def toNextActor(strict):
 	# cursorMoves == True if cursor didn't start at _position_
 	cursorMoved = moveToPosition(position)
 
-	if cursorMoved:
-		soundControl.play('navigate')
-
 	# NOTE(kgeffen) If cursor didn't move (was already at position),
 	# cycle units once, then get new first unit's position
-	else:
+	if not cursorMoved:
 
 		# Cycle once so fresh entry is chosen
 		cycleList(actors)	
@@ -74,9 +71,6 @@ def toNextActor(strict):
 		position = getPosition.onGround(actors[0]['position'])
 		
 		success = moveToPosition(position)
-		# If cursor succesfully moved, play sound
-		if success:
-			soundControl.play('navigate')
 
 	# NOTE(kgeffen) Necessarily cycle each time to ensure that
 	# if cursor moves to unit A, then I act with it, move cursor,
