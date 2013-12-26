@@ -8,8 +8,6 @@ def attempt(position):
 	if moveAllowed(position):
 		do(position)
 
-		soundControl.play('move')
-
 	else:
 		soundControl.play('negative')
 
