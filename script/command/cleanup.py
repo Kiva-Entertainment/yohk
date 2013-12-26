@@ -37,6 +37,9 @@ def do():
 	# Display the results of the command that just resolved
 	displayCommandResults()
 
+	# Change cursor to select a unit to act
+	logic.globalDict['cursor'] = 'selecting'
+
 # Lower unit's sp by cost of command that just resolved
 def consumeSp(unit):
 	command = logic.globalDict['cursor']
