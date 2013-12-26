@@ -2,6 +2,10 @@
 from bge import logic
 import aud
 
+from script import objectControl
+
+soundObj = objectControl.getFromScene('soundControl', 'persistent')
+
 # The device which plays all sounds
 device = aud.device()
 # A dictionary of stored sounds in the form
@@ -9,18 +13,25 @@ device = aud.device()
 # NOTE(kgeffen) Handle is buffered
 storedSounds = {}
 
+# Toggle the mute for all sound in game on/off
+def toggleMute(cont):
+	if cont.sensors['mKey'].positive:
+		soundObj['mute'] = not soundObj['mute']
+
 # Play a sound with given name once
 # Sound wav file must exist in audio
 def play(soundName):
-	# Determine if a factory for sound already exists
-	soundAlreadyStored = soundName in storedSounds
+	if not soundObj['mute']:
 
-	if not soundAlreadyStored:
-		storeSound(soundName)
+		# Determine if a factory for sound already exists
+		soundAlreadyStored = soundName in storedSounds
 
-	# Play sound from start
-	storedSounds[soundName].position = 0
-	storedSounds[soundName].resume()
+		if not soundAlreadyStored:
+			storeSound(soundName)
+
+		# Play sound from start
+		storedSounds[soundName].position = 0
+		storedSounds[soundName].resume()
 
 # Store in storedSounds a pairing of the sound's name and its handle
 def storeSound(soundName):

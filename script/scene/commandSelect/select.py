@@ -14,6 +14,8 @@ def do():
 		
 		if commandIsAllowed(selectedCommand):
 			selectCommand(selectedCommand)
+
+			soundControl.play('confirmation')
 			
 		else:
 			soundControl.play('negative')
@@ -44,10 +46,6 @@ def selectCommand(command):
 
 def commandIsAllowed(command):
 	unit = logic.globalDict['actor']
-	
-	# Not allowed if unit has no more actions left
-	if unit['act'] == 0:
-		return False
 	
 	# Not allowed if unit can't afford it (In sp)
 	cost = commandControl.cost(command)
