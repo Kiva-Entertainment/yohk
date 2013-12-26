@@ -3,7 +3,7 @@
 # Ex: To next unit acting this turn if selecting actor
 from bge import logic
 
-from script import check, getPosition, objectControl, commandControl, soundControl
+from script import check, getPosition, objectControl, commandControl
 
 def attempt(cont):
 	fKey = cont.sensors['fKey'].positive
@@ -70,7 +70,7 @@ def toNextActor(strict):
 		# This is the position of the first unit in newly cycled list of actors
 		position = getPosition.onGround(actors[0]['position'])
 		
-		success = moveToPosition(position)
+		moveToPosition(position)
 
 	# NOTE(kgeffen) Necessarily cycle each time to ensure that
 	# if cursor moves to unit A, then I act with it, move cursor,
