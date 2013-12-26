@@ -7,9 +7,11 @@ from mathutils import Matrix, Vector
 from script import objectControl, getPosition
 
 # How high above the ground the display is
-HEIGHT_ABOVE = 2.0
+HEIGHT_ABOVE = 1.5
 # Name of the object that display copies the rotation from
 OBJECT_NAME_ROTATION_COPY = 'cursorSlow'
+# The number of game tics each result stays visible for
+TICS_PER_RESULT = 30
 
 # Make commandResult visible and change it to state 3
 # Target waits while results are displayed
@@ -35,6 +37,10 @@ def playEffects():
 	# Raise
 	textObj.worldPosition += Vector((0.0, 0.0, 0.01))
 
+	# Fade text from 1.0 to 0.0 alpha for each result
+	changePerTic = 1/TICS_PER_RESULT
+	textObj.color -= Vector((0, 0, 0, changePerTic))
+
 # NOTE(kgeffen) Speed of cycling is controlled by frequency of controller
 # Cycle to the next result to be displayed and display it. If none left, end
 def cycle():
@@ -50,6 +56,9 @@ def cycle():
 # Display the given result in the correct location
 def displayResult(result):
 	textObj = objectControl.getFromScene('commandResult', 'battlefield')
+
+	# Reset alpha to 1.0
+	textObj.color = (1, 1, 1, 1)
 
 	# Set text
 	textObj['Text'] = result['text'].capitalize()
@@ -71,8 +80,8 @@ def displayResult(result):
 
 # Center the given object based on the number of characters command result contains
 def centerText(obj, numChars):
-	# NOTE(kgeffen) Each character has length 0.1
-	textObjectLength = 0.1 * numChars
+	# NOTE(kgeffen) Each character has length 0.3
+	textObjectLength = obj.size * numChars / 2
 	
 	# Move object to the left by half of its total length
 	localDisplacement = Vector((-textObjectLength/2, 0.0, 0.0))
