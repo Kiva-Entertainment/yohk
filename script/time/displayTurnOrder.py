@@ -8,6 +8,7 @@ OVERLAY_SCENE_NAME = 'battlefieldOverlay'
 # Name of the text object which displays turn order
 TURN_ORDER_DISPLAY= 'displayTurnOrder'
 
+# The greatest number of lines to display for timeline
 MAX_LINES = 30
 
 def do():
@@ -21,12 +22,14 @@ def do():
 # The timeline that is expected if no units die/have their speed changed
 def expectedTimeLine():
 	expectedTime = []
-	for i in range(101):
+	# NOTE(kgeffen) Only go to 30 because that allows for 2 instances of bases acting in timeline.
+	# This entire module is temporary, and just has to serve until the next version release.
+	for i in range(30):
 		expectedTime.append([])
 
 	time = logic.globalDict['time']
 
-	for turnNum in range(0, len(time)):
+	for turnNum in range(0, len(expectedTime)):
 		turn = time[turnNum]
 
 		turnHasActors = turn != []
@@ -35,17 +38,23 @@ def expectedTimeLine():
 			for groupNum in range(0, len(turn)):
 				group = turn[groupNum]
 
-				for actor in group:
-					name = actor['name']
+				for unit in group:
 
-					expectedTime[turnNum].append(name)
+					if unit['speed'] > 0:
+						# The number for a turn that the unit acts on, is incremented below
+						turnUnitActsOn = turnNum
 
-					if actor['speed'] > 0:
-						nextTurnNum = turnNum + round(100/actor['speed'])
-
-						while nextTurnNum < 100:
-							expectedTime[nextTurnNum].append(name)
-							nextTurnNum += round(100/actor['speed'])
+						while turnUnitActsOn < 30:
+							# NOTE(kgeffen) This is scaffolding that relies on solarServants going before
+							# martialLegion. Time + time display will be changed in next release, so
+							# scaffolding is acceptable.
+							# IOW: It's a hack, but it's okay because it will disappear soon
+							if unit['align'] == 'martialLegion':
+								expectedTime[turnUnitActsOn].append(unit['name'])
+							else:
+								expectedTime[turnUnitActsOn].insert(0, unit['name'])
+							
+							turnUnitActsOn += round(100/unit['speed'])
 	return expectedTime
 
 # For each turn with actors, add all of those actors, followed by
