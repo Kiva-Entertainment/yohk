@@ -2,6 +2,7 @@
 # or list of lists of commands
 from bge import logic
 
+from script import soundControl
 from script.scene.commandSelect import setup
 
 # NOTE(kgeffen) Both methods are called by game.
@@ -23,6 +24,10 @@ def commandLists(cont):
 	
 	leftKey = cont.sensors['leftKey'].positive
 	rightKey = cont.sensors['rightKey'].positive
+
+	# Do nothing if both or neither are pressed
+	if (leftKey and rightKey) or (not leftKey and not rightKey):
+		return
 	
 	if leftKey:
 		# 'commands' - A list of commands
@@ -37,6 +42,9 @@ def commandLists(cont):
 	logic.globalDict['extent'] = 0
 	# Reset choices
 	logic.globalDict['commandChoices'] = []
+
+	# Play sound
+	soundControl.play('navigate')
 	
 	setup.screen()
 
@@ -54,7 +62,11 @@ def commands(cont):
 	
 	upKey = cont.sensors['upKey'].positive
 	downKey = cont.sensors['downKey'].positive
-	
+
+	# Do nothing if both or neither are pressed
+	if (upKey and downKey) or (not upKey and not downKey):
+		return
+
 	if upKey:
 		command = commands.pop()
 		commands.insert(0, command)
@@ -66,5 +78,8 @@ def commands(cont):
 	logic.globalDict['extent'] = 0
 	# Reset choices
 	logic.globalDict['commandChoices'] = []
+	
+	# Play sound
+	soundControl.play('navigate')
 
 	setup.screen()
