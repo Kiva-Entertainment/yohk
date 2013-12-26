@@ -1,7 +1,7 @@
 # Perform any cleanup necessary after command resolves
 from bge import logic
 
-from script import commandControl, objectControl, unitControl
+from script import commandControl, objectControl, unitControl, soundControl
 from script.time import displayTurnOrder 
 
 # The message sent which causes command results to be displayed
@@ -75,6 +75,8 @@ def killUnit(unit):
 	# Update the time data and display to account for deaths
 	updateTime(unit)
 	displayTurnOrder.do()
+
+	soundControl.play('die')
 
 	# TODO(kgeffen) Churn if turn now empty
 
