@@ -75,9 +75,16 @@ def centerText(obj, numChars):
 	textObjectLength = 0.1 * numChars
 	
 	# Move object to the left by half of its total length
-	adjustment = Vector((-textObjectLength/2, 0.0, 0.0))
+	localDisplacement = Vector((-textObjectLength/2, 0.0, 0.0))
 
-	obj.localPosition += adjustment
+	'Calculate the global position'
+	# Displacement in global terms
+	globalDisplacement = obj.orientation * localDisplacement
+	
+	# New position is current position plus displacement
+	position = obj.worldPosition + globalDisplacement
+
+	obj.worldPosition = position
 
 # Copy the rotation of slowTarget, which is the camera's parent
 def adjustRotation(resultDisplay):
