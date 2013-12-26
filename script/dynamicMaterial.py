@@ -6,9 +6,17 @@ STARTING_MATERIAL = 'MAdynamic'
 # Switch the image that an object's material uses
 # to the image at 'path'
 def switchMaterialsImage(path, objectName):
-	scene = logic.getCurrentScene()
-	obj = scene.objects[objectName]
-	
+	obj = None
+	# Search each active scene to find the object with given name
+	for scene in logic.getSceneList():
+		if objectName in scene.objects:
+			obj = scene.objects[objectName]
+			break
+
+	if obj is None:
+		print('Object ' + objectName + ' not found.')
+		return
+
 	"""Create a new Dynamic Texture"""
 	# Get the reference pointer (ID) of the internal texture
 	ID = texture.materialID(obj, STARTING_MATERIAL)

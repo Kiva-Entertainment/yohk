@@ -2,7 +2,7 @@
 # TODO(kgeffen) This is a wip, when greater artistic vision is reached, update this script
 from bge import logic
 
-from script import objectControl
+from script import objectControl, alignControl, dynamicMaterial
 
 OVERLAY_SCENE_NAME = 'battlefieldOverlay'
 # Name of the text object which displays turn order
@@ -11,6 +11,8 @@ TURN_ORDER_DISPLAY= 'displayTurnOrder'
 # The greatest number of lines to display for timeline
 MAX_LINES = 30
 
+ALIGN_ICON_OBJECT_NAME = 'currentTurnAlignDisplay'
+
 def do():
 	timeline = expectedTimeLine()
 	text = formTimelineText(timeline)
@@ -18,6 +20,9 @@ def do():
 	# Set the text of the object that displays turn order
 	turnDisplay = objectControl.getFromScene(TURN_ORDER_DISPLAY, OVERLAY_SCENE_NAME)
 	turnDisplay['Text'] = text
+
+	# Display the icon of whichever alignment is acting currently
+	displayCurrentAlignIcon()
 
 # The timeline that is expected if no units die/have their speed changed
 def expectedTimeLine():
@@ -82,3 +87,16 @@ def formTimelineText(timeline):
 		return fittingText
 
 	return text
+
+
+# Display the icon of whichever alignment is acting currently
+def displayCurrentAlignIcon():
+	firstTurn = logic.globalDict['time'][0]
+
+	if firstTurn != []:
+		align = firstTurn[0][0]['align']
+
+		filename = alignControl.icon(align)
+		path = logic.expandPath('//images/icons/' + filename)
+	
+		dynamicMaterial.switchMaterialsImage(path, ALIGN_ICON_OBJECT_NAME)
