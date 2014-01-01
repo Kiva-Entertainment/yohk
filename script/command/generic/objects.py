@@ -74,10 +74,8 @@ def flame():
 		'speed' : 50,
 		'jump' : 0,
 		'regen' : 25,
-		'commands' : [['flameBarrage', 'livingFlame']]
+		'commands' : [['burn', 'livingFlame']]
 		}
-
-
 def ice():
 	return {
 		'model' : 'ice',
@@ -101,4 +99,29 @@ def ice():
 		'jump' : 0,
 		'regen' : 13,
 		'commands' : [['iceShard', 'icePrison', 'crystallineCluster']]
+		}
+
+def squire():
+	return {
+		'model' : 'squire',
+		'name' : 'Squire',
+		'align' : 'neutral',
+		'health' : 500,
+		'hp' : 500,
+		'spirit' : 0,
+		'sp' : 0,
+		'move' : 3,
+		'mv' : 3,
+		'actions' : 1,
+		'act' : 1,
+		'strength' : 60,
+		'intelligence' : 40,
+		'toughness' : 60,
+		'willpower' : 40,
+		'focus' : 50,
+		'agility' : 50,
+		'speed' : 50,
+		'jump' : 10,
+		'regen' : 0,
+		'commands' : [['slash', 'dualSharpen']]
 		}

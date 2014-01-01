@@ -15,11 +15,12 @@ from script import unitControl
 from script.command import storeResult
 
 # How random calculations are
-RANDOMNESS = 0.1
+RANDOMNESS = 0.0
 
 'Basic commands'
 def standardAttack(target, factors):
-	force = 2 * random.gauss(factors['force'], factors['force'] * RANDOMNESS)
+	force = random.gauss(factors['force'], factors['force'] * RANDOMNESS)
+	force *= 2
 	resist = random.gauss(factors['resist'], factors['resist'] * RANDOMNESS)
 	
 	damage = force - resist
@@ -73,6 +74,7 @@ def move(unit):
 # Determine if command hits
 # If command misses, store 'miss' in commandResults
 def hitCheck(target, factors):
+	return True
 	accuracy = random.gauss(factors['accuracy'], factors['accuracy'] * RANDOMNESS)
 	
 	evasion = random.gauss(factors['evasion'], factors['evasion'] * RANDOMNESS)
