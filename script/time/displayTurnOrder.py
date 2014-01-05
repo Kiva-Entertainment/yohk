@@ -9,7 +9,7 @@ OVERLAY_SCENE_NAME = 'battlefieldOverlay'
 TURN_ORDER_DISPLAY= 'displayTurnOrder'
 
 # The greatest number of lines to display for timeline
-MAX_LINES = 30
+MAX_LINES = 40
 
 ALIGN_ICON_OBJECT_NAME = 'currentTurnAlignDisplay'
 
@@ -30,7 +30,7 @@ def expectedTimeLine():
 	# NOTE(kgeffen) Only go to 30 because that allows for 2 instances of bases acting in timeline.
 	# This entire module is temporary, and just has to serve until the next version release.
 	for i in range(30):
-		expectedTime.append([])
+		expectedTime.append([[], []])
 
 	time = logic.globalDict['time']
 
@@ -55,9 +55,9 @@ def expectedTimeLine():
 							# scaffolding is acceptable.
 							# IOW: It's a hack, but it's okay because it will disappear soon
 							if unit['align'] == 'martialLegion':
-								expectedTime[turnUnitActsOn].append(unit['name'])
-							else:
-								expectedTime[turnUnitActsOn].insert(0, unit['name'])
+								expectedTime[turnUnitActsOn][1].append(unit['name'])
+							else: # solarServants
+								expectedTime[turnUnitActsOn][0].append(unit['name'])
 							
 							turnUnitActsOn += round(100/unit['speed'])
 	return expectedTime
@@ -70,10 +70,12 @@ def formTimelineText(timeline):
 	# Form full text
 	for turn in timeline:
 
-		if turn != []:
-			for unit in turn:
-				text += unit + '\n'
-			text += '\n'
+		for group in turn:
+
+			if group != []:
+				for unit in group:
+					text += unit + '\n'
+				text += '\n'
 
 	# Crop to fit max lines
 	# NOTE(kgeffen) Even last line has a trailing newline
