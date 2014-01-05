@@ -103,8 +103,7 @@
 "inactiveUnits" : [
 	{	"model" : "soldier",
 		"name" : "Glorious Soldier",
-		"descrip" : "He's so dreamy",
-		"descript" : "",
+		"descript" : "djsdsahfhskdjf dsjk fdhsjkf dhskjfs djsdsahfhskdjf dsjk fdhsjkf dhskjfs djsdsahfhskdjf dsjk fdhsjkf dhskjfs djsdsahfhskdjf dsjk fdhsjkf dhskjfs",
 		"align" : "solarServants",
 		"health" : 1000,
 		"hp" : 1000,

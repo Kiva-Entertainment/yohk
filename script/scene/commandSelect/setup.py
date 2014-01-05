@@ -18,9 +18,9 @@ SCENE_NAME = 'commandSelect'
 def screen():
 	listText()
 	iconImage()
+	choiceText()
 	costText()
 	descriptionText()
-	choiceText()
 	extentText()
 
 

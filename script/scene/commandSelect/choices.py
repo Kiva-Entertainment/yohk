@@ -33,5 +33,5 @@ def cycle(cont):
 		soundControl.play('navigate')
 			
 		# Display the new cost of the command
-		setup.choiceText()
+		setup.screen()
 
