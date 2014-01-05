@@ -18,6 +18,6 @@ def do(unit):
 	logic.globalDict['described'] = unit
 
 	sceneControl.show('info')
-	sceneControl.hide('battlefieldOverlay')
+	sceneControl.hide('battlefieldOverlay', 'basicInfo')
 	sceneControl.suspend('battlefield')
 
