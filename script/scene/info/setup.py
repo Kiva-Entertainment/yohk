@@ -35,8 +35,6 @@ def do():
 
 	faceImage(unit)
 	statText(unit)
-	# TODO(kgeffen) Remove once placement and layout of info scene is finalized and
-	# all of the text with the type of stat (Ex: 'strength') is baked to an image
 	typeText()
 
 	alignmentVisuals(unit)
@@ -54,7 +52,8 @@ def typeText():
 			text += '\n'
 
 		# Get text object
-		objectName = TEXT_OBJECT_NAME_BASE + str(i) + '_type'
+		TYPE_SUFFIX = '_type'
+		objectName = TEXT_OBJECT_NAME_BASE + str(i) + TYPE_SUFFIX
 		obj = objectControl.getFromScene(objectName, 'info')
 
 		# Set that object's text

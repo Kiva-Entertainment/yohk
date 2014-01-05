@@ -8,6 +8,6 @@ def attempt(cont):
 
 def do():
 	sceneControl.resume('battlefield')
-	sceneControl.show('battlefieldOverlay')
+	sceneControl.show('battlefieldOverlay', 'basicInfo')
 	sceneControl.hide('info')
 
