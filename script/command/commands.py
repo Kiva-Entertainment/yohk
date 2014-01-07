@@ -1920,7 +1920,16 @@ class deploy:
 		return 0
 	
 	def description():
-		return ('Place a unit of your choice onto the field to fight for you.')
+		text = 'Place a unit of your choice onto the field to fight for you.\n\n'
+
+		# Add a description of the unit at the end
+		choices = logic.globalDict['commandChoices']
+		choice = choices[0]['value']
+		unitDescript = choice['descript']
+
+		text += unitDescript
+
+		return (text)
 	
 	def name():
 		return 'Deploy'
