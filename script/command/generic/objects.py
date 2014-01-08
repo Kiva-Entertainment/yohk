@@ -60,10 +60,10 @@ def flame():
 		'name' : 'Flame',
 		'descript' : 'A raging fire. It can burn any adjacent units and eventually can spread. It can only spread once.',
 		'align' : 'neutral',
-		'health' : 300,
-		'hp' : 300,
+		'health' : 200,
+		'hp' : 200,
 		'spirit' : 200,
-		'sp' : 0,
+		'sp' : 50,
 		'move' : 0,
 		'mv' : 0,
 		'actions' : 1,
@@ -88,7 +88,7 @@ def ice():
 		'health' : 300,
 		'hp' : 300,
 		'spirit' : 200,
-		'sp' : 50,
+		'sp' : 0,
 		'move' : 0,
 		'mv' : 0,
 		'actions' : 1,
@@ -101,7 +101,7 @@ def ice():
 		'agility' : 0,
 		'speed' : 50,
 		'jump' : 0,
-		'regen' : 13,
+		'regen' : 25,
 		'commands' : [['iceShard', 'icePrison', 'crystallineCluster']]
 		}
 
