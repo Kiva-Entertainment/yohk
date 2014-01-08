@@ -15,7 +15,7 @@ from script import unitControl
 from script.command import storeResult
 
 # How random calculations are
-RANDOMNESS = 0.0
+RANDOMNESS = 0.1
 
 'Basic commands'
 def standardAttack(target, factors):
