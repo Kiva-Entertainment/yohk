@@ -74,7 +74,6 @@ def move(unit):
 # Determine if command hits
 # If command misses, store 'miss' in commandResults
 def hitCheck(target, factors):
-	return True
 	accuracy = random.gauss(factors['accuracy'], factors['accuracy'] * RANDOMNESS)
 	
 	evasion = random.gauss(factors['evasion'], factors['evasion'] * RANDOMNESS)

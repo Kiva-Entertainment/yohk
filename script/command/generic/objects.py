@@ -19,7 +19,7 @@ def rock():
 		'strength' : 0,
 		'intelligence' : 0,
 		'toughness' : 100,
-		'willpower' : 0,
+		'willpower' : 100,
 		'focus' : 0,
 		'agility' : 0,
 		'speed' : 0,
@@ -58,12 +58,12 @@ def flame():
 	return {
 		'model' : 'flame',
 		'name' : 'Flame',
-		'descript' : 'A raging fire. It can burn any adjacent units and eventually can spread. It can only spread once.',
+		'descript' : 'A raging fire. It can burn any adjacent units and eventually spread.',
 		'align' : 'neutral',
-		'health' : 200,
-		'hp' : 200,
-		'spirit' : 200,
-		'sp' : 50,
+		'health' : 150,
+		'hp' : 150,
+		'spirit' : 500,
+		'sp' : 0,
 		'move' : 0,
 		'mv' : 0,
 		'actions' : 1,
@@ -76,18 +76,19 @@ def flame():
 		'agility' : 0,
 		'speed' : 50,
 		'jump' : 0,
-		'regen' : 25,
+		'regen' : 10,
 		'commands' : [['burn', 'livingFlame']]
 		}
+
 def ice():
 	return {
 		'model' : 'ice',
 		'name' : 'Ice',
-		'descript' : 'A frigid ice crystal. On the offense, it can shoot a shard of ice to hit far away enemies, or can slow them down with Ice Prison. It can spread, but only once.',
+		'descript' : 'A frigid ice crystal. It can damage or slow down enemies from far away.',
 		'align' : 'neutral',
 		'health' : 300,
 		'hp' : 300,
-		'spirit' : 200,
+		'spirit' : 500,
 		'sp' : 0,
 		'move' : 0,
 		'mv' : 0,
@@ -101,8 +102,8 @@ def ice():
 		'agility' : 0,
 		'speed' : 50,
 		'jump' : 0,
-		'regen' : 25,
-		'commands' : [['iceShard', 'icePrison', 'crystallineCluster']]
+		'regen' : 10,
+		'commands' : [['iceShard', 'icePrison']]
 		}
 
 def squire():
@@ -111,8 +112,8 @@ def squire():
 		'name' : 'Squire',
 		'descript' : 'A weak squire. Can raise the strength of nearby units, and slash to take out weaker enemies.',
 		'align' : 'neutral',
-		'health' : 500,
-		'hp' : 500,
+		'health' : 300,
+		'hp' : 300,
 		'spirit' : 0,
 		'sp' : 0,
 		'move' : 3,

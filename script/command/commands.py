@@ -137,22 +137,24 @@ class shadeSlash:
 		factors = generic.commandFactors.physical(actor, target)
 		
 		if generic.command.hitCheck(target, factors):
-			damageDealt = generic.command.standardAttack(target, factors)
+			# Deal damage
+			generic.command.standardAttack(target, factors)
 
-			multiplier = extentInfluence.polynomial(0, 1/10)
-			amount = -round(damageDealt * multiplier)
-			generic.command.raiseStat(target, 'sp', amount)
+			# Lower sp
+			amount = 0.9 ** extentInfluence.polynomial(1, 1)
+			generic.command.scaleStat(target, 'sp', amount)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return extentInfluence.polynomial(0, 9, 1)
+		return extentInfluence.polynomial(0, 10, 0)
 	
 	def description():
-		return ('Basic sword attack\n'
-				'Lowers target\'s sp by X/10 of the damage dealt.')
+		return ('Basic sword attack that lowers the sp of anything it hits\n'
+				'-10% Sp X times\n'
+				'(For example, X = 1 lowers target\'s sp by 10%. X = 1 lowers it by 19%)')
 	
 	def name():
 		return 'Shade Slash'
@@ -895,25 +897,23 @@ class livingFlame:
 		spawn['align'] = actor['align']
 		
 		generic.command.addObjects(spawn)
-
-		# If user is a flame, lose the skill to make more flame
-		if actor['model'] == 'flame':
-			generic.command.loseCommand(actor, 'livingFlame')
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 
-		commandRange['range'] = shapes.diamond(2, 1)
+		reach = generic.extentInfluence.polynomial(1, 1)
+		commandRange['range'] = shapes.diamond(reach, 1)
+
 		commandRange['specialSpaces'] = shapes.single()
 
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 100
+		return generic.extentInfluence.polynomial(100, 5, 5)
 	
 	def description():
 		return ('A flame bursts to life by your hand, ready to consume and spread.\n\n'
-				'Summon a flame up to 2 spaces away')
+				'Summon a flame up to X + 1 spaces away')
 	
 	def name():
 		return 'Living Flame'
@@ -922,7 +922,7 @@ class livingFlame:
 		return 'S_Fire_02.png'
 
 	def tags():
-		return []
+		return ['extends']
 class blazeCloak:
 	def perform(actor, target):
 		amount = extentInfluence.polynomial(5, 5)
@@ -1118,7 +1118,7 @@ class gust:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(0, 0, 20)
+		return generic.extentInfluence.polynomial(0, 10, 10)
 	
 	def description():
 		return ('It\'s scary when the air itself turns violent.\n\n'
@@ -1222,7 +1222,7 @@ class stoneGarden:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return 50
+		return 0
 	
 	def description():
 		return ('Isolate yourself. Give yourself time to plan and grow.\n\n'
@@ -1379,10 +1379,6 @@ class crystallineCluster:
 		unit['align'] = actor['align']
 		
 		generic.command.addObjects(unit)
-
-		# Once an ice makes an ice, it can't loses the ability to make more
-		if actor['model'] == 'ice':
-			generic.command.loseCommand(actor, 'crystallineCluster')
 
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
@@ -1733,7 +1729,7 @@ class enlist:
 		return []
 class stoneWall:
 	def perform(actor):
-		# Add 3 rocks in front
+		# Spawn 3 rocks
 		spawns = []
 		for i in range(0, 3):
 			spawns.append(generic.objects.rock())
@@ -1748,7 +1744,7 @@ class stoneWall:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 50
+		return 0
 	
 	def description():
 		return ('Create a wall 3 stones long in front of you\n'
