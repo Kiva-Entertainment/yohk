@@ -16,5 +16,5 @@ def do():
 	marker.clearMoveMarkers()
 	
 	sceneControl.show('commandSelect')
-	sceneControl.hide('battlefieldOverlay')
+	sceneControl.hide('battlefieldOverlay', 'basicInfo')
 	sceneControl.suspend('battlefield') # Battlefield is still visible

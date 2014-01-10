@@ -41,7 +41,7 @@ def selectCommand(command):
 	commandControl.determineRange(command)
 
 	sceneControl.resume('battlefield')
-	sceneControl.show('battlefieldOverlay')
+	sceneControl.show('battlefieldOverlay', 'basicInfo')
 	sceneControl.hide('commandSelect')
 
 def commandIsAllowed(command):
