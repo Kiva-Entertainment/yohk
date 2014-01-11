@@ -570,6 +570,39 @@ class guilltineSpiral:
 		return ['targets']
 
 'Axe'
+class shatter:
+	def perform(actor, target):
+		factors = generic.commandFactors.sword(actor, target)
+
+		if generic.command.hitCheck(target, factors):
+
+			# If target is rock, destroy it automatically
+			if target['model'] == 'rock':
+				generic.command.scaleStat(target, 'hp', 0)
+			else:
+				# Deal standard damage
+				generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.sword()
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Basic attack\n'
+				'Shatters any rock')
+	
+	def name():
+		return 'Shatter'
+	
+	def icon():
+		return 'W_Mace_012.png'
+
+	def tags():
+		return ['targets']
+
 class chop:
 	def perform(actor, target):
 		factors = generic.commandFactors.axe(actor, target)
@@ -1403,6 +1436,9 @@ class crystallineCluster:
 	def icon():
 		return 'S_Ice_01.png'
 
+	def tags():
+		return ['extends']
+
 class typhoon:
 	def perform(actor, target):
 		# Raise mv
@@ -1727,6 +1763,34 @@ class enlist:
 
 	def tags():
 		return []
+class commision:
+	def perform(actor):
+		spawn = generic.objects.mason()
+		spawn['align'] = actor['align']
+		
+		generic.command.addObjects(spawn)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['specialSpaces'] = shapes.single()
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 100
+	
+	def description():
+		return ('Commision a stone mason to build for you.\nHe can create and destroy rocks with ease.')
+	
+	def name():
+		return 'Commision'
+	
+	def icon():
+		return 'I_Scroll_02.png'
+
+	def tags():
+		return []
 class stoneWall:
 	def perform(actor):
 		# Spawn 3 rocks
@@ -1810,38 +1874,34 @@ class dualSharpen:
 
 	def tags():
 		return ['targets']
-class bloodRitual:
-	def perform(actor, target):
-		# Lower hp
-		dHp = -round( actor['health'] / 6 )
-		generic.command.raiseStat(actor, 'hp', dHp)
+class craft:
+	def perform(actor):
+		# Spawn a rock
+		rock = generic.objects.rock()
 
-		generic.command.raiseStat(actor, 'strength', 20)
-		generic.command.raiseStat(actor, 'intelligence', 20)
-		generic.command.regen(actor)
-	
+		generic.command.addObjects(rock)
+
 	def determineRange():
-		commandRange = generic.rangeFactors.self()
-		generic.range.free(commandRange)
+		commandRange = generic.rangeFactors.standard()
+
+		commandRange['specialSpaces'] = shapes.single()
+
+		generic.range.rigid(commandRange)
 	
 	def cost():
 		return 0
 	
 	def description():
-		return ('To be powerful, to be great, you must suffer.\n\n'
-				'Pay 1/6th of your hp\n'
-				'Regenerate you sp\n'
-				'+20 Strength\n'
-				'+20 Intelligence')
+		return ('Erect a rock beside you')
 	
 	def name():
-		return 'Blood Ritual'
+		return 'Craft'
 	
 	def icon():
-		return 'I_Ruby.png'
+		return 'W_Mace_003.png'
 
 	def tags():
-		return ['targets']
+		return []
 
 
 '''Special'''
@@ -1866,7 +1926,8 @@ class deploy:
 		return 0
 	
 	def description():
-		text = 'Place a unit of your choice onto the field to fight for you.\n\n'
+		# Newlines so that choices for which unit to deploy are not covered by description
+		text = '\n\n'#'Place a unit of your choice onto the field to fight for you.\n\n'
 
 		# Add a description of the unit at the end
 		choices = logic.globalDict['commandChoices']

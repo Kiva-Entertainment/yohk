@@ -131,3 +131,29 @@ def squire():
 		'regen' : 0,
 		'commands' : [['slash', 'dualSharpen']]
 		}
+
+def mason():
+	return {
+		'model' : 'mason',
+		'name' : 'Mason',
+		'descript' : 'A weak stone mason. Can make and destroy rocks easily.',
+		'align' : 'neutral',
+		'health' : 300,
+		'hp' : 300,
+		'spirit' : 0,
+		'sp' : 0,
+		'move' : 3,
+		'mv' : 3,
+		'actions' : 1,
+		'act' : 1,
+		'strength' : 60,
+		'intelligence' : 40,
+		'toughness' : 60,
+		'willpower' : 40,
+		'focus' : 50,
+		'agility' : 50,
+		'speed' : 50,
+		'jump' : 10,
+		'regen' : 0,
+		'commands' : [['craft', 'shatter']]
+		}
