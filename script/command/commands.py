@@ -1151,7 +1151,7 @@ class gust:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(0, 10, 10)
+		return generic.extentInfluence.polynomial(0, 3, 5)
 	
 	def description():
 		return ('It\'s scary when the air itself turns violent.\n\n'
@@ -1364,7 +1364,7 @@ class icePrison:
 	def description():
 		return ('To conquer any foe, show them a world both cold and confining and they will forfeit.\n\n'
 				'Hit a unit up to X + 1 spaces away\n'
-				'-X Mv for one turn')
+				'-1 -X Mv for one turn')
 	
 	def name():
 		return 'Ice Prison'
@@ -1595,7 +1595,7 @@ class throw:
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(0, 4, 6)
+		return generic.extentInfluence.polynomial(0, 2, 4)
 	
 	def description():
 		return ('Throw anything adjacent to you back X + 1 spaces')
