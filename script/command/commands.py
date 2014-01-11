@@ -141,7 +141,7 @@ class shadeSlash:
 			generic.command.standardAttack(target, factors)
 
 			# Lower sp
-			amount = 0.9 ** extentInfluence.polynomial(1, 1)
+			amount = 0.9 ** extentInfluence.polynomial(0, 1)
 			generic.command.scaleStat(target, 'sp', amount)
 	
 	def determineRange():
@@ -186,7 +186,7 @@ class grandEntrance:
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
 		
-		# How far from caster spell command can be target meteor's center
+		# How far from user center of aoe can be
 		reach = extentInfluence.polynomial(2, 2)
 		commandRange['range'] = shapes.diamond(reach, 1)
 		
