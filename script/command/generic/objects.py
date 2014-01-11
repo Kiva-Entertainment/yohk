@@ -6,9 +6,10 @@ def rock():
 	return {
 		'model' : 'rock',
 		'name' : 'Rock',
+		'descript' : 'A rock. Immobile and passive, it acts as makeshift a barrier.',
 		'align' : 'neutral',
-		'health' : 500,
-		'hp' : 500,
+		'health' : 200,
+		'hp' : 200,
 		'spirit' : 0,
 		'sp' : 0,
 		'move' : 0,
@@ -17,8 +18,8 @@ def rock():
 		'act' : 0,
 		'strength' : 0,
 		'intelligence' : 0,
-		'toughness' : 130,
-		'willpower' : 0,
+		'toughness' : 100,
+		'willpower' : 100,
 		'focus' : 0,
 		'agility' : 0,
 		'speed' : 0,
@@ -31,6 +32,7 @@ def bird():
 	return {
 		'model' : 'bird',
 		'name' : 'Bird',
+		'descript' : 'A small bird. Although it cannot attack, it is great for blocking bases or slowing down any assailants. It can also be used in combination with Ribbon-Dash or Passage Bolt to move across the field quickly.',
 		'align' : 'neutral',
 		'health' : 100,
 		'hp' : 100,
@@ -56,10 +58,11 @@ def flame():
 	return {
 		'model' : 'flame',
 		'name' : 'Flame',
+		'descript' : 'A raging fire. It can burn any adjacent units and eventually spread.',
 		'align' : 'neutral',
-		'health' : 300,
-		'hp' : 300,
-		'spirit' : 200,
+		'health' : 150,
+		'hp' : 150,
+		'spirit' : 500,
 		'sp' : 0,
 		'move' : 0,
 		'mv' : 0,
@@ -73,20 +76,20 @@ def flame():
 		'agility' : 0,
 		'speed' : 50,
 		'jump' : 0,
-		'regen' : 25,
-		'commands' : [['flameBarrage', 'livingFlame']]
+		'regen' : 10,
+		'commands' : [['burn', 'livingFlame']]
 		}
-
 
 def ice():
 	return {
 		'model' : 'ice',
 		'name' : 'Ice',
+		'descript' : 'A frigid ice crystal. It can damage or slow down enemies from far away.',
 		'align' : 'neutral',
 		'health' : 300,
 		'hp' : 300,
-		'spirit' : 200,
-		'sp' : 50,
+		'spirit' : 500,
+		'sp' : 0,
 		'move' : 0,
 		'mv' : 0,
 		'actions' : 1,
@@ -99,6 +102,58 @@ def ice():
 		'agility' : 0,
 		'speed' : 50,
 		'jump' : 0,
-		'regen' : 13,
-		'commands' : [['iceShard', 'icePrison', 'crystallineCluster']]
+		'regen' : 10,
+		'commands' : [['iceShard', 'icePrison']]
+		}
+
+def squire():
+	return {
+		'model' : 'squire',
+		'name' : 'Squire',
+		'descript' : 'A weak squire. Can raise the strength of nearby units, and slash to take out weaker enemies.',
+		'align' : 'neutral',
+		'health' : 300,
+		'hp' : 300,
+		'spirit' : 0,
+		'sp' : 0,
+		'move' : 3,
+		'mv' : 3,
+		'actions' : 1,
+		'act' : 1,
+		'strength' : 60,
+		'intelligence' : 40,
+		'toughness' : 60,
+		'willpower' : 40,
+		'focus' : 50,
+		'agility' : 50,
+		'speed' : 50,
+		'jump' : 10,
+		'regen' : 0,
+		'commands' : [['slash', 'dualSharpen']]
+		}
+
+def mason():
+	return {
+		'model' : 'mason',
+		'name' : 'Mason',
+		'descript' : 'A weak stone mason. Can make and destroy rocks easily.',
+		'align' : 'neutral',
+		'health' : 300,
+		'hp' : 300,
+		'spirit' : 0,
+		'sp' : 0,
+		'move' : 3,
+		'mv' : 3,
+		'actions' : 1,
+		'act' : 1,
+		'strength' : 60,
+		'intelligence' : 40,
+		'toughness' : 60,
+		'willpower' : 40,
+		'focus' : 50,
+		'agility' : 50,
+		'speed' : 50,
+		'jump' : 10,
+		'regen' : 0,
+		'commands' : [['craft', 'shatter']]
 		}

@@ -1,11 +1,11 @@
 # Setup the Info scene
 from bge import logic
 
-from script import sceneControl, dynamicMaterial, objectControl, alignControl
+from script import sceneControl, dynamicMaterial, objectControl, alignControl, textControl
 
 # Stats displayed on first screen
 STATS = [['name'],
-		['model'],
+		['descript'],
 		['health', 'spirit', 'move', 'actions', 'speed', 'regen'],
 		['strength', 'toughness', 'intelligence', 'willpower', 'focus', 'agility']]
 
@@ -17,6 +17,9 @@ RATIO_STATS = {'health' : 'hp',
 
 # Name of object that displays unit's face
 FACE_OBJECT_NAME = 'info_face'
+
+# Number of characters to wrap description at
+WRAP_AT = 60
 
 # Base of name of object that displays stat text for unit
 # NOTE(kgeffen) There are multiple, named _name_1, _name_2, etc.
@@ -32,9 +35,29 @@ def do():
 
 	faceImage(unit)
 	statText(unit)
+	typeText()
 
 	alignmentVisuals(unit)
 
+
+# Display the text describing which stat each number corresponds to
+def typeText():
+	# Setup each of the text objects
+	objNumbers = [2, 3]
+	for i in objNumbers:
+
+		text = ''
+		for statType in STATS[i]:
+			text += statType.capitalize()
+			text += '\n'
+
+		# Get text object
+		TYPE_SUFFIX = '_type'
+		objectName = TEXT_OBJECT_NAME_BASE + str(i) + TYPE_SUFFIX
+		obj = objectControl.getFromScene(objectName, 'info')
+
+		# Set that object's text
+		obj['Text'] = text
 
 # Display the correct face based on the unit's model type (Ex: Soldier)
 def faceImage(unit):
@@ -53,6 +76,9 @@ def statText(unit):
 
 		# Get text that object will display
 		text = statsInLines(unit, STATS[i])
+		# Description must be wrapped - Special case
+		if STATS[i] == ['descript']:
+			text = textControl.wrap(text, WRAP_AT)
 		
 		# Get text object
 		objectName = TEXT_OBJECT_NAME_BASE + str(i)

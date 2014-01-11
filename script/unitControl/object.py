@@ -1,6 +1,8 @@
 # Scripts relating to interacting with game objects for units
 # Used throughout other scripts
 from bge import logic
+from math import radians
+from mathutils import Matrix
 
 from script import check, sceneControl, getPosition, time
 from script.time import displayTurnOrder
@@ -25,6 +27,12 @@ def add(unit):
 	# Create game object
 	obj = createGameObject(unit)
 	switchMesh(obj, unit['model'])
+
+	# TODO(kgeffen) Generalize this to work with any given teams, not just the ones in this demo
+	# Adjust object's rotation
+	if unit['align'] == 'solarServants':
+		rotAdjust = Matrix.Rotation(radians(-180.0), 3, 'Z')
+		obj.orientation *= rotAdjust
 
 	# Add first turn to time
 	time.addNext.unitAction(unit)

@@ -19,7 +19,8 @@ RANDOMNESS = 0.1
 
 'Basic commands'
 def standardAttack(target, factors):
-	force = 2 * random.gauss(factors['force'], factors['force'] * RANDOMNESS)
+	force = random.gauss(factors['force'], factors['force'] * RANDOMNESS)
+	force *= 2
 	resist = random.gauss(factors['resist'], factors['resist'] * RANDOMNESS)
 	
 	damage = force - resist

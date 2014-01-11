@@ -4,7 +4,7 @@ from bge import logic
 from script import sceneControl, dynamicMaterial, objectControl, commandControl, textControl
 
 # The max number of characters in a line of text
-WRAP_AT = 45
+WRAP_AT = 50
 
 LIST_OBJECT_NAME = 'commandSelect_list'
 COST_OBJECT_NAME = 'commandSelect_cost'
@@ -18,9 +18,9 @@ SCENE_NAME = 'commandSelect'
 def screen():
 	listText()
 	iconImage()
+	choiceText()
 	costText()
 	descriptionText()
-	choiceText()
 	extentText()
 
 
