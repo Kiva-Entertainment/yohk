@@ -28,7 +28,7 @@ class slash:
 		return 0
 	
 	def description():
-		return ('Basic sword attack')
+		return ('Slash an adjacent unit with your sword')
 	
 	def name():
 		return 'Slash'
@@ -90,7 +90,7 @@ class flameSlash:
 		return extentInfluence.polynomial(0, 9, 1)
 	
 	def description():
-		return ('Basic sword attack\n'
+		return ('Slash an adjacent unit with your sword. Wreath your sword in flames by channeling spirit into it.\n'
 				'+10X% Damage')
 	
 	def name():
@@ -98,37 +98,6 @@ class flameSlash:
 	
 	def icon():
 		return 'W_Sword_016.png'
-
-	def tags():
-		return ['targets', 'extends']
-class galeSlash:
-	def perform(actor, target):
-		factors = generic.commandFactors.physical(actor, target)
-
-		# Raise own Mv
-		amount = extentInfluence.polynomial(0, 1)
-		generic.command.raiseStat(actor, 'mv', amount)
-
-		# Hit target
-		if generic.command.hitCheck(target, factors):
-			generic.command.standardAttack(target, factors)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return extentInfluence.polynomial(0, 7, 3)
-	
-	def description():
-		return ('TODO\n\n'
-				'TODO')
-	
-	def name():
-		return 'Gale Slash'
-	
-	def icon():
-		return 'W_Sword_021.png'
 
 	def tags():
 		return ['targets', 'extends']
@@ -152,7 +121,7 @@ class shadeSlash:
 		return extentInfluence.polynomial(0, 10, 0)
 	
 	def description():
-		return ('Basic sword attack that lowers the sp of anything it hits\n'
+		return ('Slash an adjacent unit with your sword. Wreath your sword in ravenous shadows by channeling spirit into it.\n'
 				'-10% Sp X times\n'
 				'(For example, X = 1 lowers target\'s sp by 10%. X = 1 lowers it by 19%)')
 	
@@ -203,7 +172,7 @@ class grandEntrance:
 		return generic.extentInfluence.polynomial(100, 50, 40, 10)
 	
 	def description():
-		return ('Jump into the fray, damaging all units X + 1 spaces from where you land.\n'
+		return ('Jump into the fray, damaging all units X + 1 spaces from wherever you land.\n'
 				'150% + 50X% Damage\n'
 				'150% + 50X% Accuracy')
 	
@@ -240,7 +209,7 @@ class ribbonDash:
 		return extentInfluence.polynomial(20, 5, 5)
 	
 	def description():
-		return ('Move forward X + 2 spaces. Damage anything in your way.\n'
+		return ('Move forward X + 2 spaces, damaging anything in your path.\n'
 				'Cannot be used if no units stand in your path.')
 	
 	def name():
@@ -276,7 +245,7 @@ class greatCross:
 		return generic.extentInfluence.polynomial(100, 0, 100)
 	
 	def description():
-		return ('Hit any units up to X + 1 spaces from you, cardinally\n'
+		return ('Hit any units up to X + 1 spaces from you in any direction\n'
 				'133% + 33X% Damage\n'
 				'133% + 33X% Accuracy')
 	
@@ -486,7 +455,7 @@ class frigidThrust:
 		return extentInfluence.polynomial(0, 5, 10)
 	
 	def description():
-		return ('Hit any unit 2 spaces from you with your spear\n'
+		return ('Thrust your spear at any unit 2 spaces from you. Cloak your spear in frigid ice by channeling your spirit into it.\n'
 				'-X Mv for one turn')
 	
 	def name():
@@ -591,8 +560,8 @@ class shatter:
 		return 0
 	
 	def description():
-		return ('Basic attack\n'
-				'Shatters any rock')
+		return ('Shatter anything in front of you with a swing of your club.\n'
+				'Destroys rocks automatically')
 	
 	def name():
 		return 'Shatter'
@@ -831,8 +800,9 @@ class beesting:
 		return extentInfluence.polynomial(0, 20, 10)
 	
 	def description():
-		return ('Shoot any unit up to 5 spaces away with an arrow that lowers defensive abilities.\n'
-				'-20% Toughness, willpower, agility X + 1 times\n')
+		return ('Shoot any unit up to 5 spaces away with a poisonous arrow that lowers defensive abilities.\n'
+				'-20% Toughness, willpower, agility X + 1 times\n'
+				'(Example: X = 1 lowers toughness by 20% of total toughness, X = 2 lowers toughness by 36% of total toughness.')
 	
 	def name():
 		return 'Beesting'
@@ -866,7 +836,7 @@ class burn:
 		return extentInfluence.polynomial(0, 9, 1)
 	
 	def description():
-		return ('Burn an adjacent unit\n'
+		return ('Burn an adjacent unit with mystical flames\n'
 				'+10X% Damage\n'
 				'+10X% Accuracy')
 	
@@ -909,7 +879,7 @@ class meteor:
 		return generic.extentInfluence.polynomial(100, 50, 40, 10)
 	
 	def description():
-		return ('Summon a huge meteor from outer space.\n\n'
+		return ('Summon a giant meteor from outer space\n\n'
 				'Meteor has radius X + 1\n'
 				'Centered up to X + 2 spaces away\n'
 				'150% +50X% Damage\n'
@@ -975,8 +945,7 @@ class blazeCloak:
 		return extentInfluence.polynomial(0, 15, 5)
 	
 	def description():
-		return ('Don a cloak of flame to ignite the world.\n\n'
-				'Cloak yourself or a unit beside you\n'
+		return ('Cloak yourself or a unit beside you in flame to raise its offensive stats\n'
 				'+5 +5X Intelligence, strength, focus')
 	
 	def name():
@@ -1088,7 +1057,7 @@ class passageBolt:
 	
 	def description():
 		return ('Move quickly through the world, sure of where you\'re headed. In the light, all things become clear.\n\n'
-				'Move past any unit X + 1 spaces away')
+				'Deal standard magic damage to and move past any unit X + 1 spaces away')
 	
 	def name():
 		return 'Passage Bolt'
@@ -1121,7 +1090,7 @@ class birdcall:
 	
 	def description():
 		return ('Alone, a bird is weak, but don\'t be so foolish as to doubt a flock.\n\n'
-				'Summon a bird up to 3 spaces away')
+				'Summon a swift bird up to 3 spaces away')
 	
 	def name():
 		return 'Birdcall'
@@ -1154,9 +1123,8 @@ class gust:
 		return generic.extentInfluence.polynomial(0, 3, 5)
 	
 	def description():
-		return ('It\'s scary when the air itself turns violent.\n\n'
-				'Standard magic damage\n'
-				'Push a unit beside you back X spaces')
+		return ('Hit anything beside you with a burst of air, knocking it backwards\n'
+				'Damage and push back any adjacent unit (Push back X spaces)')
 	
 	def name():
 		return 'Gust'
@@ -1225,8 +1193,7 @@ class mudshot:
 	
 	def description():
 		return ('Earth and water forms the mud. A delicate balance of fluidity and stability.\n\n'
-				'Standard magic damage\n'
-				'Hit all units up to X + 1 spaces in front of you\n'
+				'Damage and lower the movement of any units up to X + 1 spaces from you in one direction\n'
 				'-X Mv for one turn')
 	
 	def name():
@@ -1259,8 +1226,7 @@ class stoneGarden:
 	
 	def description():
 		return ('Isolate yourself. Give yourself time to plan and grow.\n\n'
-				'Summon rocks on each side of you\n'
-				'Useful as a blockade')
+				'Summon a rock on each side of you')
 	
 	def name():
 		return 'Stone Garden'
@@ -1362,8 +1328,7 @@ class icePrison:
 		return generic.extentInfluence.polynomial(0, 6, 4)
 	
 	def description():
-		return ('To conquer any foe, show them a world both cold and confining and they will forfeit.\n\n'
-				'Hit a unit up to X + 1 spaces away\n'
+		return ('Imprison any unit up to X + 1 spaces from you, temporarily lowering their movement\n'
 				'-1 -X Mv for one turn')
 	
 	def name():
@@ -1427,8 +1392,7 @@ class crystallineCluster:
 		return generic.extentInfluence.polynomial(100, 5, 5)
 	
 	def description():
-		return ('Force the world to form precisely. But be warned, a world forced to form will inevitably shatter.\n\n'
-				'Summon a frigid ice crystal up to X + 1 spaces from you')
+		return ('Summon a frigid ice crystal up to X + 1 spaces from you')
 	
 	def name():
 		return 'Crystalline Cluster'
@@ -1539,7 +1503,7 @@ class dash:
 	
 	def description():
 		return ('Concentrate on moving. If you can run, you can survive.\n\n'
-				'+2 Mv')
+				'Move an additional 2 spaces this turn')
 	
 	def name():
 		return 'Dash'
@@ -1598,7 +1562,7 @@ class throw:
 		return generic.extentInfluence.polynomial(0, 2, 4)
 	
 	def description():
-		return ('Throw anything adjacent to you back X + 1 spaces')
+		return ('Throw anything beside you back X + 1 spaces')
 	
 	def name():
 		return 'Throw'
@@ -1623,8 +1587,7 @@ class strengthen:
 		return 0
 	
 	def description():
-		return ('Get strong, son.\n\n'
-				'+10 Strength')
+		return ('+10 Strength')
 	
 	def name():
 		return 'Strengthen'
@@ -1753,7 +1716,8 @@ class enlist:
 		return 100
 	
 	def description():
-		return ('Summon a squire to help you fight or ready you for battle')
+		return ('Summon a squire beside you.\n'
+				'Squires can attack, and can raise the strength of their allies.')
 	
 	def name():
 		return 'Enlist'
@@ -1781,7 +1745,8 @@ class commision:
 		return 100
 	
 	def description():
-		return ('Commision a stone mason to build for you.\nHe can create and destroy rocks with ease.')
+		return ('Commision a stone mason to build for you.'
+				'\nHe can create and destroy rocks with ease.')
 	
 	def name():
 		return 'Commision'
@@ -1838,8 +1803,7 @@ class firstAid:
 		return 0
 	
 	def description():
-		return ('Treat the wounded.\n\n'
-				'Heal up to 3 units in line in front of you\n'
+		return ('Heal up to 3 units in a line in front of you\n'
 				'Heal each unit by 200 hp')
 	
 	def name():
@@ -1863,8 +1827,8 @@ class dualSharpen:
 		return 0
 	
 	def description():
-		return ('Sharpen your blade against the weapon of any unit beside you.\n\n'
-				'+8 Strength for both units')
+		return ('Sharpen your blade against the weapon of any unit beside you.\n'
+				'+8 Strength for each unit')
 	
 	def name():
 		return 'Dual-Sharpen'
@@ -1892,7 +1856,7 @@ class craft:
 		return 0
 	
 	def description():
-		return ('Erect a rock beside you')
+		return ('Place a stone beside you')
 	
 	def name():
 		return 'Craft'

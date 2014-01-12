@@ -6,7 +6,7 @@ def rock():
 	return {
 		'model' : 'rock',
 		'name' : 'Rock',
-		'descript' : 'A rock. Immobile and passive, it acts as makeshift a barrier.',
+		'descript' : 'A rock. Immobile and passive, its only purpose is to act as a barrier.',
 		'align' : 'neutral',
 		'health' : 200,
 		'hp' : 200,
@@ -32,7 +32,7 @@ def bird():
 	return {
 		'model' : 'bird',
 		'name' : 'Bird',
-		'descript' : 'A small bird. Although it cannot attack, it is great for blocking bases or slowing down any assailants. It can also be used in combination with Ribbon-Dash or Passage Bolt to move across the field quickly.',
+		'descript' : 'A small bird. Although it cannot attack, it can move to block enemies and enemy bases.',
 		'align' : 'neutral',
 		'health' : 100,
 		'hp' : 100,
@@ -58,7 +58,7 @@ def flame():
 	return {
 		'model' : 'flame',
 		'name' : 'Flame',
-		'descript' : 'A raging fire. It can burn any adjacent units and eventually spread.',
+		'descript' : 'A raging fire. It can burn any adjacent units and eventually spread. Given enough time to spread, these flames become incredibly difficult to deal with.',
 		'align' : 'neutral',
 		'health' : 150,
 		'hp' : 150,
@@ -110,7 +110,7 @@ def squire():
 	return {
 		'model' : 'squire',
 		'name' : 'Squire',
-		'descript' : 'A weak squire. Can raise the strength of nearby units, and slash to take out weaker enemies.',
+		'descript' : 'A weak squire. It can attack to take out other weak enemies, or can raise the strength of your allies.',
 		'align' : 'neutral',
 		'health' : 300,
 		'hp' : 300,
@@ -136,7 +136,7 @@ def mason():
 	return {
 		'model' : 'mason',
 		'name' : 'Mason',
-		'descript' : 'A weak stone mason. Can make and destroy rocks easily.',
+		'descript' : 'A weak stone mason. Can make and destroy rocks with ease.',
 		'align' : 'neutral',
 		'health' : 300,
 		'hp' : 300,
