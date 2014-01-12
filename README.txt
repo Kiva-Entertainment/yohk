@@ -3,6 +3,9 @@ GENERAL
 -------
 This project is a grid-based SRPG videogame, similar to Chess/FFTactics/Disgaea/Fire-Emblem.
 
+Yohk is ideally a 2 person game.
+A single game typically takes 10-60 minutes, depending on which units are used and what win condition the players decide upon.
+
 To play, you must have version 2.69 (current) of Blender, which can be downloaded for free here:
 http://www.blender.org/download/
 Open battlefield.blend with Blender and press p to begin playing.
@@ -34,10 +37,10 @@ Space key	Select
 W Key		Deselect/Exit/Undo
 X Key		End turn
 A/D keys	Rotate view
-		Raise/Lower extent while selecting a command that extends (See <i>Extent</i>)
+		Raise/Lower extent while selecting a command that extends
 F/G Keys	Move cursor to next valid unit
 		G is stricter (While selecting units to act, only move to units with actions remaining, F moves to units with actions OR movement left)
-		G maximizes extent while selecting a command that extends (See <i>Extent</i>)
+		G maximizes extent while selecting a command that extends
 Q/E keys	Zoom in/out
 I key		View unit info
 M key		Mute
@@ -57,9 +60,6 @@ EXTENT
 Some skills have something called “extent”
 When you use a skill, you can spend more sp to raise the extent of the skill
 This makes the skill more substantial in some way (Greater range, greater damage, etc.)
-To raise extent, press “D” to raise it by 1, or “G” to raise it as high as possible
-To lower extent, press “A” to lower it by 1
-
 Spending just the right amount on each skill is essential to ensuring your victory
 
 
