@@ -1,10 +1,12 @@
 # Churn through entries in time until turn with actors comes up
 from bge import logic
 
-from script.time import addNext, upkeep, displayTurnOrder
+from script.time import addNext, upkeep, displayTurnOrder, cleanup
 
 # Number of entries in time array
-QUANTITY_ENTRIES = 100
+# NOTE(kgeffen) Add 1 because turn[0] is current turn,
+# and a unit with speed 1 would need to be put in turn 100 (0 + 100)
+QUANTITY_ENTRIES = 100 + 1
 
 def attempt(cont):
 	if cont.sensors['xKey'].positive:
@@ -13,19 +15,24 @@ def attempt(cont):
 def do():
 	time = logic.globalDict['time']
 	
-	# Churn the turn that just finished
-	lastTurn = churnSingle(time)
-	
-	# Units that just acted must be added to time again
-	# Also, they each have an upkeep
-	for unitNumber in lastTurn:
-		upkeep.unit(unitNumber)
-		addNext.unitAction(unitNumber, time)
-	
+	turnHasActors = time[0] != []
+	if turnHasActors:
+		# Remove the actors that just acted from time
+		# time[0] is current turn, first entry in it is first group of units
+		actors = time[0].pop(0)
+
+		# Units that just acted must be added to time again
+		# Also, they each have an upkeep
+		for unit in actors:
+			upkeep.unit(unit)
+			addNext.unitAction(unit)
+
 	churnUntilTurnWithActor(time)
-	
+
 	displayTurnOrder.do()
 
+	# Perform any necessary cleanup between turns
+	cleanup.do()
 
 # Remove turns with no actors until current turn has actor(s)
 def churnUntilTurnWithActor(time):
@@ -34,19 +41,9 @@ def churnUntilTurnWithActor(time):
 		
 		noActors = time[0] == []
 		if noActors:
-			churnSingle(time)
+			time.pop(0)
+			time.append([])
 		else:
 			# Current turn has actors
 			return
 
-# Remove current turn and add a blank turn on at end
-# Returns turn removed
-def churnSingle(time):
-	# The turn being removed
-	churned = time.pop(0)
-	
-	# Add on a turn to keep time same size
-	time.append([])
-	
-	# Return removed turn
-	return churned

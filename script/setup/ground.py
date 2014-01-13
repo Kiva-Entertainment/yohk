@@ -1,25 +1,26 @@
 # Switch the ground mesh and create all ground variables stored in the globalDict
 from bge import logic
+import json
 
 from script import objectControl
 
-GROUND_HEIGHT_FILENAME = 'groundHeight.txt'
+STAGE_DATA_FILENAME = 'stageData.json'
+# TODO(kgeffen) Remove once stage selection has been enabled
+TEMP_STAGE_NAME = 'mars'
 
 # Setup the ground mesh and all ground vars
 def do():
-	filepath = logic.globalDict['stageFilepath']
+	# TODO(kgeffen) Remove once stage selection has been enabled
+	filepath = logic.expandPath('//stages/') + TEMP_STAGE_NAME + '/'
 	
 	setupGroundHeight(filepath)
 	setupMapDimensions()
 	
 	switchMapMesh(filepath)
 
-# Setup an array for the height of the ground of each space on the map
-# NOTE(kgeffen) At the moment, the groundHeight.txt has all of the data and is evaled
 def setupGroundHeight(filepath):
-	with open(filepath + GROUND_HEIGHT_FILENAME) as heightFile:
-		# TODO(kgeffen) This is easily tamperable, switch to more secure solution
-		logic.globalDict['groundHeight'] = eval(heightFile.read())
+	with open(filepath + STAGE_DATA_FILENAME) as stageDataFile:
+		logic.globalDict['groundHeight'] = json.load(stageDataFile)['ground']
 
 # Store the x and y of the current map based on the pre-existing groundHeight array
 def setupMapDimensions():

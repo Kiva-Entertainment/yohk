@@ -1,54 +1,71 @@
 README
 GENERAL
 -------
-This project is a grid-based SRPG videogame, similar to Chess/FFTactics/Disgaea.
+This project is a grid-based SRPG videogame, similar to Chess/FFTactics/Disgaea/Fire-Emblem.
 
-To play, you must have version 2.69 (current) of Blender, which can be found for free here:
+Yohk is ideally a 2 person game.
+A single game typically takes 10-60 minutes, depending on which units are used and what win condition the players decide upon.
+
+To play, you must have version 2.69 (current) of Blender, which can be downloaded for free here:
 http://www.blender.org/download/
 Open battlefield.blend with Blender and press p to begin playing.
 
 This game is being produced by Kiva-Entertainment, and is free to download from GitHub.
 However, redistribution and/or commercial use is forbidden.
-For more information on licensing, see LICENSE
+For more information on licensing, see LICENSE.
 
-To watch tutorials and other videos, visit the youtube channel:
+It is highly recommended that you download the latest stable release.
+All releases can be found here:
+https://github.com/Kiva-Entertainment/yohk/releases
+
+To watch game matches, tutorials, and other videos, visit our Youtube channel:
 https://www.youtube.com/channel/UCFDRx42y3uBs-IROz3pMZNQ
+
+To discuss the game and get the latest news, visit this game’s thread:
+http://blenderartists.org/forum/showthread.php?319877-Yohk-SRPG-wip
+
 
 CREDIT
 ------
-Specific credit given within folders containing external content
+All credit for external resources given in the directory that contains the resource
 
-General credit:
-Charles Gabriel on openGameArt.org for face images
-Henrique Lazarini on openGameArt.org for icon images
-Daniel Cook on lostGarden.com for tile images
 
 CONTROLS
 --------
-When selecting units:
-Arrow keys move cardinally
-a/d to rotate view
-q/e zoom in/out
-f Cycle through units acting in current turn (See below)
-x End current turn
-space select whatever target is over (To view menu/move/make attack target)
+Arrow keys	Move
+Space key	Select
+W Key		Deselect/Exit/Undo
+X Key		End turn
+A/D keys	Rotate view
+		Raise/Lower extent while selecting a command that extends
+F/G Keys	Move cursor to next valid unit
+		G is stricter (While selecting units to act, only move to units with actions remaining, F moves to units with actions OR movement left)
+		G maximizes extent while selecting a command that extends
+Q/E keys	Zoom in/out
+I key		View unit info
+M key		Mute
+Esc key		Exit game
 
-When unitMenu is open
-Up Move
-Left Action select
-Down View info
-w Deselect unit (Close menu)
 
-In action select/info
-Arrow keys to navigate
-space Select
-w Exit
-a/d to raise or lower extent (Makes attacks more significant)
+VICTORY
+-------
+In this demo, it is up to the players to decide when one team has won
+You could decide that a player wins once they have remove all of their enemies from the field (This can take a long time)
+You could also decide that a player wins after they’ve defeated N of their opponent’s units
+It is up to you to decide when the match is over
+
+
+EXTENT
+------
+Some skills have something called “extent”
+When you use a skill, you can spend more sp to raise the extent of the skill
+This makes the skill more substantial in some way (Greater range, greater damage, etc.)
+Spending just the right amount on each skill is essential to ensuring your victory
+
 
 TURNS
 ------
-Units are placed in turn order based on their speed
-Speed is between 1 and 100
-2 units with speed c (ex: 20) always act on the same turn
-A unit with speed 100 acts 4x as often as one with speed 25
-(In the above case, the unit w speed 25 always acts on the same turn as the one with 100, but the 100 has 3 additional turns by itself)
+Units act in turns
+Units act more frequently if they have higher speed
+In this demo, all units have same speed, except for bases, which have 1/10th the number of turns that other units have
+

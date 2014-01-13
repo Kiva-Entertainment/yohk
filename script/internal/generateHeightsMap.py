@@ -5,8 +5,8 @@ import math
 import os
 
 
-x = 10
-y = 10
+x = 18
+y = 31
 a = []
 for i in range(0, x):
 	aj = [0.0 for j in range(0, y)]
@@ -17,7 +17,7 @@ m = o.data.polygons
 for face in m.values():
 	x = int(face.center[0])
 	y = int(face.center[1])
-	z = face.center[2]
+	z = round(face.center[2], 2)
 	a[x][y] = z
 
 path = bpy.path.abspath('//groundHeight.txt')

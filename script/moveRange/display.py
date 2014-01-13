@@ -6,4 +6,4 @@ from script import marker
 def do():
 	for move in logic.globalDict['validMove']:
 		space = move['space']
-		marker.add(space)
+		marker.add(space, 'markerMove')

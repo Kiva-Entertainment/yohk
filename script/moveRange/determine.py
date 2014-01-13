@@ -15,7 +15,7 @@ def do(unit):
 	fromRing = start
 	
 	# final - List of all pairs (valid space/mv consumed)
-	final = []
+	final = start
 	for dMv in range(1, unit['mv'] + 1): # dMv = How much movement is consumed
 		
 		newRing = spread(fromRing, dMv, unit['jump'])

@@ -4,11 +4,10 @@ from bge import logic
 from script import sceneControl, objectControl, marker
 
 # Display the unit's info
-def info(cont):
-	# TODO(kgeffen) Fix info scene
-	return
-	
+def info(cont):	
 	if cont.sensors['downKey'].positive:
+		logic.globalDict['described'] = logic.globalDict['actor']
+
 		sceneControl.show('info')
 		sceneControl.hide('battlefieldOverlay')
 		sceneControl.suspend('battlefield')
@@ -21,19 +20,17 @@ def move(cont):
 		# Hide unitMenu
 		menu = objectControl.getFromScene('unitMenu', 'battlefield')
 		objectControl.hide(menu)
-		
-		sceneControl.hide('basicInfo')
 
 # Change to action select
 def skill(cont):
 	if cont.sensors['leftKey'].positive:
 		# Clear all movement range markers
-		marker.clear()
+		marker.clearMoveMarkers()
 		
 		# Hide the unit menu
 		menu = objectControl.getFromScene('unitMenu', 'battlefield')
 		objectControl.hide(menu)
 		
 		sceneControl.show('commandSelect')
-		sceneControl.hide('battlefieldOverlay', 'basicInfo')
+		sceneControl.hide('battlefieldOverlay')
 		sceneControl.suspend('battlefield') # Battlefield is still visible

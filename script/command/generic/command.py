@@ -11,58 +11,69 @@ from bge import logic
 import math
 import random
 
-from script import objectControl, getPosition
+from script import unitControl
 from script.command import storeResult
 
 # How random calculations are
 RANDOMNESS = 0.1
 
 'Basic commands'
-def standardAttack(targetNumber, factors):
-	force = 2 * random.gauss(factors['force'], factors['force'] * RANDOMNESS)
+def standardAttack(target, factors):
+	force = random.gauss(factors['force'], factors['force'] * RANDOMNESS)
+	force *= 2
 	resist = random.gauss(factors['resist'], factors['resist'] * RANDOMNESS)
 	
 	damage = force - resist
 	if damage < 1:
 		damage = 1
 	
-	raiseStat(targetNumber, 'hp', -damage)
+	raiseStat(target, 'hp', -damage)
 	
 	return damage
 
+def regen(unit):
+	dSp = unit['regen']/100 * unit['spirit']
+	dSp = round(dSp)
+
+	raiseStat(unit, 'sp', dSp)
+
 'Basic results of commands'
 # Raise one of unit's stats by an amount
-def raiseStat(unitNumber, stat, amount):
-	logic.globalDict['units'][unitNumber][stat] += round(amount)
+def raiseStat(unit, stat, amount):
+	# Don't lower stat to less than 0
+	if -amount > unit[stat]:
+		amount = -unit[stat]
+
+	unit[stat] += round(amount)
 	
-	storeResult.statChange(stat, amount, unitNumber)
+	storeResult.statChange(stat, amount, unit)
 
 # Multiply a stat by an amount
-def scaleStat(unitNumber, stat, factor):
-	v1 = logic.globalDict['units'][unitNumber][stat]
+def scaleStat(unit, stat, factor):
+	v1 = unit[stat]
 	v2 = round(v1 * factor)
 	
-	logic.globalDict['units'][unitNumber][stat] = v2
+	unit[stat] = v2
 	
 	# Calculate and store the change in the affected stat
 	amount = v2 - v1
-	storeResult.statChange(stat, amount, unitNumber)
+	storeResult.statChange(stat, amount, unit)
+
+	return amount
 
 'Movement'
-def move(unitNumber):
+def move(unit):
 	# First special space
 	position = logic.globalDict['commandSpecialSpaces'][0]
 	
-	logic.globalDict['units'][unitNumber]['position'] = position
+	unitControl.move.toSpace(unit, position)
 	
-	# Move actual object
-	obj = objectControl.getFromScene(str(unitNumber), 'battlefield')
-	obj.worldPosition = getPosition.onGround(position)
+	
 
-'Other'
+'Checks'
 # Determine if command hits
 # If command misses, store 'miss' in commandResults
-def hitCheck(targetNumber, factors):
+def hitCheck(target, factors):
 	accuracy = random.gauss(factors['accuracy'], factors['accuracy'] * RANDOMNESS)
 	
 	evasion = random.gauss(factors['evasion'], factors['evasion'] * RANDOMNESS)
@@ -74,7 +85,56 @@ def hitCheck(targetNumber, factors):
 	
 	# Store result 'miss'
 	if not hit:
-		space = logic.globalDict['units'][targetNumber]['position']
+		space = target['position']
 		storeResult.storeText(space, 'miss')
 	
 	return hit
+
+# Return true 50% of the time
+# If _times_ is given, flip that many times and return True if any are heads
+def coinFlip(times = 1):
+	for i in range(times):
+		if random.random() < 0.5:
+			return True
+
+
+'Other'
+# Create the given objects
+# Objects are added based on special spaces, in order
+def addObjects(*units):
+	for i in range(0, len(units)):
+		unit = units[i]
+
+		# Change its position before adding
+		unit['position'] = logic.globalDict['commandSpecialSpaces'][i]
+
+		# Add game object
+		unitControl.object.add(unit)
+
+		# Remove unit from inactive units list, if it's in there
+		inactiveUnits = logic.globalDict['inactiveUnits']
+		for i in range(0, len(inactiveUnits)):
+			if unit == inactiveUnits[i]:
+				# TODO(kgeffen) In version 0.3, as scaffolding, generic units are created instead of
+				# specific characters. Once specific characters exist, uncomment deletion
+				#del inactiveUnits[i]
+				break
+
+		storeResult.storeText(unit['position'], 'Poof!')
+
+# Make given unit lose any occurences of the given skill
+def loseCommand(unit, commandName):
+	# New list of lists of commands that unit has
+	newCommands = []
+
+	# Units commands are seperated into lists, go through each of those lists
+	for commandList in unit['commands']:
+
+		# Change the list to not include the given commandName
+		newList = list(filter((commandName).__ne__, commandList))
+		# Only add list if it isn't empty
+		if newList != []:
+			newCommands.append(newList)
+
+	unit['commands'] = newCommands
+

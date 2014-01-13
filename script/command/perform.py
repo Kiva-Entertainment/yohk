@@ -2,29 +2,36 @@
 # Called by cursor.select.target.py
 from bge import logic
 
-from script import check, objectControl, commandControl, unitControl
+from script import check, objectControl, commandControl
 from script.command import cleanup
 
-def attempt():
-	cursor = objectControl.getFromScene('cursor', 'battlefield')
-	cursorPosition = cursor.worldPosition
-	
+def attempt(cursorPosition):
+	# List of units effected by command happening at given position
 	effectedUnits = unitsInSpacesAoe(cursorPosition)
-	
-	if effectedUnits is not None:
-		
-		actor = unitControl.get.actor()
-		targets = effectedUnits
-		command = logic.globalDict['cursor']
-		
+
+	# If list is None (None, not empty list) command cannot target given position, thus can't be performed
+	# TODO(kgeffen) This is an implementation detail, make the check for valid space more obvious
+	if effectedUnits is None:
+		return False
+
+	commandName = logic.globalDict['cursor']
+	requiresTarget = commandControl.hasTag(commandName, 'targets')
+
+	if requiresTarget and effectedUnits == []:
+		return False
+	else:
 		# Store effected special spaces in 'commandSpecialSpaces'
 		storeSpecialSpaces(cursorPosition)
-
-		do(actor, targets, command)
+		
+		do(effectedUnits)
 
 		# Indicate that command was performed
 		return True
-def do(actor, targets, command):
+
+def do(targets):
+	actor = logic.globalDict['actor']
+	command = logic.globalDict['cursor']
+
 	# Perform the command
 	commandControl.perform(command, actor, targets)
 	
