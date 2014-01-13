@@ -90,7 +90,8 @@ class flameSlash:
 		return extentInfluence.polynomial(0, 9, 1)
 	
 	def description():
-		return ('Slash an adjacent unit with your sword. Wreath your sword in flames by channeling spirit into it.\n'
+		return ('Slash an adjacent unit with your sword.\n'
+				'Wreath your sword in flames by channeling spirit into it.\n'
 				'+10X% Damage')
 	
 	def name():
@@ -121,7 +122,8 @@ class shadeSlash:
 		return extentInfluence.polynomial(0, 10, 0)
 	
 	def description():
-		return ('Slash an adjacent unit with your sword. Wreath your sword in ravenous shadows by channeling spirit into it.\n'
+		return ('Slash an adjacent unit with your sword.\n' 
+				'Wreath your sword in ravenous shadows by channeling spirit into it.\n\n'
 				'-10% Sp X times\n'
 				'(For example, X = 1 lowers target\'s sp by 10%. X = 1 lowers it by 19%)')
 	
@@ -245,7 +247,7 @@ class greatCross:
 		return generic.extentInfluence.polynomial(100, 0, 100)
 	
 	def description():
-		return ('Hit any units up to X + 1 spaces from you in any direction\n'
+		return ('Hit all units up to X + 1 spaces from you in any direction\n'
 				'133% + 33X% Damage\n'
 				'133% + 33X% Accuracy')
 	
@@ -800,8 +802,8 @@ class beesting:
 		return extentInfluence.polynomial(0, 20, 10)
 	
 	def description():
-		return ('Shoot any unit up to 5 spaces away with a poisonous arrow that lowers defensive abilities.\n'
-				'-20% Toughness, willpower, agility X + 1 times\n'
+		return ('Shoot any unit up to 5 spaces away with a poisonous arrow that lowers defensive abilities.\n\n'
+				'-20% Toughness, willpower, agility X + 1 times\n\n'
 				'(Example: X = 1 lowers toughness by 20% of total toughness, X = 2 lowers toughness by 36% of total toughness.')
 	
 	def name():
