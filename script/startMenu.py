@@ -9,17 +9,26 @@ ACTIVE = logic.KX_INPUT_JUST_ACTIVATED
 # Distance in height between one field and the next
 D_HEIGHT = 0.1
 # A list of all fields by number
-FIELDS = ['stage', 'characters', 'goal', 'players', 'start']
+FIELDS = ['stages', 'characters', 'goals', 'players', 'start']
+
+# A list of all possible goals
+GOALS = ['Fight to the death', 'jump around!', 'stuff']
+# List of valid choices for 'players'
+PLAYERS = ['Single Player']
 
 def setup(cont):
+	own = cont.owner
+
 	if cont.sensors['start'].positive:
 		# Get list of names of all stages
 		stagesDirectory = logic.expandPath('//stages')
 		stageNames = [x[1] for x in os.walk(stagesDirectory)][0]
-		cont.owner['stage'] = stageNames
+		own['stages'] = stageNames
 
-
-
+		# TODO(kgeffen) Read characters from file
+		own['characters'] = ['The goofsters', 'But nah', 'idk stuff']
+		own['goals'] = GOALS
+		own['players'] = PLAYERS
 
 def update(cont):
 	own = cont.owner
@@ -27,9 +36,10 @@ def update(cont):
 	
 	# Display each field's current choice
 	for field in FIELDS:
-		obj = objectControl.getFromScene('text_' + field, 'main')
-		obj.text = own[field][0].capitalize()
-		break
+		# Start is a button, not a field
+		if field != 'start':
+			obj = objectControl.getFromScene('text_' + field, 'main')
+			obj.text = own[field][0]
 
 	# Scale down the arrows if they are enlarged
 	for arrowName in ['leftArrow', 'rightArrow']:
@@ -46,6 +56,10 @@ def update(cont):
 		moveHorizontal(own, left = True)
 	elif keyboard.events[events.RIGHTARROWKEY] == ACTIVE:
 		moveHorizontal(own, left = False)
+
+	elif keyboard.events[events.SPACEKEY] == ACTIVE:
+		select(own)
+
 
 # Move cursor to next selection up/down
 def moveVertical(own, up):
@@ -93,16 +107,29 @@ def moveVertical(own, up):
 
 # Select a choice for current fieldNum
 def moveHorizontal(own, left):
+	field = FIELDS[ own['fieldNum'] ]
+
+	# Start is a button, has no field
+	if field == 'start':
+		return
+
 	if left:
 		objectControl.getFromScene('leftArrow', 'main').worldScale = [1.5, 1.5, 1.5]
 		# Cycle list
-		field = FIELDS[ own['fieldNum'] ]
 		entry = own[field].pop()
 		own[field].insert(0, entry)
 
 	else:
 		objectControl.getFromScene('rightArrow', 'main').worldScale = [1.5, 1.5, 1.5]
 		# Cycle list
-		field = FIELDS[ own['fieldNum'] ]
 		entry = own[field].pop(0)
 		own[field].append(entry)
+
+# Select the option that selector is over currently
+def select(own):
+	field = FIELDS[ own['fieldNum'] ]
+
+	if field == 'start':
+		# Start battlefield
+		path = logic.expandPath('battlefield.blend')
+		logic.startGame(path)
