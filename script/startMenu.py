@@ -1,6 +1,7 @@
 # Control everything that happens in the start menu
 from bge import logic, events
 from mathutils import Vector
+import os
 
 from script import objectControl
 
@@ -10,14 +11,31 @@ D_HEIGHT = 0.1
 # A list of all fields by number
 FIELDS = ['stage', 'characters', 'goal', 'players', 'start']
 
+def setup(cont):
+	if cont.sensors['start'].positive:
+		# Get list of names of all stages
+		stagesDirectory = logic.expandPath('//stages')
+		stageNames = [x[1] for x in os.walk(stagesDirectory)][0]
+		cont.owner['stage'] = stageNames
+
+
+
+
 def update(cont):
 	own = cont.owner
 	keyboard = logic.keyboard
 	
+	# Display each field's current choice
+	for field in FIELDS:
+		obj = objectControl.getFromScene('text_' + field, 'main')
+		obj.text = own[field][0].capitalize()
+		break
+
+	# Scale down the arrows if they are enlarged
 	for arrowName in ['leftArrow', 'rightArrow']:
 		arrow = objectControl.getFromScene(arrowName, 'main')
 		if arrow.localScale.x > 1:
-			arrow.localScale -= Vector((0.04, 0.04, 0.04))
+			arrow.localScale -= Vector((0.035, 0.035, 0.035))
 
 	if keyboard.events[events.UPARROWKEY] == ACTIVE:
 		moveVertical(own, up = True)
@@ -77,5 +95,14 @@ def moveVertical(own, up):
 def moveHorizontal(own, left):
 	if left:
 		objectControl.getFromScene('leftArrow', 'main').worldScale = [1.5, 1.5, 1.5]
+		# Cycle list
+		field = FIELDS[ own['fieldNum'] ]
+		entry = own[field].pop()
+		own[field].insert(0, entry)
+
 	else:
 		objectControl.getFromScene('rightArrow', 'main').worldScale = [1.5, 1.5, 1.5]
+		# Cycle list
+		field = FIELDS[ own['fieldNum'] ]
+		entry = own[field].pop(0)
+		own[field].append(entry)
