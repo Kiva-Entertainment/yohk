@@ -46,12 +46,18 @@ def moveVertical(own, up):
 			own.worldPosition.y += D_HEIGHT * movesUp
 			own['fieldNum'] = 0
 
-	# If selector is on start button, arrows should be hidden
-	if FIELDS[ own['fieldNum'] ] == 'start':
+	# Reset all fields to black/Ensure arrows visible
+	for field in FIELDS:
+		objectControl.getFromScene('text_' + field, 'main').color = (0, 0, 0, 1)
+	
+	# Make selected field white
+	field = FIELDS[ own['fieldNum'] ]
+	objectControl.getFromScene('text_' + field, 'main').color = (1, 1, 1, 1)
+
+	# If selection is start button, make arrows invisible
+	if field == 'start':
 		objectControl.getFromScene('leftArrow', 'main').setVisible(False)
 		objectControl.getFromScene('rightArrow', 'main').setVisible(False)
-		objectControl.getFromScene('text_start', 'main').color = (1, 1, 1, 1)
 	else:
 		objectControl.getFromScene('leftArrow', 'main').setVisible(True)
 		objectControl.getFromScene('rightArrow', 'main').setVisible(True)
-		objectControl.getFromScene('text_start', 'main').color = (0, 0, 0, 1)
