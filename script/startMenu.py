@@ -9,7 +9,7 @@ ACTIVE = logic.KX_INPUT_JUST_ACTIVATED
 # Distance in height between one field and the next
 D_HEIGHT = 0.1
 # A list of all fields by number
-FIELDS = ['stages', 'characters', 'goals', 'players', 'start']
+FIELDS = ['stages', 'party', 'goals', 'players', 'start']
 
 # A list of all possible goals
 GOALS = ['Fight to the death', 'jump around!', 'stuff']
@@ -21,12 +21,16 @@ def setup(cont):
 
 	if cont.sensors['start'].positive:
 		# Get list of names of all stages
-		stagesDirectory = logic.expandPath('//stages')
-		stageNames = [x[1] for x in os.walk(stagesDirectory)][0]
+		stagesDir = logic.expandPath('//stages')
+		stageNames = [x[1] for x in os.walk(stagesDir)][0]
 		own['stages'] = stageNames
 
-		# TODO(kgeffen) Read characters from file
-		own['characters'] = ['The goofsters', 'But nah', 'idk stuff']
+		# Get list of parties
+		partiesDir = logic.expandPath('//parties')
+		partyNames = [x[2] for x in os.walk(partiesDir)][0]
+		# NOTE(kgeffen) Strip off '.json' from each file (.json is last 5 chars)
+		own['party'] = [name[:-5] for name in partyNames if name.endswith('.json')]
+
 		own['goals'] = GOALS
 		own['players'] = PLAYERS
 
@@ -132,7 +136,7 @@ def select(own):
 	if field == 'start':
 		# Set all globalDicts based on fields
 		logic.globalDict['stage'] = own['stages'][0]
-		logic.globalDict['characters'] = own['characters'][0]
+		logic.globalDict['party'] = own['party'][0]
 		logic.globalDict['goal'] = own['goals'][0]
 		# players must be handled a little differently
 
