@@ -130,6 +130,12 @@ def select(own):
 	field = FIELDS[ own['fieldNum'] ]
 
 	if field == 'start':
+		# Set all globalDicts based on fields
+		logic.globalDict['stage'] = own['stages'][0]
+		logic.globalDict['characters'] = own['characters'][0]
+		logic.globalDict['goal'] = own['goals'][0]
+		# players must be handled a little differently
+
 		# Start battlefield
 		path = logic.expandPath('battlefield.blend')
 		logic.startGame(path)

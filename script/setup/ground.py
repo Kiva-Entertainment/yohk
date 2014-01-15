@@ -5,13 +5,10 @@ import json
 from script import objectControl
 
 STAGE_DATA_FILENAME = 'stageData.json'
-# TODO(kgeffen) Remove once stage selection has been enabled
-TEMP_STAGE_NAME = 'mars'
 
 # Setup the ground mesh and all ground vars
 def do():
-	# TODO(kgeffen) Remove once stage selection has been enabled
-	filepath = logic.expandPath('//stages/') + TEMP_STAGE_NAME + '/'
+	filepath = logic.expandPath('//stages/') + logic.globalDict['stage'] + '/'
 	
 	setupGroundHeight(filepath)
 	setupMapDimensions()
