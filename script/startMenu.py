@@ -1,5 +1,6 @@
 # Control everything that happens in the start menu
 from bge import logic, events
+from mathutils import Vector
 
 from script import objectControl
 
@@ -13,10 +14,20 @@ def update(cont):
 	own = cont.owner
 	keyboard = logic.keyboard
 	
+	for arrowName in ['leftArrow', 'rightArrow']:
+		arrow = objectControl.getFromScene(arrowName, 'main')
+		if arrow.localScale.x > 1:
+			arrow.localScale -= Vector((0.04, 0.04, 0.04))
+
 	if keyboard.events[events.UPARROWKEY] == ACTIVE:
 		moveVertical(own, up = True)
 	elif keyboard.events[events.DOWNARROWKEY] == ACTIVE:
 		moveVertical(own, up = False)
+
+	elif keyboard.events[events.LEFTARROWKEY] == ACTIVE:
+		moveHorizontal(own, left = True)
+	elif keyboard.events[events.RIGHTARROWKEY] == ACTIVE:
+		moveHorizontal(own, left = False)
 
 # Move cursor to next selection up/down
 def moveVertical(own, up):
@@ -61,3 +72,10 @@ def moveVertical(own, up):
 	else:
 		objectControl.getFromScene('leftArrow', 'main').setVisible(True)
 		objectControl.getFromScene('rightArrow', 'main').setVisible(True)
+
+# Select a choice for current fieldNum
+def moveHorizontal(own, left):
+	if left:
+		objectControl.getFromScene('leftArrow', 'main').worldScale = [1.5, 1.5, 1.5]
+	else:
+		objectControl.getFromScene('rightArrow', 'main').worldScale = [1.5, 1.5, 1.5]
