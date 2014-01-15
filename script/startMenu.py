@@ -1,6 +1,8 @@
 # Control everything that happens in the start menu
 from bge import logic, events
 
+from script import objectControl
+
 ACTIVE = logic.KX_INPUT_JUST_ACTIVATED
 # Distance in height between one field and the next
 D_HEIGHT = 0.1
@@ -43,3 +45,13 @@ def moveVertical(own, up):
 
 			own.worldPosition.y += D_HEIGHT * movesUp
 			own['fieldNum'] = 0
+
+	# If selector is on start button, arrows should be hidden
+	if FIELDS[ own['fieldNum'] ] == 'start':
+		objectControl.getFromScene('leftArrow', 'main').setVisible(False)
+		objectControl.getFromScene('rightArrow', 'main').setVisible(False)
+		objectControl.getFromScene('text_start', 'main').color = (1, 1, 1, 1)
+	else:
+		objectControl.getFromScene('leftArrow', 'main').setVisible(True)
+		objectControl.getFromScene('rightArrow', 'main').setVisible(True)
+		objectControl.getFromScene('text_start', 'main').color = (0, 0, 0, 1)
