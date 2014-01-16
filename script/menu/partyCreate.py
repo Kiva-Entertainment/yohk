@@ -2,6 +2,7 @@
 from bge import logic, events
 import json, os
 
+from script.command import commands
 
 
 from mathutils import Vector
@@ -29,6 +30,12 @@ def setup(cont):
 			own['units'] = json.load(partyFile)
 
 		own['party'] = partyName
+
+		# Read list of commands to add from json
+		filepath = logic.expandPath('//releasedCommands.json')
+		with open(filepath) as commandsFile:
+			own['addSkill'] = json.load(commandsFile)
+
 
 def update(cont):
 	own = cont.owner
@@ -97,16 +104,24 @@ def updateTextFields(own):
 		objectControl.getFromScene('text_button_' + button, 'partyCreate').color = (1, 1, 1, 1)
 
 def setTextFields(own):
+	'''Party Text'''
 	partyText = objectControl.getFromScene('text_party', 'partyCreate')
 	partyText.text = own['party']
 
+	'''Name Text'''
 	nameText = objectControl.getFromScene('text_name', 'partyCreate')
 	nameText.text = own['units'][0]['name']
 
+	'''Class Text'''
 	classText = objectControl.getFromScene('text_class', 'partyCreate')
 	# TODO(kgeffen) Change 'model' to 'class' everywhere
 	classText.text = own['units'][0]['model']	
 
+	'''Add Skill Text'''
+	addSkillText = objectControl.getFromScene('text_addSkill', 'partyCreate')
+	# TODO(kgeffen) Change 'model' to 'class' everywhere
+	addSkillText.text = own['addSkill'][0]
+	
 	# Add skill
 
 	removeSkillText = objectControl.getFromScene('text_removeSkill', 'partyCreate')
@@ -145,33 +160,74 @@ def moveVertical(own, up):
 def moveHorizontal(own, left):
 	field = FIELDS[ own['fieldNum'] ]
 
-	# Buttons must be handled differently
-	if field == 'button':
-		soundControl.play('navigate')
-		if left:
-			if own['buttonNum'] > 0:
-				own['buttonNum'] -= 1
-			else:
-				own['buttonNum'] = len(BUTTONS) - 1
+	callDict = {
+		'party' : cycleParty,
+		'name' : cycleName,
+		'class' : cycleClass,
+		'addSkill' : cycleAddSkill,
+		'removeSkill' : cycleRemoveSkill,
+		'button' : cycleButton
+	}
+
+	method = callDict[field]
+	method(own, left)
+
+	# Scale up arrow chosen
+	if left:
+		objectControl.getFromScene('leftArrow2', 'partyCreate').worldScale = [1.5, 1.5, 1.5]
+	else:
+		objectControl.getFromScene('rightArrow2', 'partyCreate').worldScale = [1.5, 1.5, 1.5]
+
+	# Play sound
+	soundControl.play('navigate')
+
+def cycleParty(own, left):
+	pass
+
+def cycleName(own, left):
+	if left:
+		objectControl.getFromScene('leftArrow2', 'partyCreate').worldScale = [1.5, 1.5, 1.5]
+		# Cycle list
+		entry = own['units'].pop()
+		own['units'].insert(0, entry)
+
+	else:
+		objectControl.getFromScene('rightArrow2', 'partyCreate').worldScale = [1.5, 1.5, 1.5]
+		# Cycle list
+		entry = own['units'].pop(0)
+		own['units'].append(entry)
+
+def cycleClass(own, left):
+	pass
+
+def cycleAddSkill(own, left):
+	pass
+
+def cycleRemoveSkill(own, left):
+	pass
+
+def cycleButton(own, left):
+	if left:
+		if own['buttonNum'] > 0:
+			own['buttonNum'] -= 1
 		else:
-			if own['buttonNum'] < len(BUTTONS) - 1:
-				own['buttonNum'] += 1
-			else:
-				own['buttonNum'] = 0
+			own['buttonNum'] = len(BUTTONS) - 1
+	else:
+		if own['buttonNum'] < len(BUTTONS) - 1:
+			own['buttonNum'] += 1
+		else:
+			own['buttonNum'] = 0
 
-	# If field has no left/right abilities, return
-	if field not in FIELDS_W_ARROWS:
-		return
-
+def dsahjkdsa():
 	soundControl.play('navigate')
 	if left:
-		objectControl.getFromScene('leftArrow2', 'main').worldScale = [1.5, 1.5, 1.5]
+		objectControl.getFromScene('leftArrow2', 'partyCreate').worldScale = [1.5, 1.5, 1.5]
 		# Cycle list
 		entry = own[field].pop()
 		own[field].insert(0, entry)
 
 	else:
-		objectControl.getFromScene('rightArrow2', 'main').worldScale = [1.5, 1.5, 1.5]
+		objectControl.getFromScene('rightArrow2', 'partyCreate').worldScale = [1.5, 1.5, 1.5]
 		# Cycle list
 		entry = own[field].pop(0)
 		own[field].append(entry)
@@ -184,8 +240,10 @@ def select(own):
 		button = BUTTONS[ own['buttonNum'] ]
 		if button == 'exit':
 			returnToMainScreen()
+
 		elif button == 'save':
 			pass
+
 		elif button == 'delete':
 			# Delete the json that has this parties information
 			party = logic.globalDict['party']
@@ -195,7 +253,7 @@ def select(own):
 			own.sendMessage('partiesChanged')
 
 			returnToMainScreen()
-			
+
 def returnToMainScreen():
 	# Resume main screen, end this one
 	for scene in logic.getSceneList():
