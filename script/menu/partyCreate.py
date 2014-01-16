@@ -23,7 +23,7 @@ def setup(cont):
 	own = cont.owner
 
 	if cont.sensors['start'].positive:
-		# Read party data from json
+		'''Read party data from json'''
 		partyName = logic.globalDict['party']
 
 		filepath = logic.expandPath('//parties/') + partyName + '.json'
@@ -32,7 +32,13 @@ def setup(cont):
 
 		own['party'] = partyName
 
-		# Read list of commands to add from json
+
+		'''Read list of valid classes from json'''
+		filepath = logic.expandPath('//script/classes.json')
+		with open(filepath) as classesFile:
+			own['class'] = json.load(classesFile)
+
+		'''Read list of commands to add from json'''
 		filepath = logic.expandPath('//releasedCommands.json')
 		with open(filepath) as commandsFile:
 			own['addSkill'] = json.load(commandsFile)
@@ -116,7 +122,7 @@ def setTextFields(own):
 	'''Class Text'''
 	classText = objectControl.getFromScene('text_class', 'partyCreate')
 	# TODO(kgeffen) Change 'model' to 'class' everywhere
-	classText.text = own['units'][0]['model']	
+	classText.text = own['units'][0]['model'].capitalize()
 
 	'''Add Skill Text'''
 	addSkillText = objectControl.getFromScene('text_addSkill', 'partyCreate')
@@ -196,7 +202,24 @@ def cycleName(own, left):
 		entry = own['units'].pop(0)
 		own['units'].append(entry)
 def cycleClass(own, left):
-	pass
+	unit = own['units'][0]
+	# Name and commands will stay the same
+	commands = unit['commands'][0]
+	name = unit['name']
+
+	# TODO(kgeffen) Change model to class everywhere
+	# NOTE(kgeffen) This only works while only 2 classes are options
+	# TODO(kgeffen) Classes is a confusing name, these are default setups for the classes. Change?
+	if unit['model'] != own['class'][0]['model']:
+		unit = own['class'][0]
+	else:
+		unit = own['class'][1]
+
+	# Reset the stats that are kept
+	unit['commands'][0] = commands
+	unit['name'] = name
+
+	own['units'][0] = unit
 def cycleAddSkill(own, left):
 	if left:
 		entry = own['addSkill'].pop()
@@ -246,9 +269,19 @@ def dsahjkdsa():
 # Select the option that selector is over currently
 def select(own):
 	field = FIELDS[ own['fieldNum'] ]
-
+	# TODO(kgeffen) Break up these if/elifs into methods found by dictionary
 	if field == 'party':
 		pass
+
+	elif field == 'addSkill':
+		# Append to current list of skills that skill selected,
+		# if unit doesn't already have that skill and has less skills than max
+		commands = own['units'][0]['commands'][0]
+		if len(commands) < MAX_SKILLS:
+			
+			command = own['addSkill'][0]
+			if command not in commands:
+				commands.append(command)
 
 	elif field == 'removeSkill':
 		commands = own['units'][0]['commands'][0]
@@ -261,7 +294,12 @@ def select(own):
 			returnToMainScreen()
 
 		elif button == 'save':
-			pass
+			filepath = logic.expandPath('//parties/') + own['party'] + '.json'
+			with open(filepath, 'w') as outfile:
+				json.dump(own['units'], outfile)
+
+			own.sendMessage('partiesChanged')
+			returnToMainScreen()
 
 		elif button == 'delete':
 			# Delete the json that has this parties information
