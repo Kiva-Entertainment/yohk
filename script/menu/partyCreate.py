@@ -239,7 +239,6 @@ def cycleRemoveSkill(own, left):
 		commands.append(entry)
 
 	own['units'][0]['commands'][0] = commands
-
 def cycleButton(own, left):
 	if left:
 		if own['buttonNum'] > 0:
