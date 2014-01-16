@@ -50,7 +50,7 @@ def update(cont):
 		moveHorizontal(own, left = False)
 
 	elif keyboard.events[events.SPACEKEY] == ACTIVE:
-		pass#select(own)
+		select(own)
 
 
 	updateDisplay(own)
@@ -95,7 +95,6 @@ def updateTextFields(own):
 	else:
 		button = BUTTONS[ own['buttonNum'] ]
 		objectControl.getFromScene('text_button_' + button, 'partyCreate').color = (1, 1, 1, 1)
-
 
 def setTextFields(own):
 	partyText = objectControl.getFromScene('text_party', 'partyCreate')
@@ -181,6 +180,27 @@ def moveHorizontal(own, left):
 def select(own):
 	field = FIELDS[ own['fieldNum'] ]
 
+	if field == 'button':
+		button = BUTTONS[ own['buttonNum'] ]
+		if button == 'exit':
+			returnToMainScreen()
+		elif button == 'save':
+			pass
+		elif button == 'delete':
+			returnToMainScreen
+
+			
+def returnToMainScreen():
+	# Resume main screen, end this one
+	for scene in logic.getSceneList():
+		if scene.name == 'main':
+			scene.resume()
+			logic.getCurrentScene().end()
+
+
+
+def mpmpfempmf():
+	return
 	if field == 'start':
 		# Set all globalDicts based on fields
 		logic.globalDict['stage'] = own['stages'][0]
