@@ -3,4 +3,4 @@
 
 def attempt(cont):
 	if cont.sensors[0].positive:
-		cont.owner.resolution = 20
+		cont.owner.resolution = 10
