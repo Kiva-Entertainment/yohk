@@ -2,11 +2,13 @@
 # Store in list all units that don't start on field
 from bge import logic
 import json
-import copy
 
 from script import unitControl
 
 STAGE_DATA_FILENAME = 'stageData.json'
+# TODO(kgeffen) Remove once better idea align has been hashed out further
+ALIGNS = {'1' : 'solarServants',
+		'2' : 'martialLegion'}
 
 def do():
 	addActiveUnits()
@@ -25,14 +27,13 @@ def addActiveUnits():
 		unitControl.object.add(unit)
 
 def addInactiveUnits():
-	filepath = logic.expandPath('//parties/') + logic.globalDict['party'] + '.json'
-	
-	# Load all of stage's data from file
-	with open(filepath) as partyData:
-		inactiveUnits = json.load(partyData)
+	for i in ['1', '2']:
+		filepath = logic.expandPath('//parties/') + logic.globalDict['party' + i] + '.json'
+		
+		# Load all of stage's data from file
+		with open(filepath) as partyData:
+			inactiveUnits = json.load(partyData)
 
-		# TODO(kgeffen) Remove once each side has own units
-		for team in ['solarServants', 'martialLegion']: 
 			for unit in inactiveUnits:
-				unit['align'] = team
-				logic.globalDict['inactiveUnits'].append(copy.deepcopy(unit))
+				unit['align'] = ALIGNS[i]
+				logic.globalDict['inactiveUnits'].append(unit)

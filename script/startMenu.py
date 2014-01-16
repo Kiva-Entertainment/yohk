@@ -1,25 +1,25 @@
 # Control everything that happens in the start menu
 from bge import logic, events
 from mathutils import Vector
-import os
+import copy, os
 
-from script import objectControl
+from script import objectControl, soundControl
 
 ACTIVE = logic.KX_INPUT_JUST_ACTIVATED
 # Distance in height between one field and the next
 D_HEIGHT = 0.1
 # A list of all fields by number
-FIELDS = ['stages', 'party', 'goals', 'players', 'start']
+FIELDS = ['stages', 'party1', 'party2', 'players', 'start']
 
-# A list of all possible goals
-GOALS = ['Fight to the death', 'jump around!', 'stuff']
 # List of valid choices for 'players'
-PLAYERS = ['Single Player']
+PLAYERS = ['Single Player', 'Two Player']
 
 def setup(cont):
 	own = cont.owner
 
 	if cont.sensors['start'].positive:
+		logic.globalDict['mute'] = False
+
 		# Get list of names of all stages
 		stagesDir = logic.expandPath('//stages')
 		stageNames = [x[1] for x in os.walk(stagesDir)][0]
@@ -29,9 +29,10 @@ def setup(cont):
 		partiesDir = logic.expandPath('//parties')
 		partyNames = [x[2] for x in os.walk(partiesDir)][0]
 		# NOTE(kgeffen) Strip off '.json' from each file (.json is last 5 chars)
-		own['party'] = [name[:-5] for name in partyNames if name.endswith('.json')]
-
-		own['goals'] = GOALS
+		parties = [name[:-5] for name in partyNames if name.endswith('.json')]
+		own['party1'] = parties
+		own['party2'] = copy.deepcopy(parties)
+		
 		own['players'] = PLAYERS
 
 def update(cont):
@@ -51,7 +52,10 @@ def update(cont):
 		if arrow.localScale.x > 1:
 			arrow.localScale -= Vector((0.035, 0.035, 0.035))
 
-	if keyboard.events[events.UPARROWKEY] == ACTIVE:
+	if keyboard.events[events.MKEY] == ACTIVE:
+		soundControl.toggleMute()
+
+	elif keyboard.events[events.UPARROWKEY] == ACTIVE:
 		moveVertical(own, up = True)
 	elif keyboard.events[events.DOWNARROWKEY] == ACTIVE:
 		moveVertical(own, up = False)
@@ -67,6 +71,7 @@ def update(cont):
 
 # Move cursor to next selection up/down
 def moveVertical(own, up):
+	soundControl.play('navigate')
 	if up:
 		# Move up unless at top, otherwise loop to bottom
 		if own['fieldNum'] != 0:
@@ -117,6 +122,7 @@ def moveHorizontal(own, left):
 	if field == 'start':
 		return
 
+	soundControl.play('navigate')
 	if left:
 		objectControl.getFromScene('leftArrow', 'main').worldScale = [1.5, 1.5, 1.5]
 		# Cycle list
@@ -136,9 +142,9 @@ def select(own):
 	if field == 'start':
 		# Set all globalDicts based on fields
 		logic.globalDict['stage'] = own['stages'][0]
-		logic.globalDict['party'] = own['party'][0]
-		logic.globalDict['goal'] = own['goals'][0]
-		# players must be handled a little differently
+		logic.globalDict['party1'] = own['party1'][0]
+		logic.globalDict['party2'] = own['party2'][0]
+		# 'players' must be handled a little differently
 
 		# Start battlefield
 		path = logic.expandPath('battlefield.blend')
