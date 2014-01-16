@@ -38,8 +38,7 @@ def storeSound(soundName):
 	# Make a factory for sound
 	filepath = logic.expandPath('//audio/') + soundName + '.wav'
 	factory = aud.Factory(filepath)
-	print(filepath)
-	print(factory)
+	
 	# Buffer the factory
 	bufferedFactory = aud.Factory.buffer(factory)
 
