@@ -1,16 +1,19 @@
-# Create all units that start on the field (Their data stored in gd['units'])
+# Create all units that start on the field
 # Store in list all units that don't start on field
 from bge import logic
 import json
+import copy
 
 from script import unitControl
 
 STAGE_DATA_FILENAME = 'stageData.json'
-# TODO(kgeffen) Remove once stage selection has been enabled
-TEMP_STAGE_NAME = 'mars'
 
 def do():
-	filepath = logic.expandPath('//stages/') + TEMP_STAGE_NAME + '/' + STAGE_DATA_FILENAME
+	addActiveUnits()
+	addInactiveUnits()
+
+def addActiveUnits():
+	filepath = logic.expandPath('//stages/') + logic.globalDict['stage'] + '/' + STAGE_DATA_FILENAME
 	
 	# Load all of stage's data from file
 	data = None
@@ -21,6 +24,15 @@ def do():
 	for unit in data['activeUnits']:
 		unitControl.object.add(unit)
 
-	# Add inactive units to list
-	for unit in data['inactiveUnits']:
-		logic.globalDict['inactiveUnits'].append(unit)
+def addInactiveUnits():
+	filepath = logic.expandPath('//parties/') + logic.globalDict['party'] + '.json'
+	
+	# Load all of stage's data from file
+	with open(filepath) as partyData:
+		inactiveUnits = json.load(partyData)
+
+		# TODO(kgeffen) Remove once each side has own units
+		for team in ['solarServants', 'martialLegion']: 
+			for unit in inactiveUnits:
+				unit['align'] = team
+				logic.globalDict['inactiveUnits'].append(copy.deepcopy(unit))
