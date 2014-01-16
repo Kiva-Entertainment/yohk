@@ -1,5 +1,9 @@
 # Control everything that happens in the start menu
 from bge import logic, events
+import json
+
+
+
 from mathutils import Vector
 import copy, os
 
@@ -9,34 +13,28 @@ ACTIVE = logic.KX_INPUT_JUST_ACTIVATED
 # Distance in height between one field and the next
 D_HEIGHT = 0.1
 # A list of all fields by number
-FIELDS = ['stages', 'party1', 'party2', 'players', 'start']
+FIELDS = ['party', 'name', 'class', 'addSkill', 'removeSkill']
 
-# List of valid choices for 'players'
-PLAYERS = ['Single Player', 'Two Player']
+FIELDS_W_ARROWS = ['name', 'class', 'addSkill', 'removeSkill']
 
 def setup(cont):
 	own = cont.owner
 
 	if cont.sensors['start'].positive:
-		logic.globalDict['mute'] = False
+		# Read party data from json
+		partyName = logic.globalDict['party']
 
-		# Get list of names of all stages
-		stagesDir = logic.expandPath('//stages')
-		stageNames = [x[1] for x in os.walk(stagesDir)][0]
-		own['stages'] = stageNames
+		filepath = logic.expandPath('//parties/') + partyName + '.json'
+		with open(filepath) as partyFile:
+			own['units'] = json.load(partyFile)
 
-		# Get list of parties
-		partiesDir = logic.expandPath('//parties')
-		partyNames = [x[2] for x in os.walk(partiesDir)][0]
-		# NOTE(kgeffen) Strip off '.json' from each file (.json is last 5 chars)
-		parties = [name[:-5] for name in partyNames if name.endswith('.json')]
-		own['party1'] = parties
-		own['party2'] = copy.deepcopy(parties)
-		
-		own['players'] = PLAYERS
+		own['party'] = partyName
 
 def update(cont):
 	own = cont.owner
+
+	updateDisplay(own)
+	return
 	keyboard = logic.keyboard
 	
 	# Display each field's current choice
@@ -68,6 +66,23 @@ def update(cont):
 	elif keyboard.events[events.SPACEKEY] == ACTIVE:
 		select(own)
 
+# Update the text that is displayed on screen
+def updateDisplay(own):
+	# Update each text field
+	partyText = objectControl.getFromScene('text_party', 'partyCreate')
+	partyText.text = own['party']
+
+	nameText = objectControl.getFromScene('text_name', 'partyCreate')
+	nameText.text = own['units'][0]['name']
+
+	classText = objectControl.getFromScene('text_class', 'partyCreate')
+	# TODO(kgeffen) Change 'model' to 'class' everywhere
+	classText.text = own['units'][0]['model']	
+
+	# Add skill
+
+	removeSkillText = objectControl.getFromScene('text_removeSkill', 'partyCreate')
+	removeSkillText.text = own['units'][0]['commands'][0][0]
 
 # Move cursor to next selection up/down
 def moveVertical(own, up):
@@ -149,3 +164,7 @@ def select(own):
 		# Start battlefield
 		path = logic.expandPath('battlefield.blend')
 		logic.startGame(path)
+
+	elif field == 'party1' or field == 'party2':
+		screen1 = objectControl.getFromScene('screen1', 'main')
+		screen1.worldPosition.z += 1.5
