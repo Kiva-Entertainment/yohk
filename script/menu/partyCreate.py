@@ -13,9 +13,9 @@ ACTIVE = logic.KX_INPUT_JUST_ACTIVATED
 # Distance in height between one field and the next
 D_HEIGHT = 0.1
 # A list of all fields by number
-FIELDS = ['party', 'name', 'class', 'addSkill', 'removeSkill']
-
+FIELDS = ['party', 'name', 'class', 'addSkill', 'removeSkill', 'button']
 FIELDS_W_ARROWS = ['name', 'class', 'addSkill', 'removeSkill']
+BUTTONS = ['exit', 'save', 'delete']
 
 def setup(cont):
 	own = cont.owner
@@ -33,23 +33,9 @@ def setup(cont):
 def update(cont):
 	own = cont.owner
 
-	updateDisplay(own)
-	return
 	keyboard = logic.keyboard
-	
-	# Display each field's current choice
-	for field in FIELDS:
-		# Start is a button, not a field
-		if field != 'start':
-			obj = objectControl.getFromScene('text_' + field, 'main')
-			obj.text = own[field][0]
 
-	# Scale down the arrows if they are enlarged
-	for arrowName in ['leftArrow', 'rightArrow']:
-		arrow = objectControl.getFromScene(arrowName, 'main')
-		if arrow.localScale.x > 1:
-			arrow.localScale -= Vector((0.035, 0.035, 0.035))
-
+	# TODO(kgeffen) Only if not editing field
 	if keyboard.events[events.MKEY] == ACTIVE:
 		soundControl.toggleMute()
 
@@ -64,11 +50,54 @@ def update(cont):
 		moveHorizontal(own, left = False)
 
 	elif keyboard.events[events.SPACEKEY] == ACTIVE:
-		select(own)
+		pass#select(own)
 
-# Update the text that is displayed on screen
+
+	updateDisplay(own)
+
+# Update screen display
 def updateDisplay(own):
 	# Update each text field
+	updateTextFields(own)
+
+	# Scale down the arrows if they are enlarged
+	for arrowName in ['leftArrow2', 'rightArrow2']:
+		arrow = objectControl.getFromScene(arrowName, 'partyCreate')
+		if arrow.localScale.x > 1:
+			arrow.localScale -= Vector((0.035, 0.035, 0.035))
+
+	# Hide arrows if necessary
+	field = FIELDS[ own['fieldNum'] ]
+	if field not in FIELDS_W_ARROWS:
+		objectControl.getFromScene('leftArrow2', 'partyCreate').setVisible(False)
+		objectControl.getFromScene('rightArrow2', 'partyCreate').setVisible(False)
+	else:
+		objectControl.getFromScene('leftArrow2', 'partyCreate').setVisible(True)
+		objectControl.getFromScene('rightArrow2', 'partyCreate').setVisible(True)
+
+def updateTextFields(own):
+	setTextFields(own)
+
+	# Reset all fields to black
+	for field in FIELDS:
+		if field != 'button':
+			objectControl.getFromScene('text_' + field, 'partyCreate').color = (0, 0, 0, 1)
+		else:
+			# Make all buttons black
+			for buttonName in BUTTONS:
+				objectControl.getFromScene('text_button_' + buttonName, 'partyCreate').color = (0, 0, 0, 1)
+
+	# Make selected field white
+	# If button is selected, make correct button white
+	field = FIELDS[ own['fieldNum'] ]
+	if field != 'button':
+		objectControl.getFromScene('text_' + field, 'partyCreate').color = (1, 1, 1, 1)
+	else:
+		button = BUTTONS[ own['buttonNum'] ]
+		objectControl.getFromScene('text_button_' + button, 'partyCreate').color = (1, 1, 1, 1)
+
+
+def setTextFields(own):
 	partyText = objectControl.getFromScene('text_party', 'partyCreate')
 	partyText.text = own['party']
 
@@ -113,39 +142,37 @@ def moveVertical(own, up):
 			own.worldPosition.y += D_HEIGHT * movesUp
 			own['fieldNum'] = 0
 
-	# Reset all fields to black/Ensure arrows visible
-	for field in FIELDS:
-		objectControl.getFromScene('text_' + field, 'main').color = (0, 0, 0, 1)
-	
-	# Make selected field white
-	field = FIELDS[ own['fieldNum'] ]
-	objectControl.getFromScene('text_' + field, 'main').color = (1, 1, 1, 1)
-
-	# If selection is start button, make arrows invisible
-	if field == 'start':
-		objectControl.getFromScene('leftArrow', 'main').setVisible(False)
-		objectControl.getFromScene('rightArrow', 'main').setVisible(False)
-	else:
-		objectControl.getFromScene('leftArrow', 'main').setVisible(True)
-		objectControl.getFromScene('rightArrow', 'main').setVisible(True)
-
 # Select a choice for current fieldNum
 def moveHorizontal(own, left):
 	field = FIELDS[ own['fieldNum'] ]
 
-	# Start is a button, has no field
-	if field == 'start':
+	# Buttons must be handled differently
+	if field == 'button':
+		soundControl.play('navigate')
+		if left:
+			if own['buttonNum'] > 0:
+				own['buttonNum'] -= 1
+			else:
+				own['buttonNum'] = len(BUTTONS) - 1
+		else:
+			if own['buttonNum'] < len(BUTTONS) - 1:
+				own['buttonNum'] += 1
+			else:
+				own['buttonNum'] = 0
+
+	# If field has no left/right abilities, return
+	if field not in FIELDS_W_ARROWS:
 		return
 
 	soundControl.play('navigate')
 	if left:
-		objectControl.getFromScene('leftArrow', 'main').worldScale = [1.5, 1.5, 1.5]
+		objectControl.getFromScene('leftArrow2', 'main').worldScale = [1.5, 1.5, 1.5]
 		# Cycle list
 		entry = own[field].pop()
 		own[field].insert(0, entry)
 
 	else:
-		objectControl.getFromScene('rightArrow', 'main').worldScale = [1.5, 1.5, 1.5]
+		objectControl.getFromScene('rightArrow2', 'main').worldScale = [1.5, 1.5, 1.5]
 		# Cycle list
 		entry = own[field].pop(0)
 		own[field].append(entry)
