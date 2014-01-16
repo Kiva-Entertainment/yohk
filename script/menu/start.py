@@ -25,13 +25,7 @@ def setup(cont):
 		stageNames = [x[1] for x in os.walk(stagesDir)][0]
 		own['stages'] = stageNames
 
-		# Get list of parties
-		partiesDir = logic.expandPath('//parties')
-		partyNames = [x[2] for x in os.walk(partiesDir)][0]
-		# NOTE(kgeffen) Strip off '.json' from each file (.json is last 5 chars)
-		parties = [name[:-5] for name in partyNames if name.endswith('.json')]
-		own['party1'] = parties
-		own['party2'] = copy.deepcopy(parties)
+		setupParties(own)
 		
 		own['players'] = PLAYERS
 
@@ -67,6 +61,22 @@ def update(cont):
 
 	elif keyboard.events[events.SPACEKEY] == ACTIVE:
 		select(own)
+
+# Refresh the list of parties that can be chosen
+# Called after partyCreate screen has added/removed a party
+def refreshParties(cont):
+	if cont.sensors[0].positive:
+		setupParties(cont.owner)
+
+def setupParties(own):
+	# Get list of parties
+	partiesDir = logic.expandPath('//parties')
+	partyNames = [x[2] for x in os.walk(partiesDir)][0]
+
+	# NOTE(kgeffen) Strip off '.json' from each file (.json is last 5 chars)
+	parties = [name[:-5] for name in partyNames if name.endswith('.json')]
+	own['party1'] = parties
+	own['party2'] = copy.deepcopy(parties)
 
 
 # Move cursor to next selection up/down

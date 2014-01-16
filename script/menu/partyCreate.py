@@ -1,6 +1,6 @@
 # Control everything that happens in the start menu
 from bge import logic, events
-import json
+import json, os
 
 
 
@@ -187,8 +187,14 @@ def select(own):
 		elif button == 'save':
 			pass
 		elif button == 'delete':
-			returnToMainScreen
+			# Delete the json that has this parties information
+			party = logic.globalDict['party']
+			filepath = logic.expandPath('//parties/') + party + '.json'
+			os.remove(filepath)
 
+			own.sendMessage('partiesChanged')
+
+			returnToMainScreen()
 			
 def returnToMainScreen():
 	# Resume main screen, end this one
