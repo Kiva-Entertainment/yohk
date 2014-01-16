@@ -19,9 +19,9 @@
 		"speed" : 50,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["flameSlash", "grandEntrance"],
-						["dualSharpen", "enlist"],
-						["strengthen"]]
+		"commands" :	[["flameSlash", "grandEntrance",
+						"dualSharpen", "enlist",
+						"strengthen"]]
 	},
 	{	"model" : "soldier",
 		"name" : "Stealthy Soldier",
@@ -43,9 +43,9 @@
 		"speed" : 50,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["beesting", "ribbonDash"],
-						["throw", "birdcall"],
-						["dash"]]
+		"commands" :	[["beesting", "ribbonDash",
+						"throw", "birdcall",
+						"dash"]]
 	},
 	{	"model" : "soldier",
 		"name" : "Versatile Soldier",
@@ -67,9 +67,9 @@
 		"speed" : 50,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["shadeSlash", "greatCross"],
-						["beesting", "enlist"],
-						["strengthen"]]
+		"commands" :	[["shadeSlash", "greatCross",
+						"beesting", "enlist",
+						"strengthen"]]
 	},
 	{	"model" : "soldier",
 		"name" : "Obstruction Soldier",
@@ -91,9 +91,9 @@
 		"speed" : 50,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["frigidThrust", "commision"],
-						["stoneWall", "firstAid"],
-						["dash"]]
+		"commands" :	[["frigidThrust", "commision",
+						"stoneWall", "firstAid",
+						"dash"]]
 	},
 	{	"model" : "devoted",
 		"position" : [5,6],
@@ -116,9 +116,9 @@
 		"speed" : 50,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["burn", "meteor"],
-						["blazeCloak", "livingFlame"],
-						["study"]]
+		"commands" :	[["burn", "meteor",
+						"blazeCloak", "livingFlame",
+						"study"]]
 	},
 	{	"model" : "devoted",
 		"name" : "Luminous Mage",
@@ -140,9 +140,9 @@
 		"speed" : 50,
 		"jump" : 10,
 		"regen" : 5,
-		"commands" : 	[["gust", "passageBolt"],
-						["birdcall", "livingFlame"],
-						["study"]]
+		"commands" : 	[["gust", "passageBolt",
+						"birdcall", "livingFlame",
+						"study"]]
 	},
 	{	"model" : "devoted",
 		"name" : "Torrent Mage",
@@ -164,9 +164,9 @@
 		"speed" : 50,
 		"jump" : 10,
 		"regen" : 5,
-		"commands" : 	[["iceShard", "crashingWave"],
-						["icePrison", "crystallineCluster"],
-						["study"]]
+		"commands" : 	[["iceShard", "crashingWave",
+						"icePrison", "crystallineCluster",
+						"study"]]
 	},
 	{	"model" : "devoted",
 		"name" : "Bog Mage",
@@ -188,8 +188,8 @@
 		"speed" : 50,
 		"jump" : 10,
 		"regen" : 5,
-		"commands" : 	[["mudshot", "icePrison"],
-						["stoneGarden", "crystallineCluster"],
-						["study"]]
+		"commands" : 	[["mudshot", "icePrison",
+						"stoneGarden", "crystallineCluster",
+						"study"]]
 	}
 ]

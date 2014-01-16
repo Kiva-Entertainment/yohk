@@ -2,7 +2,7 @@
 from bge import logic, events
 import json, os
 
-from script.command import commands
+from script import commandControl
 
 
 from mathutils import Vector
@@ -10,6 +10,7 @@ import copy, os
 
 from script import objectControl, soundControl
 
+MAX_SKILLS = 5
 ACTIVE = logic.KX_INPUT_JUST_ACTIVATED
 # Distance in height between one field and the next
 D_HEIGHT = 0.1
@@ -119,13 +120,16 @@ def setTextFields(own):
 
 	'''Add Skill Text'''
 	addSkillText = objectControl.getFromScene('text_addSkill', 'partyCreate')
-	# TODO(kgeffen) Change 'model' to 'class' everywhere
-	addSkillText.text = own['addSkill'][0]
+	command = own['addSkill'][0]
+	addSkillText.text = commandControl.name(command)
 	
 	# Add skill
-
 	removeSkillText = objectControl.getFromScene('text_removeSkill', 'partyCreate')
-	removeSkillText.text = own['units'][0]['commands'][0][0]
+	commands = own['units'][0]['commands'][0]
+	if len(commands) != 0:
+		removeSkillText.text = commandControl.name(commands[0])
+	else:
+		removeSkillText.text = ''
 
 # Move cursor to next selection up/down
 def moveVertical(own, up):
@@ -183,28 +187,35 @@ def moveHorizontal(own, left):
 
 def cycleParty(own, left):
 	pass
-
 def cycleName(own, left):
 	if left:
-		objectControl.getFromScene('leftArrow2', 'partyCreate').worldScale = [1.5, 1.5, 1.5]
-		# Cycle list
 		entry = own['units'].pop()
 		own['units'].insert(0, entry)
 
 	else:
-		objectControl.getFromScene('rightArrow2', 'partyCreate').worldScale = [1.5, 1.5, 1.5]
-		# Cycle list
 		entry = own['units'].pop(0)
 		own['units'].append(entry)
-
 def cycleClass(own, left):
 	pass
-
 def cycleAddSkill(own, left):
-	pass
+	if left:
+		entry = own['addSkill'].pop()
+		own['addSkill'].insert(0, entry)
 
+	else:
+		entry = own['addSkill'].pop(0)
+		own['addSkill'].append(entry)
 def cycleRemoveSkill(own, left):
-	pass
+	commands = own['units'][0]['commands'][0]
+
+	if left:
+		entry = commands.pop()
+		commands.insert(0, entry)
+	else:
+		entry = commands.pop(0)
+		commands.append(entry)
+
+	own['units'][0]['commands'][0] = commands
 
 def cycleButton(own, left):
 	if left:
@@ -236,7 +247,15 @@ def dsahjkdsa():
 def select(own):
 	field = FIELDS[ own['fieldNum'] ]
 
-	if field == 'button':
+	if field == 'party':
+		pass
+
+	elif field == 'removeSkill':
+		commands = own['units'][0]['commands'][0]
+		if len(commands) != 0:
+			commands.pop(0)
+
+	elif field == 'button':
 		button = BUTTONS[ own['buttonNum'] ]
 		if button == 'exit':
 			returnToMainScreen()
