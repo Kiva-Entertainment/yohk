@@ -13,15 +13,19 @@ device = aud.device()
 # NOTE(kgeffen) Handle is buffered
 storedSounds = {}
 
-# Toggle the mute for all sound in game on/off
-def toggleMute(cont):
+
+def attemptToggleMute(cont):
 	if cont.sensors['mKey'].positive:
-		soundObj['mute'] = not soundObj['mute']
+		toggleMute()
+		
+# Toggle the mute for all sound in game on/off
+def toggleMute():
+		logic.globalDict['mute'] = not logic.globalDict['mute']
 
 # Play a sound with given name once
 # Sound wav file must exist in audio
 def play(soundName):
-	if not soundObj['mute']:
+	if not logic.globalDict['mute']:
 
 		# Determine if a factory for sound already exists
 		soundAlreadyStored = soundName in storedSounds
