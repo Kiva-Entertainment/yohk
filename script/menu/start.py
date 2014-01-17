@@ -160,7 +160,10 @@ def select(own):
 		path = logic.expandPath('battlefield.blend')
 		logic.startGame(path)
 
-	elif field == 'party1' or field == 'party2':		
+	elif field == 'party1' or field == 'party2':
+		# TODO(kgeffen) Implement character/party creation
+		return
+
 		# Set name of party being dealt with
 		logic.globalDict['party'] = own[field][0]
 
