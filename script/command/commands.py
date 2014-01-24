@@ -745,6 +745,41 @@ class crackFoundation:
 	def tags():
 		return ['targets']
 
+'Dagger'
+class assassinate:
+	def perform(actor, target):
+		factors = generic.commandFactors.dagger(actor, target)
+
+		factors['force'] *= 3
+		factors['accuracy'] *= 3
+
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.dagger()
+
+		# commandRange['specialSpaces'] = hollowSquare
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 250
+	
+	def description():
+		return ('Silent.\n'
+				'')
+	
+	def name():
+		return 'Assassinate'
+	
+	def icon():
+		return 'W_Dagger_007.png'
+
+	def tags():
+		return ['targets']
+
+
 'Wand'
 class psiStrike:
 	def perform(actor, target):
@@ -1494,7 +1529,7 @@ class tutor:
 'Boots'
 class dash:
 	def perform(actor, target):
-		generic.command.raiseStat(target, 'mv', 2)
+		generic.command.raiseStat(target, 'mv', 3)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.self()
@@ -1505,7 +1540,7 @@ class dash:
 	
 	def description():
 		return ('Concentrate on moving. If you can run, you can survive.\n\n'
-				'Move an additional 2 spaces this turn')
+				'Move an additional 3 spaces this turn')
 	
 	def name():
 		return 'Dash'
@@ -1515,6 +1550,37 @@ class dash:
 
 	def tags():
 		return ['targets']
+class leap:
+	def perform(actor):
+		# Move self to selected space
+		generic.command.move(actor)		
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+		
+		reach = extentInfluence.polynomial(1, 1)
+		commandRange['range'] = shapes.diamond(reach, 1)
+
+		commandRange['specialSpaces'] = generic.shapes.single()
+		
+		generic.range.free(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(0, 5, 10)
+	
+	def description():
+		return ('Jump around\n'
+				'Jump to space')
+	
+	def name():
+		return 'Leap'
+	
+	def icon():
+		return 'E_Shoes_05.png'
+
+	def tags():
+		return ['extends']
+
 
 'Shields'
 class defend:

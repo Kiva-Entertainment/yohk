@@ -11,7 +11,7 @@
 		"actions" : 1,
 		"act" : 1,
 		"strength" : 120,
-		"intelligence" : 80,
+		"intelligence" :80,
 		"toughness" : 120,
 		"willpower" : 80,
 		"focus" : 100,
@@ -19,8 +19,9 @@
 		"speed" : 50,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["flameSlash", "gloryStrike", "grandEntrance"],
-						["strengthen", "dualSharpen"]]
+		"commands" :	[["flameSlash", "grandEntrance"],
+						["dualSharpen", "enlist"],
+						["strengthen"]]
 	},
 	{	"model" : "soldier",
 		"name" : "Stealthy Soldier",
@@ -34,7 +35,7 @@
 		"actions" : 1,
 		"act" : 1,
 		"strength" : 120,
-		"intelligence" : 80,
+		"intelligence" :80,
 		"toughness" : 120,
 		"willpower" : 80,
 		"focus" : 100,
@@ -42,8 +43,9 @@
 		"speed" : 50,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["beesting", "assassinate"],
-						["dash", "throw", "leap"]]
+		"commands" :	[["beesting", "ribbonDash"],
+						["throw", "birdcall"],
+						["dash"]]
 	},
 	{	"model" : "soldier",
 		"name" : "Versatile Soldier",
