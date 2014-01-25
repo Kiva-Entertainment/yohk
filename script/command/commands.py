@@ -814,7 +814,7 @@ class psiStrike:
 		return ['targets', 'extends']
 
 'Bow'
-class beesting:
+class withertipVolley:
 	def perform(actor, target):
 		factors = generic.commandFactors.physical(actor, target)
 
@@ -827,10 +827,7 @@ class beesting:
 			generic.command.scaleStat(target, 'agility', amount)
 	
 	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['range'] = shapes.diamond(5, 1)
-
+		commandRange = generic.rangeFactors.bow()
 		generic.range.free(commandRange)
 	
 	def cost():
@@ -842,48 +839,71 @@ class beesting:
 				'(Example: X = 1 lowers toughness by 20% of total toughness, X = 2 lowers toughness by 36% of total toughness.')
 	
 	def name():
-		return 'Beesting'
+		return 'Withertip Volley'
 	
 	def icon():
 		return 'W_Bow_03.png'
 
 	def tags():
 		return ['targets', 'extends']
-class viperBite:
+class poisonShot:
 	def perform(actor, target):
-		factors = generic.commandFactors.physical(actor, target)
-
-		if generic.command.hitCheck(target, factors):
-			# Damage target
-			generic.command.standardAttack(target, factors)
-
-			# Poison target
-			generic.command.addTrait(target, 'Poisoned')
+		# Poison target
+		generic.command.addTrait(target, 'Poisoned')
 	
 	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		# TODO(kgeffen) Make a bow range that has this built in
-		commandRange['range'] = shapes.diamond(5, 1)
-
+		commandRange = generic.rangeFactors.bow()
 		generic.range.free(commandRange)
 	
 	def cost():
-		return extentInfluence.polynomial(70)
+		return extentInfluence.polynomial(120)
 	
 	def description():
-		return ('Shoot any unit up to 5 spaces away with a poisonous arrow that lowers defensive abilities.\n\n'
-				'-20% Toughness, willpower, agility X + 1 times\n\n'
-				'(Example: X = 1 lowers toughness by 20% of total toughness, X = 2 lowers toughness by 36% of total toughness.')
+		return ('Shoot any unit up to 5 spaces away with a poisonous arrow that poisons them.\n\n'
+				'')
 	
 	def name():
-		return 'Viper Bite'
+		return 'Poison Shot'
 	
 	def icon():
 		return 'W_Bow_13.png'
 
 	def tags():
 		return ['targets']
+class starshower:
+	def perform(actor, _):
+
+		targets = [unit for unit in logic.globalDict['units'] if unit != actor]
+		
+
+		for target in targets:
+
+			factors = generic.commandFactors.bow(actor, target)
+			factors['force'] *= extentInfluence.polynomial(1, 1/2)
+			factors['accuracy'] *= 2
+
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.self()
+		generic.range.free(commandRange)
+	
+	def cost():
+		return extentInfluence.polynomial(0, 100)
+	
+	def description():
+		return ('Hit everyone.\n\n'
+				'')
+	
+	def name():
+		return 'Starshower'
+	
+	def icon():
+		return 'W_Bow_15.png'
+
+	def tags():
+		return ['extends']
 
 
 '''Magic'''
@@ -1601,7 +1621,7 @@ class leap:
 		generic.range.free(commandRange)
 	
 	def cost():
-		return generic.extentInfluence.polynomial(0, 5, 10)
+		return generic.extentInfluence.polynomial(0, 8, 4)
 	
 	def description():
 		return ('Jump around\n'
@@ -1801,6 +1821,31 @@ class focus:
 		return ['targets']
 
 'Other'
+class wait:
+	def perform(actor, target):
+		# Grant yourself a pending action
+		generic.command.addTrait(actor, 'Extra Action')
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Have an extra action next turn.\n\n'
+				'')
+	
+	def name():
+		return 'Wait'
+	
+	def icon():
+		return 'O_Clock.png'
+
+	def tags():
+		return ['targets']
+
 class enlist:
 	def perform(actor):
 		spawn = generic.objects.squire()

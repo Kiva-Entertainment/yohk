@@ -44,8 +44,8 @@
 		"jump" : 12,
 		"regen" : 5,
 		"traits" : [],
-		"commands" :	[["beesting", "viperBite"],
-						["dash", "throw", "leap"]]
+		"commands" :	[["starshower", "withertipVolley", "poisonShot"],
+						["leap", "wait"]]
 	},
 	{	"model" : "soldier",
 		"name" : "Versatile Soldier",

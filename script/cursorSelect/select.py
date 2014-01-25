@@ -33,6 +33,6 @@ def do():
 		else:
 			cursorSelect.actor.attempt()
 
-	elif status != 'wait':
+	else:
 		# Selecting the target for a command
 		cursorSelect.target.attempt(cursorPosition)

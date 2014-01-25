@@ -20,3 +20,8 @@ def perform(effect, target):
 def poisonDamage(unit):
 	dHp = -round(unit['health'] / 10)
 	generic.command.raiseStat(unit, 'hp', dHp)
+
+# TODO(kgeffen) Make into more general "Pending raise/lower of stat by N" effect with act as the stat in this case
+def addAction(unit):
+	generic.command.raiseStat(unit, 'act', 1)
+	generic.command.loseTrait(unit, 'Extra Action')

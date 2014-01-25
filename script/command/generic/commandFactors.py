@@ -26,6 +26,12 @@ def dagger(actor, target):
 			'accuracy' : actor['focus'],
 			'evasion' : target['agility']}
 
+def bow(actor, target):
+	return {'force' : actor['focus'],
+			'resist' : target['toughness'],
+			'accuracy' : actor['focus'],
+			'evasion' : target['agility']}
+
 'Standard'
 def physical(actor, target):
 	return {'force' : actor['strength'],

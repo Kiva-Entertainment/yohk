@@ -2,12 +2,11 @@
 from bge import logic
 
 # A dict of all traits that trigger at upkeep and what their effect is
-TRAIT_EFFECT = {'Poisoned' : 'poisonDamage'}
+TRAIT_EFFECT = {'Poisoned' : 'poisonDamage',
+				'Extra Action' : 'addAction'}
 
 # Provide any upkeep needed such as regening sp and restoring move
 def unit(unit):
-	triggerEffectsBasedOnTraits(unit)
-
 	# Regenerate mv
 	unit['mv'] = unit['move']
 	
@@ -15,6 +14,8 @@ def unit(unit):
 	unit['act'] = unit['actions']
 	
 	regenerateSp(unit)
+
+	triggerEffectsBasedOnTraits(unit)
 
 # Call any effects that happen because of traits that unit has
 def triggerEffectsBasedOnTraits(unit):

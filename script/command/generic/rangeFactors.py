@@ -35,6 +35,12 @@ def axe():
 			'aoe' : shapes.single(),
 			'specialSpaces' : [[0, -2]]}
 
+def bow():
+	return {'okDz' : {'max' : 10.0, 'min' : -10.0}, # {'max' : 1.2, 'min' : -1.2},
+			'range' : shapes.diamond(5, 1),
+			'aoe' : shapes.single(),
+			'specialSpaces' : []}
+
 def dagger():
 	return {'okDz' : {'max' : 10.0, 'min' : -10.0}, # {'max' : 1.2, 'min' : -1.2},
 			'range' : shapes.single(),
