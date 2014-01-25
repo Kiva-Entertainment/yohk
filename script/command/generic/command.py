@@ -61,6 +61,13 @@ def scaleStat(unit, stat, factor):
 
 	return amount
 
+# Give given unit given trait
+def addTrait(unit, trait):
+	if trait not in unit['traits']:
+		unit['traits'].append(trait)
+
+		storeResult.storeText(unit['position'], trait)
+
 'Movement'
 def move(unit):
 	# First special space

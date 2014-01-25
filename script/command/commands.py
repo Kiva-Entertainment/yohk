@@ -845,10 +845,45 @@ class beesting:
 		return 'Beesting'
 	
 	def icon():
-		return 'W_Bow_13.png'
+		return 'W_Bow_03.png'
 
 	def tags():
 		return ['targets', 'extends']
+class viperBite:
+	def perform(actor, target):
+		factors = generic.commandFactors.physical(actor, target)
+
+		if generic.command.hitCheck(target, factors):
+			# Damage target
+			generic.command.standardAttack(target, factors)
+
+			# Poison target
+			generic.command.addTrait(target, 'Poisoned')
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		# TODO(kgeffen) Make a bow range that has this built in
+		commandRange['range'] = shapes.diamond(5, 1)
+
+		generic.range.free(commandRange)
+	
+	def cost():
+		return extentInfluence.polynomial(70)
+	
+	def description():
+		return ('Shoot any unit up to 5 spaces away with a poisonous arrow that lowers defensive abilities.\n\n'
+				'-20% Toughness, willpower, agility X + 1 times\n\n'
+				'(Example: X = 1 lowers toughness by 20% of total toughness, X = 2 lowers toughness by 36% of total toughness.')
+	
+	def name():
+		return 'Viper Bite'
+	
+	def icon():
+		return 'W_Bow_13.png'
+
+	def tags():
+		return ['targets']
 
 
 '''Magic'''

@@ -24,6 +24,7 @@
 		"speed" : 5,
 		"jump" : 0,
 		"regen" : 0,
+		"traits" : [],
 		"commands" : [["deploy"]]
 	},
 	{	"position" : [24, 22],
@@ -48,6 +49,7 @@
 		"speed" : 5,
 		"jump" : 0,
 		"regen" : 0,
+		"traits" : [],
 		"commands" : [["deploy"]]
 	}
 ]

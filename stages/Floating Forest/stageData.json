@@ -24,6 +24,7 @@
 		"speed" : 5,
 		"jump" : 0,
 		"regen" : 0,
+		"traits" : [],
 		"commands" : [["deploy"]]
 	},
 	{	"position" : [22, 32],
@@ -48,6 +49,7 @@
 		"speed" : 5,
 		"jump" : 0,
 		"regen" : 0,
+		"traits" : [],
 		"commands" : [["deploy"]]
 	},
 	{	"position" : [34, 19],
@@ -72,6 +74,7 @@
 		"speed" : 5,
 		"jump" : 0,
 		"regen" : 0,
+		"traits" : [],
 		"commands" : [["deploy"]]
 	},
 	{	"position" : [18, 7],
@@ -96,6 +99,7 @@
 		"speed" : 5,
 		"jump" : 0,
 		"regen" : 0,
+		"traits" : [],
 		"commands" : [["deploy"]]
 	},
 	{	"position" : [33, 33],
@@ -120,6 +124,7 @@
 		"speed" : 5,
 		"jump" : 0,
 		"regen" : 0,
+		"traits" : [],
 		"commands" : [["deploy"]]
 	},
 	{	"position" : [6, 8],
@@ -144,6 +149,7 @@
 		"speed" : 5,
 		"jump" : 0,
 		"regen" : 0,
+		"traits" : [],
 		"commands" : [["deploy"]]
 	},
 	{
@@ -169,6 +175,7 @@
 		"speed" : 0,
 		"jump" : 0,
 		"regen" : 0,
+		"traits" : [],
 		"commands" : [[]]
 	}
 ]

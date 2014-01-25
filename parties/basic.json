@@ -19,6 +19,7 @@
 		"speed" : 50,
 		"jump" : 12,
 		"regen" : 5,
+		"traits" : [],
 		"commands" :	[["flameSlash", "gloryStrike", "grandEntrance"],
 						["strengthen", "dualSharpen"]]
 	},
@@ -42,7 +43,8 @@
 		"speed" : 50,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["beesting", "assassinate"],
+		"traits" : [],
+		"commands" :	[["beesting", "viperBite"],
 						["dash", "throw", "leap"]]
 	},
 	{	"model" : "soldier",
@@ -65,6 +67,7 @@
 		"speed" : 50,
 		"jump" : 12,
 		"regen" : 5,
+		"traits" : [],
 		"commands" :	[["shadeSlash", "greatCross"],
 						["beesting", "enlist"],
 						["strengthen"]]
@@ -89,6 +92,7 @@
 		"speed" : 50,
 		"jump" : 12,
 		"regen" : 5,
+		"traits" : [],
 		"commands" :	[["frigidThrust", "commision"],
 						["stoneWall", "firstAid"],
 						["dash"]]
@@ -114,6 +118,7 @@
 		"speed" : 50,
 		"jump" : 12,
 		"regen" : 5,
+		"traits" : [],
 		"commands" :	[["burn", "meteor"],
 						["blazeCloak", "livingFlame"],
 						["study"]]
@@ -138,6 +143,7 @@
 		"speed" : 50,
 		"jump" : 10,
 		"regen" : 5,
+		"traits" : [],
 		"commands" : 	[["gust", "passageBolt"],
 						["birdcall", "livingFlame"],
 						["study"]]
@@ -162,6 +168,7 @@
 		"speed" : 50,
 		"jump" : 10,
 		"regen" : 5,
+		"traits" : [],
 		"commands" : 	[["iceShard", "crashingWave"],
 						["icePrison", "crystallineCluster"],
 						["study"]]
@@ -186,6 +193,7 @@
 		"speed" : 50,
 		"jump" : 10,
 		"regen" : 5,
+		"traits" : [],
 		"commands" : 	[["mudshot", "icePrison"],
 						["stoneGarden", "crystallineCluster"],
 						["study"]]
