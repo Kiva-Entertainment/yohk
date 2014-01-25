@@ -7,10 +7,9 @@ from script.time import displayTurnOrder
 # The message sent which causes command results to be displayed
 DISPLAY_COMMAND_RESULTS_MESSAGE = 'displayCommandResults'
 
-def do():
-	# Clear list of previous unit movement
-	logic.globalDict['moveLog'] = []
-
+# Cleanup all variables set while selecting command target
+# Also perform any cleanup that happens after an effect resolves
+def fromUnitActing():
 	# Clear list of spaces that command can target
 	logic.globalDict['spaceTarget'] = []
 	
@@ -27,6 +26,17 @@ def do():
 	# sp consumption based on extent
 	logic.globalDict['extent'] = 0
 	
+	# Perform cleanup that happens after every effect resolves
+	fromEffectResolving()
+
+	# Change cursor to select a unit to act
+	logic.globalDict['cursor'] = 'selecting'
+
+# Perform all cleanup that happens after each effect resolves
+def fromEffectResolving():
+	# Clear list of previous unit movement
+	logic.globalDict['moveLog'] = []
+
 	# Kill any units with hp <= 0
 	killDeadUnits()
 	
@@ -37,9 +47,7 @@ def do():
 	# Display the results of the command that just resolved
 	displayCommandResults()
 
-	# Change cursor to select a unit to act
-	logic.globalDict['cursor'] = 'selecting'
-
+'''Internal (Private) Methods'''
 # Lower unit's sp by cost of command that just resolved
 def consumeSp(unit):
 	command = logic.globalDict['cursor']
@@ -71,7 +79,7 @@ def killUnit(unit):
 	unitList = logic.globalDict['units']
 	unitList = list(filter((unit).__ne__, unitList))
 	logic.globalDict['units'] = unitList
-
+	
 	# Update the time data and display to account for deaths
 	updateTime(unit)
 	displayTurnOrder.do()

@@ -1,13 +1,12 @@
 # Handle unit upkeep
 from bge import logic
 
+# A dict of all traits that trigger at upkeep and what their effect is
+TRAIT_EFFECT = {'Poisoned' : 'poisonDamage'}
+
 # Provide any upkeep needed such as regening sp and restoring move
 def unit(unit):
-	# TODO(kgeffen) As more traits are added, determining what happens, as well as how it stacks,
-	# should be made into a more concrete process
-	# For example, instead of elifs, have a dictionary with methods called based on the unit's traits
-	if 'Poisoned' in unit['traits']:
-		dealPoisonDamage(unit)
+	triggerEffectsBasedOnTraits(unit)
 
 	# Regenerate mv
 	unit['mv'] = unit['move']
@@ -17,6 +16,22 @@ def unit(unit):
 	
 	regenerateSp(unit)
 
+# Call any effects that happen because of traits that unit has
+def triggerEffectsBasedOnTraits(unit):
+	# NOTE(kgeffen) Calling effects after forming list because effects could alter
+	# units traits, which would cause list to change during iteration
+	calledEffects = []
+
+	for trait in unit['traits']:
+		if trait in TRAIT_EFFECT:
+			calledEffects.append(TRAIT_EFFECT[trait])
+
+	# TODO(kgeffen) To prevent circular dependancies, should solve underlying problem given the chance
+	if calledEffects != []:
+		from script.command import effects
+
+	for effect in calledEffects:
+		effects.perform(effect, target = unit)
 
 # Increase Sp by percentage (equal to 'regen') of 'Spirit'
 # Sp cannot exceed 'spirit'
@@ -28,14 +43,3 @@ def regenerateSp(unit):
 	# If sp exceeds spirit, set sp equal to spirit
 	if unit['sp'] > unit['spirit']:
 		unit['sp'] = unit['spirit']
-
-# TODO(kgeffen) Make a setup for effects to deal damage while taking advantage of functionality of command package
-def dealPoisonDamage(unit):
-	dHp = round(unit['health'] / 10)
-	
-	if unit['hp'] >= dHp:
-		unit['hp'] -= dHp
-	else:
-		unit['hp'] = 0
-
-

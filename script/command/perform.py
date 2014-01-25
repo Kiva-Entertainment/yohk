@@ -36,7 +36,7 @@ def do(targets):
 	commandControl.perform(command, actor, targets)
 	
 	# Do any necessary post-command work (Lowering sp, etc.)
-	cleanup.do()
+	cleanup.fromUnitActing()
 
 # Store in globalDict a list of all special spaces for command targeting given position
 def storeSpecialSpaces(space):
