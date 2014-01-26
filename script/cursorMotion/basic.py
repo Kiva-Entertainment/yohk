@@ -51,22 +51,21 @@ def getOffset():
 	downKey = logic.KX_INPUT_ACTIVE == keyboard.events[events.DOWNARROWKEY]
 	rightKey = logic.KX_INPUT_ACTIVE == keyboard.events[events.RIGHTARROWKEY]
 	
-	# Return unit vector or None based on which key(s) are pressed
-	if upKey + leftKey + downKey + rightKey > 1:
-		return None
+	# Calculate and return the offset caused by the keystroke
+	offset = Vector((0.0, 0.0, 0.0))
+	
+	if upKey:
+		offset += Vector((0.0, 1.0, 0.0))
+	if leftKey:
+		offset += Vector((-1.0, 0.0, 0.0))
+	if downKey:
+		offset += Vector((0.0, -1.0, 0.0))
+	if rightKey:
+		offset += Vector((1.0, 0.0, 0.0))
 
-	elif upKey:
-		return Vector((0.0, 1.0, 0.0))
-
-	elif leftKey:
-		return Vector((-1.0, 0.0, 0.0))
-
-	elif downKey:
-		return Vector((0.0, -1.0, 0.0))
-
-	elif rightKey:
-		return Vector((1.0, 0.0, 0.0))
-
+	# Return the offset, if non-zero
+	if offset != Vector((0.0, 0.0, 0.0)):
+		return offset
 	else:
 		return None
 

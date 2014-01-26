@@ -26,7 +26,7 @@ def onMap(position):
 	elif logic.globalDict['xLength'] <= x:
 		position[0] = 0
 		
-	elif y < 0:
+	if y < 0:
 		position[1] = logic.globalDict['yLength'] - 1
 		
 	elif logic.globalDict['yLength'] <= y:
