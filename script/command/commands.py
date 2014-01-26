@@ -543,7 +543,7 @@ class guilltineSpiral:
 'Axe'
 class shatter:
 	def perform(actor, target):
-		factors = generic.commandFactors.sword(actor, target)
+		factors = generic.commandFactors.physical(actor, target)
 
 		if generic.command.hitCheck(target, factors):
 
@@ -573,6 +573,74 @@ class shatter:
 
 	def tags():
 		return ['targets']
+class cranialPuncture:
+	def perform(actor, target):
+		factors = generic.commandFactors.physical(actor, target)
+
+		if generic.command.hitCheck(target, factors):
+			# Deal standard damage
+			generic.command.standardAttack(target, factors)
+
+			# Lower sp to 0
+			generic.command.scaleStat(target, 'sp', 0.5)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.sword()
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 75
+	
+	def description():
+		return ('Lower targets sp to 0.\n'
+				'')
+	
+	def name():
+		return 'Cranial Puncture'
+	
+	def icon():
+		return 'W_Mace_009.png'
+
+	def tags():
+		return ['targets']
+class brutalYoke:
+	def perform(actor, target):
+		factors = generic.commandFactors.physical(actor, target)
+
+		# move target
+		generic.command.move(target)
+
+		if generic.command.hitCheck(target, factors):
+			# Deal damage
+			generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.sword()
+
+		# Grab target from distance = X spaces away
+		distance = generic.extentInfluence.polynomial(0, 1)
+		commandRange['range'] = [[0, distance]]
+		# Move target behind user (2 spaces behind space in front of user)
+		commandRange['specialSpaces'] = [[0, -distance - 2]]
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return extentInfluence.polynomial(20, 7, 3)
+	
+	def description():
+		return ('Lower targets sp to 0.\n'
+				'')
+	
+	def name():
+		return 'Brutal Yoke'
+	
+	def icon():
+		return 'W_Mace_006.png'
+
+	def tags():
+		return ['targets', 'extends']
+
 
 class chop:
 	def perform(actor, target):

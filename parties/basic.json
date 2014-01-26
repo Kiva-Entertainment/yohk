@@ -21,10 +21,10 @@
 		"regen" : 5,
 		"traits" : [],
 		"commands" :	[["flameSlash", "gloryStrike", "grandEntrance"],
-						["strengthen", "dualSharpen"]]
+						["strengthen", "dash"]]
 	},
 	{	"model" : "soldier",
-		"name" : "Stealthy Soldier",
+		"name" : "Bowman",
 		"descript" : "A quick soldier with few offensive skills. He can move himself and others around the field, can lower the enemies defenses, and can summon birds to slow your foes down or block their bases.",
 		"health" : 1000,
 		"hp" : 1000,
@@ -44,11 +44,11 @@
 		"jump" : 12,
 		"regen" : 5,
 		"traits" : [],
-		"commands" :	[["starshower", "withertipVolley", "poisonShot"],
-						["leap", "wait"]]
+		"commands" :	[["withertipVolley", "starshower", "poisonShot"],
+						["dash", "leap"]]
 	},
 	{	"model" : "soldier",
-		"name" : "Versatile Soldier",
+		"name" : "Jack Knight",
 		"descript" : "A balanced soldier who can be used offensively or defensively. He can summon weaker soldiers, strengthen himself, and lower the enemy's defenses and sp.",
 		"health" : 1000,
 		"hp" : 1000,
@@ -68,9 +68,8 @@
 		"jump" : 12,
 		"regen" : 5,
 		"traits" : [],
-		"commands" :	[["shadeSlash", "greatCross"],
-						["beesting", "enlist"],
-						["strengthen"]]
+		"commands" :	[["shatter", "cranialPuncture", "brutalYoke"],
+						["dash", "throw"]]
 	},
 	{	"model" : "soldier",
 		"name" : "Obstruction Soldier",
