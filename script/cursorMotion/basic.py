@@ -51,23 +51,23 @@ def getOffset():
 	downKey = logic.KX_INPUT_ACTIVE == keyboard.events[events.DOWNARROWKEY]
 	rightKey = logic.KX_INPUT_ACTIVE == keyboard.events[events.RIGHTARROWKEY]
 	
+	# Calculate and return the offset caused by the keystroke
 	offset = Vector((0.0, 0.0, 0.0))
 	
 	if upKey:
 		offset += Vector((0.0, 1.0, 0.0))
-
 	if leftKey:
 		offset += Vector((-1.0, 0.0, 0.0))
-
 	if downKey:
 		offset += Vector((0.0, -1.0, 0.0))
-
 	if rightKey:
 		offset += Vector((1.0, 0.0, 0.0))
 
-	# Return the offset, unless it is nothing
+	# Return the offset, if non-zero
 	if offset != Vector((0.0, 0.0, 0.0)):
 		return offset
+	else:
+		return None
 
 # Get the position that cursor is moving to
 def getNewPosition(cursor, offset):
