@@ -68,7 +68,7 @@
 		"jump" : 12,
 		"regen" : 5,
 		"traits" : [],
-		"commands" :	[["shatter", "cranialPuncture", "brutalYoke"],
+		"commands" :	[["shatter", "chasmMaw", "brutalYoke"],
 						["dash", "throw"]]
 	},
 	{	"model" : "soldier",

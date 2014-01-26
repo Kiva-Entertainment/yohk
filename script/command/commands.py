@@ -573,36 +573,42 @@ class shatter:
 
 	def tags():
 		return ['targets']
-class cranialPuncture:
-	def perform(actor, target):
-		factors = generic.commandFactors.physical(actor, target)
+class chasmMaw:
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.physical(actor, target)
 
-		if generic.command.hitCheck(target, factors):
-			# Deal standard damage
-			generic.command.standardAttack(target, factors)
-
-			# Lower sp to 0
-			generic.command.scaleStat(target, 'sp', 0.5)
+			factors['force'] *= 1.2
+			factors['accuracy'] *= 1.2
+			
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
 	
 	def determineRange():
-		commandRange = generic.rangeFactors.sword()
+		commandRange = generic.rangeFactors.standard()
+
+		length = extentInfluence.polynomial(2, 1)
+		commandRange['aoe'] = shapes.line(length)
+
 		generic.range.rigid(commandRange)
 	
 	def cost():
-		return 75
+		return extentInfluence.polynomial(22, 15, 5)
 	
 	def description():
-		return ('Lower targets sp to 0.\n'
-				'')
+		return ('Split the ground to create a gaping maw, hungry for blood.\n\n'
+				'Hit up to 3 units in your sightline\n'
+				'120% Damage\n'
+				'120% Accuracy')
 	
 	def name():
-		return 'Cranial Puncture'
+		return 'Chasm Maw'
 	
 	def icon():
 		return 'W_Mace_009.png'
 
 	def tags():
-		return ['targets']
+		return ['targets', 'extends']
 class brutalYoke:
 	def perform(actor, target):
 		factors = generic.commandFactors.physical(actor, target)
@@ -641,7 +647,36 @@ class brutalYoke:
 	def tags():
 		return ['targets', 'extends']
 
+class cranialPuncture:
+	def perform(actor, target):
+		factors = generic.commandFactors.physical(actor, target)
 
+		if generic.command.hitCheck(target, factors):
+			# Deal standard damage
+			generic.command.standardAttack(target, factors)
+
+			# Lower sp to 0
+			generic.command.scaleStat(target, 'sp', 0.5)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.sword()
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 75
+	
+	def description():
+		return ('Lower targets sp to 0.\n'
+				'')
+	
+	def name():
+		return 'Cranial Puncture'
+	
+	def icon():
+		return 'W_Mace_009.png'
+
+	def tags():
+		return ['targets']
 class chop:
 	def perform(actor, target):
 		factors = generic.commandFactors.axe(actor, target)
@@ -665,41 +700,6 @@ class chop:
 	
 	def icon():
 		return 'W_Axe_001.png'
-
-	def tags():
-		return ['targets']
-class chasmMaw:
-	def perform(actor, *targets):
-		for target in targets:
-			factors = generic.commandFactors.axe(actor, target)
-
-			factors['force'] *= 1.2
-			factors['accuracy'] *= 1.2
-			
-			if generic.command.hitCheck(target, factors):
-				generic.command.standardAttack(target, factors)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.axe()
-
-		commandRange['aoe'] = shapes.line(3)
-
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return 38
-	
-	def description():
-		return ('Split the ground to create a gaping maw, hungry for blood.\n\n'
-				'Hit up to 3 units in your sightline\n'
-				'120% Damage\n'
-				'120% Accuracy')
-	
-	def name():
-		return 'Chasm Maw'
-	
-	def icon():
-		return 'W_Mace_009.png'
 
 	def tags():
 		return ['targets']
