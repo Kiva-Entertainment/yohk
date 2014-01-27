@@ -9,9 +9,8 @@ def attempt(cont):
 def do():
 	# NOTE(kgeffen) Overlay scene must exist before units added to time so that they can be displayed
 	# NOTE(kgeffen) Time array must exist before units are added so that they can be added to it
-	time.setup.primary()
+	time.setup()
+
 	setup.units.do()
-	# NOTE(kgeffen) After time is populated with units, it should churn until its first turn has actors
-	time.setup.secondary()
 
 	setup.scenes.secondary()
