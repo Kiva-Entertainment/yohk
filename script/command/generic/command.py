@@ -61,6 +61,13 @@ def scaleStat(unit, stat, factor):
 
 	return amount
 
+# Give given unit given trait
+def addTrait(unit, trait):
+	if trait not in unit['traits']:
+		unit['traits'].append(trait)
+
+		storeResult.storeText(unit['position'], trait)
+
 'Movement'
 def move(unit):
 	# First special space
@@ -138,3 +145,11 @@ def loseCommand(unit, commandName):
 
 	unit['commands'] = newCommands
 
+# Make given unit lose the given trait
+def loseTrait(unit, trait):
+	traitsList = unit['traits']
+	
+	# Change the list to not include the given commandName
+	traitsList = list(filter((trait).__ne__, traitsList))
+	
+	unit['traits'] = traitsList

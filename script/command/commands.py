@@ -543,7 +543,7 @@ class guilltineSpiral:
 'Axe'
 class shatter:
 	def perform(actor, target):
-		factors = generic.commandFactors.sword(actor, target)
+		factors = generic.commandFactors.physical(actor, target)
 
 		if generic.command.hitCheck(target, factors):
 
@@ -573,7 +573,110 @@ class shatter:
 
 	def tags():
 		return ['targets']
+class chasmMaw:
+	def perform(actor, *targets):
+		for target in targets:
+			factors = generic.commandFactors.physical(actor, target)
 
+			factors['force'] *= 1.2
+			factors['accuracy'] *= 1.2
+			
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+
+		length = extentInfluence.polynomial(2, 1)
+		commandRange['aoe'] = shapes.line(length)
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return extentInfluence.polynomial(22, 15, 5)
+	
+	def description():
+		return ('Split the ground to create a gaping maw, hungry for blood.\n\n'
+				'Hit up to 3 units in your sightline\n'
+				'120% Damage\n'
+				'120% Accuracy')
+	
+	def name():
+		return 'Chasm Maw'
+	
+	def icon():
+		return 'W_Mace_009.png'
+
+	def tags():
+		return ['targets', 'extends']
+class brutalYoke:
+	def perform(actor, target):
+		factors = generic.commandFactors.physical(actor, target)
+
+		# move target
+		generic.command.move(target)
+
+		if generic.command.hitCheck(target, factors):
+			# Deal damage
+			generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.sword()
+
+		# Grab target from distance = X spaces away
+		distance = generic.extentInfluence.polynomial(0, 1)
+		commandRange['range'] = [[0, distance]]
+		# Move target behind user (2 spaces behind space in front of user)
+		commandRange['specialSpaces'] = [[0, -distance - 2]]
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return extentInfluence.polynomial(20, 7, 3)
+	
+	def description():
+		return ('Lower targets sp to 0.\n'
+				'')
+	
+	def name():
+		return 'Brutal Yoke'
+	
+	def icon():
+		return 'W_Mace_006.png'
+
+	def tags():
+		return ['targets', 'extends']
+
+class cranialPuncture:
+	def perform(actor, target):
+		factors = generic.commandFactors.physical(actor, target)
+
+		if generic.command.hitCheck(target, factors):
+			# Deal standard damage
+			generic.command.standardAttack(target, factors)
+
+			# Lower sp to 0
+			generic.command.scaleStat(target, 'sp', 0.5)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.sword()
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 75
+	
+	def description():
+		return ('Lower targets sp to 0.\n'
+				'')
+	
+	def name():
+		return 'Cranial Puncture'
+	
+	def icon():
+		return 'W_Mace_009.png'
+
+	def tags():
+		return ['targets']
 class chop:
 	def perform(actor, target):
 		factors = generic.commandFactors.axe(actor, target)
@@ -597,41 +700,6 @@ class chop:
 	
 	def icon():
 		return 'W_Axe_001.png'
-
-	def tags():
-		return ['targets']
-class chasmMaw:
-	def perform(actor, *targets):
-		for target in targets:
-			factors = generic.commandFactors.axe(actor, target)
-
-			factors['force'] *= 1.2
-			factors['accuracy'] *= 1.2
-			
-			if generic.command.hitCheck(target, factors):
-				generic.command.standardAttack(target, factors)
-	
-	def determineRange():
-		commandRange = generic.rangeFactors.axe()
-
-		commandRange['aoe'] = shapes.line(3)
-
-		generic.range.rigid(commandRange)
-	
-	def cost():
-		return 38
-	
-	def description():
-		return ('Split the ground to create a gaping maw, hungry for blood.\n\n'
-				'Hit up to 3 units in your sightline\n'
-				'120% Damage\n'
-				'120% Accuracy')
-	
-	def name():
-		return 'Chasm Maw'
-	
-	def icon():
-		return 'W_Mace_009.png'
 
 	def tags():
 		return ['targets']
@@ -745,6 +813,41 @@ class crackFoundation:
 	def tags():
 		return ['targets']
 
+'Dagger'
+class assassinate:
+	def perform(actor, target):
+		factors = generic.commandFactors.dagger(actor, target)
+
+		factors['force'] *= 3
+		factors['accuracy'] *= 3
+
+		if generic.command.hitCheck(target, factors):
+			generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.dagger()
+
+		# commandRange['specialSpaces'] = hollowSquare
+
+		generic.range.rigid(commandRange)
+	
+	def cost():
+		return 250
+	
+	def description():
+		return ('Silent.\n'
+				'')
+	
+	def name():
+		return 'Assassinate'
+	
+	def icon():
+		return 'W_Dagger_007.png'
+
+	def tags():
+		return ['targets']
+
+
 'Wand'
 class psiStrike:
 	def perform(actor, target):
@@ -779,7 +882,7 @@ class psiStrike:
 		return ['targets', 'extends']
 
 'Bow'
-class beesting:
+class withertipVolley:
 	def perform(actor, target):
 		factors = generic.commandFactors.physical(actor, target)
 
@@ -792,10 +895,7 @@ class beesting:
 			generic.command.scaleStat(target, 'agility', amount)
 	
 	def determineRange():
-		commandRange = generic.rangeFactors.standard()
-
-		commandRange['range'] = shapes.diamond(5, 1)
-
+		commandRange = generic.rangeFactors.bow()
 		generic.range.free(commandRange)
 	
 	def cost():
@@ -807,13 +907,71 @@ class beesting:
 				'(Example: X = 1 lowers toughness by 20% of total toughness, X = 2 lowers toughness by 36% of total toughness.')
 	
 	def name():
-		return 'Beesting'
+		return 'Withertip Volley'
+	
+	def icon():
+		return 'W_Bow_03.png'
+
+	def tags():
+		return ['targets', 'extends']
+class poisonShot:
+	def perform(actor, target):
+		# Poison target
+		generic.command.addTrait(target, 'Poisoned')
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.bow()
+		generic.range.free(commandRange)
+	
+	def cost():
+		return extentInfluence.polynomial(120)
+	
+	def description():
+		return ('Shoot any unit up to 5 spaces away with a poisonous arrow that poisons them.\n\n'
+				'')
+	
+	def name():
+		return 'Poison Shot'
 	
 	def icon():
 		return 'W_Bow_13.png'
 
 	def tags():
-		return ['targets', 'extends']
+		return ['targets']
+class starshower:
+	def perform(actor, _):
+
+		targets = [unit for unit in logic.globalDict['units'] if unit != actor]
+		
+
+		for target in targets:
+
+			factors = generic.commandFactors.bow(actor, target)
+			factors['force'] *= extentInfluence.polynomial(1, 1/2)
+			factors['accuracy'] *= 2
+
+			if generic.command.hitCheck(target, factors):
+				generic.command.standardAttack(target, factors)
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.self()
+		generic.range.free(commandRange)
+	
+	def cost():
+		return extentInfluence.polynomial(0, 100)
+	
+	def description():
+		return ('Hit everyone.\n\n'
+				'')
+	
+	def name():
+		return 'Starshower'
+	
+	def icon():
+		return 'W_Bow_15.png'
+
+	def tags():
+		return ['extends']
 
 
 '''Magic'''
@@ -1496,7 +1654,7 @@ class tutor:
 'Boots'
 class dash:
 	def perform(actor, target):
-		generic.command.raiseStat(target, 'mv', 2)
+		generic.command.raiseStat(target, 'mv', 3)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.self()
@@ -1507,7 +1665,7 @@ class dash:
 	
 	def description():
 		return ('Concentrate on moving. If you can run, you can survive.\n\n'
-				'Move an additional 2 spaces this turn')
+				'Move an additional 3 spaces this turn')
 	
 	def name():
 		return 'Dash'
@@ -1517,6 +1675,37 @@ class dash:
 
 	def tags():
 		return ['targets']
+class leap:
+	def perform(actor):
+		# Move self to selected space
+		generic.command.move(actor)		
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+		
+		reach = extentInfluence.polynomial(1, 1)
+		commandRange['range'] = shapes.diamond(reach, 1)
+
+		commandRange['specialSpaces'] = generic.shapes.single()
+		
+		generic.range.free(commandRange)
+	
+	def cost():
+		return generic.extentInfluence.polynomial(0, 8, 4)
+	
+	def description():
+		return ('Jump around\n'
+				'Jump to space')
+	
+	def name():
+		return 'Leap'
+	
+	def icon():
+		return 'E_Shoes_05.png'
+
+	def tags():
+		return ['extends']
+
 
 'Shields'
 class defend:
@@ -1702,6 +1891,31 @@ class focus:
 		return ['targets']
 
 'Other'
+class wait:
+	def perform(actor, target):
+		# Grant yourself a pending action
+		generic.command.addTrait(actor, 'Extra Action')
+	
+	def determineRange():
+		commandRange = generic.rangeFactors.standard()
+		generic.range.free(commandRange)
+	
+	def cost():
+		return 0
+	
+	def description():
+		return ('Have an extra action next turn.\n\n'
+				'')
+	
+	def name():
+		return 'Wait'
+	
+	def icon():
+		return 'O_Clock.png'
+
+	def tags():
+		return ['targets']
+
 class enlist:
 	def perform(actor):
 		spawn = generic.objects.squire()

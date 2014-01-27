@@ -11,7 +11,7 @@
 		"actions" : 1,
 		"act" : 1,
 		"strength" : 120,
-		"intelligence" :80,
+		"intelligence" : 80,
 		"toughness" : 120,
 		"willpower" : 80,
 		"focus" : 100,
@@ -19,12 +19,12 @@
 		"speed" : 2,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["flameSlash", "grandEntrance"],
-						["dualSharpen", "enlist"],
-						["strengthen"]]
+		"traits" : [],
+		"commands" :	[["flameSlash", "gloryStrike", "grandEntrance"],
+						["strengthen", "dash"]]
 	},
 	{	"model" : "soldier",
-		"name" : "Stealthy Soldier",
+		"name" : "Bowman",
 		"descript" : "A quick soldier with few offensive skills. He can move himself and others around the field, can lower the enemies defenses, and can summon birds to slow your foes down or block their bases.",
 		"health" : 1000,
 		"hp" : 1000,
@@ -35,7 +35,7 @@
 		"actions" : 1,
 		"act" : 1,
 		"strength" : 120,
-		"intelligence" :80,
+		"intelligence" : 80,
 		"toughness" : 120,
 		"willpower" : 80,
 		"focus" : 100,
@@ -43,12 +43,12 @@
 		"speed" : 2,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["beesting", "ribbonDash"],
-						["throw", "birdcall"],
-						["dash"]]
+		"traits" : [],
+		"commands" :	[["withertipVolley", "starshower", "poisonShot"],
+						["dash", "leap"]]
 	},
 	{	"model" : "soldier",
-		"name" : "Versatile Soldier",
+		"name" : "Jack Knight",
 		"descript" : "A balanced soldier who can be used offensively or defensively. He can summon weaker soldiers, strengthen himself, and lower the enemy's defenses and sp.",
 		"health" : 1000,
 		"hp" : 1000,
@@ -67,9 +67,9 @@
 		"speed" : 2,
 		"jump" : 12,
 		"regen" : 5,
-		"commands" :	[["shadeSlash", "greatCross"],
-						["beesting", "enlist"],
-						["strengthen"]]
+		"traits" : [],
+		"commands" :	[["shatter", "chasmMaw", "brutalYoke"],
+						["dash", "throw"]]
 	},
 	{	"model" : "soldier",
 		"name" : "Obstruction Soldier",
@@ -91,6 +91,7 @@
 		"speed" : 2,
 		"jump" : 12,
 		"regen" : 5,
+		"traits" : [],
 		"commands" :	[["frigidThrust", "commision"],
 						["stoneWall", "firstAid"],
 						["dash"]]
@@ -116,6 +117,7 @@
 		"speed" : 2,
 		"jump" : 12,
 		"regen" : 5,
+		"traits" : [],
 		"commands" :	[["burn", "meteor"],
 						["blazeCloak", "livingFlame"],
 						["study"]]
@@ -140,6 +142,7 @@
 		"speed" : 2,
 		"jump" : 10,
 		"regen" : 5,
+		"traits" : [],
 		"commands" : 	[["gust", "passageBolt"],
 						["birdcall", "livingFlame"],
 						["study"]]
@@ -164,6 +167,7 @@
 		"speed" : 2,
 		"jump" : 10,
 		"regen" : 5,
+		"traits" : [],
 		"commands" : 	[["iceShard", "crashingWave"],
 						["icePrison", "crystallineCluster"],
 						["study"]]
@@ -188,6 +192,7 @@
 		"speed" : 2,
 		"jump" : 10,
 		"regen" : 5,
+		"traits" : [],
 		"commands" : 	[["mudshot", "icePrison"],
 						["stoneGarden", "crystallineCluster"],
 						["study"]]

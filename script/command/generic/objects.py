@@ -26,6 +26,7 @@ def rock():
 		'speed' : 0,
 		'jump' : 0,
 		'regen' : 0,
+		'traits' : [],
 		'commands' : [[]]
 		}
 
@@ -53,6 +54,7 @@ def bird():
 		'speed' : 2,
 		'jump' : 100,
 		'regen' : 0,
+		'traits' : [],
 		'commands' : [[]]
 		}
 
@@ -80,6 +82,7 @@ def flame():
 		'speed' : 2,
 		'jump' : 0,
 		'regen' : 10,
+		'traits' : [],
 		'commands' : [['burn', 'livingFlame']]
 		}
 
@@ -107,6 +110,7 @@ def ice():
 		'speed' : 2,
 		'jump' : 0,
 		'regen' : 10,
+		'traits' : [],
 		'commands' : [['iceShard', 'icePrison']]
 		}
 
@@ -134,6 +138,7 @@ def squire():
 		'speed' : 2,
 		'jump' : 10,
 		'regen' : 0,
+		'traits' : [],
 		'commands' : [['slash', 'dualSharpen']]
 		}
 
@@ -161,5 +166,6 @@ def mason():
 		'speed' : 2,
 		'jump' : 10,
 		'regen' : 0,
+		'traits' : [],
 		'commands' : [['craft', 'shatter']]
 		}
