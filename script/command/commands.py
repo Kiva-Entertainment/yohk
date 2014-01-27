@@ -72,7 +72,7 @@ class gloryStrike:
 
 class flameSlash:
 	def perform(actor, target):
-		multiplier = extentInfluence.polynomial(1, 1/10) * 100000
+		multiplier = extentInfluence.polynomial(1, 1/10)
 
 		factors = generic.commandFactors.physical(actor, target)
 
