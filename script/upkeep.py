@@ -2,7 +2,7 @@
 from bge import logic
 
 # Provide any upkeep needed such as regening sp and restoring move
-def unit(unit):
+def do(unit):
 	# Regenerate mv
 	unit['mv'] = unit['move']
 	

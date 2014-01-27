@@ -1076,7 +1076,8 @@ class birdcall:
 		# Make a copy of target and place it
 		unit = generic.objects.bird()
 		unit['align'] = actor['align']
-		
+		unit['team'] = actor['team']
+
 		generic.command.addObjects(unit)
 	
 	def determineRange():
@@ -1377,6 +1378,7 @@ class crystallineCluster:
 		# Basic ice object
 		unit = generic.objects.ice()
 		unit['align'] = actor['align']
+		unit['team'] = actor['team']
 		
 		generic.command.addObjects(unit)
 
@@ -1704,6 +1706,7 @@ class enlist:
 	def perform(actor):
 		spawn = generic.objects.squire()
 		spawn['align'] = actor['align']
+		unit['team'] = actor['team']
 		
 		generic.command.addObjects(spawn)
 	
@@ -1733,6 +1736,7 @@ class commision:
 	def perform(actor):
 		spawn = generic.objects.mason()
 		spawn['align'] = actor['align']
+		unit['team'] = actor['team']
 		
 		generic.command.addObjects(spawn)
 	

@@ -5,7 +5,6 @@ from math import radians
 from mathutils import Matrix
 
 from script import check, sceneControl, getPosition, time
-from script.time import displayTurnOrder
 
 # Get the game object for a given unit
 def get(unit):
@@ -35,9 +34,7 @@ def add(unit):
 		obj.orientation *= rotAdjust
 
 	# Add first turn to time
-	time.addNext.unitAction(unit)
-	displayTurnOrder.do()
-
+	logic.globalDict['time'].add(unit)
 
 # Create a game object for given unit at unit's position
 def createGameObject(unit):
