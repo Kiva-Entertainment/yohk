@@ -2,7 +2,6 @@
 from bge import logic
 
 from script import commandControl, objectControl, unitControl
-from script.time import displayTurnOrder 
 
 # The message sent which causes command results to be displayed
 DISPLAY_COMMAND_RESULTS_MESSAGE = 'displayCommandResults'
@@ -73,10 +72,7 @@ def killUnit(unit):
 	logic.globalDict['units'] = unitList
 
 	# Update the time data and display to account for deaths
-	updateTime(unit)
-	displayTurnOrder.do()
-
-	# TODO(kgeffen) Churn if turn now empty
+	logic.globalDict['time'].remove(unit)
 
 # Update the time array to account for units dying
 def updateTime(unit):

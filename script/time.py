@@ -2,8 +2,10 @@
 # Called from setup scripts
 from bge import logic
 
+from script import upkeep
+
 # The size of the timeline
-SIZE = 10
+SIZE = 100
 NUM_TEAMS = 2
 
 def setup():
@@ -12,6 +14,11 @@ def setup():
 def endTurn(cont):
 	if cont.sensors[0].positive:
 		logic.globalDict['time'].endTurn()
+
+def ensureFirstTurnHasActor():
+	# Implementation detail: Calling end turn ensures starting turn has actor
+	# Kinda risky to use, but works
+	logic.globalDict['time'].endTurn()
 
 class Timeline(list):
 	def __init__(self, old):
@@ -44,7 +51,11 @@ class Timeline(list):
 				turn = timeline.pop(0)
 				timeline.append(turn)
 
+	# End the current turn and go to the next turn with actors
 	def endTurn(self):
+		for unit in self[0][0]:
+			upkeep.do(unit)
+
 		self.churn()
 
 		# NOTE(kgeffen) Less hazardous while(true)
@@ -54,12 +65,30 @@ class Timeline(list):
 			else:
 				break
 
+	# Add the given unit to appropriate timeline
 	def add(self, unit):
 		# Add unit to its teams timeline
 		teamsTimeline = self[ unit['team'] - 1 ]
-		for turn in teamsTimeline:
-			turn.append(unit)
+		for turnNum in range(1, len(teamsTimeline)): # Ignore first turn
 
+			# Speed is how many turns occur per 1 in which unit acts
+			speed = unit['speed']
+			if speed == 0:
+				return
+			else:
+				if turnNum % speed == 0:
+					teamsTimeline[turnNum].append(unit)
+
+	# Remove all instances of the given unit in all timelines
+	def remove(self, unit):
+		for teamNum in range(len(self)):
+			for turnNum in range(len(self[teamNum])):
+				# Filter specified turn to exclude given unit
+				turn = self[teamNum][turnNum]
+				turn = list(filter((unit).__ne__, turn))
+				self[teamNum][turnNum] = turn
+
+	# Return string describing the current timeline
 	def asString(self):
 		result = ''
 
@@ -73,10 +102,4 @@ class Timeline(list):
 					result += '\n'
 
 		return result
-
-
-
-
-
-
 

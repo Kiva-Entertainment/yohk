@@ -7,8 +7,7 @@ from script import unitControl
 
 STAGE_DATA_FILENAME = 'stageData.json'
 # TODO(kgeffen) Remove once better idea align has been hashed out further
-ALIGNS = {'1' : 'solarServants',
-		'2' : 'martialLegion'}
+ALIGNS = ['solarServants', 'martialLegion']
 
 def do():
 	addActiveUnits()
@@ -27,13 +26,14 @@ def addActiveUnits():
 		unitControl.object.add(unit)
 
 def addInactiveUnits():
-	for i in ['1', '2']:
-		filepath = logic.expandPath('//parties/') + logic.globalDict['party' + i] + '.json'
+	for i in [1, 2]:
+		filepath = logic.expandPath('//parties/') + logic.globalDict['party' + str(i)] + '.json'
 		
 		# Load all of stage's data from file
 		with open(filepath) as partyData:
 			inactiveUnits = json.load(partyData)
 
 			for unit in inactiveUnits:
-				unit['align'] = ALIGNS[i]
+				unit['align'] = ALIGNS[i - 1]
+				unit['team'] = i
 				logic.globalDict['inactiveUnits'].append(unit)

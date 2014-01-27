@@ -13,4 +13,6 @@ def do():
 
 	setup.units.do()
 
+	time.ensureFirstTurnHasActor()
+
 	setup.scenes.secondary()
