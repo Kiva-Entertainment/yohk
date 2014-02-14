@@ -8,10 +8,10 @@ TRAIT_EFFECT = {'Poisoned' : 'poisonDamage',
 # Provide any upkeep needed such as regening sp and restoring move
 def do(unit):
 	# Regenerate mv
-	unit['mv'] = unit['move']
+	unit.stats['mv'] = unit.stats['move']
 	
 	# Regenerate actions
-	unit['act'] = unit['actions']
+	unit.stats['act'] = unit.stats['actions']
 	
 	regenerateSp(unit)
 
@@ -23,7 +23,7 @@ def triggerEffectsBasedOnTraits(unit):
 	# units traits, which would cause list to change during iteration
 	calledEffects = []
 
-	for trait in unit['traits']:
+	for trait in unit.stats['traits']:
 		if trait in TRAIT_EFFECT:
 			calledEffects.append(TRAIT_EFFECT[trait])
 
@@ -37,10 +37,10 @@ def triggerEffectsBasedOnTraits(unit):
 # Increase Sp by percentage (equal to 'regen') of 'Spirit'
 # Sp cannot exceed 'spirit'
 def regenerateSp(unit):
-	dSp = round( unit['regen']/100 * unit['spirit'] )
+	dSp = round( unit.stats['regen']/100 * unit.stats['spirit'] )
 	
-	unit['sp'] += dSp
+	unit.stats['sp'] += dSp
 	
 	# If sp exceeds spirit, set sp equal to spirit
-	if unit['sp'] > unit['spirit']:
-		unit['sp'] = unit['spirit']
+	if unit.stats['sp'] > unit.stats['spirit']:
+		unit.stats['sp'] = unit.stats['spirit']

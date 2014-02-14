@@ -1,5 +1,5 @@
 {	"class" : "base",
-	"name" : "Holy Ground",
+	"name" : "Base",
 	"descript" : "A base yo. It deploy units slowly. It can't deploy units if it is blocked on all sides. It can be destroyed.",
 	"health" : 1000,
 	"hp" : 1000,

@@ -68,11 +68,11 @@ class Timeline(list):
 	# Add the given unit to appropriate timeline
 	def add(self, unit):
 		# Add unit to its teams timeline
-		teamsTimeline = self[ unit['team'] - 1 ]
+		teamsTimeline = self[ unit.stats['team'] - 1 ]
 		for turnNum in range(1, len(teamsTimeline)): # Ignore first turn
 
 			# Speed is how many turns occur per 1 in which unit acts
-			speed = unit['speed']
+			speed = unit.stats['speed']
 			if speed == 0:
 				return
 			else:
@@ -98,7 +98,7 @@ class Timeline(list):
 				# If turn has actors for given team, add it with trailing newline
 				if teamTimeline[turnNum] != []:
 					for unit in teamTimeline[turnNum]:
-						result += unit['name'] + '\n'
+						result += unit.stats['name'] + '\n'
 					result += '\n'
 
 		return result

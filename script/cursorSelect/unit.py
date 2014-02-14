@@ -2,11 +2,12 @@
 # Display its move range and unit menu
 from bge import logic
 
-from script import moveRange, objectControl, unitControl
+from script import moveRange, objectControl, common
 
 def attempt(position):
-	unit = unitControl.get.inSpace(position)
-
+	# Get unit in given space
+	unit = common.unitInSpace(position)
+	
 	if unit is not None and unitActsThisTurn(unit):
 		do(unit)
 

@@ -24,7 +24,7 @@ def do():
 	elif status == 'move':
 		# NOTE(kgeffen) When user is selecting a space to move unit,
 		# is user selects unit, commandSelect opens
-		unitPosition = logic.globalDict['actor']['position']
+		unitPosition = logic.globalDict['actor'].position
 
 		# If cursor is not over unit, move unit to space cursor is on
 		if not check.eq2D(cursorPosition, unitPosition):

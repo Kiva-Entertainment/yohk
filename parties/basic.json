@@ -1,6 +1,6 @@
 [
 	{	"class" : "soldier",
-		"unitName" : "Glorious Soldier",
+		"name" : "Glorious Soldier",
 		"descript" : "The most blatantly aggressive soldier. He can enlist weaker soldiers, increase the strength of your allies, and deal lots of damage. However, he has trouble getting through obstacles.",
 		"health" : 1000,
 		"hp" : 1000,
@@ -24,7 +24,7 @@
 						["strengthen", "dash"]]
 	},
 	{	"class" : "soldier",
-		"unitName" : "Bowman",
+		"name" : "Bowman",
 		"descript" : "A quick soldier with few offensive skills. He can move himself and others around the field, can lower the enemies defenses, and can summon birds to slow your foes down or block their bases.",
 		"health" : 1000,
 		"hp" : 1000,
@@ -48,7 +48,7 @@
 						["dash", "leap"]]
 	},
 	{	"class" : "soldier",
-		"unitName" : "Jack Knight",
+		"name" : "Jack Knight",
 		"descript" : "A balanced soldier who can be used offensively or defensively. He can summon weaker soldiers, strengthen himself, and lower the enemy's defenses and sp.",
 		"health" : 1000,
 		"hp" : 1000,
@@ -72,7 +72,7 @@
 						["dash", "throw"]]
 	},
 	{	"class" : "soldier",
-		"unitName" : "Obstruction Soldier",
+		"name" : "Obstruction Soldier",
 		"descript" : "A defensive soldier who fills the field with rocks to impede movement and combat. Can heal other units, summon masons to help clutter the field, and keep his foes from moving while dealing minimal damage.",
 		"health" : 1000,
 		"hp" : 1000,
@@ -97,7 +97,7 @@
 						["dash"]]
 	},
 	{	"class" : "devoted",
-		"unitName" : "Flame Mage",
+		"name" : "Flame Mage",
 		"descript" : "The most aggressive mage. Raises offensive stats, summons spreading flames, and deals heavy damage with her fiery magic.",
 		"health" : 1000,
 		"hp" : 1000,
@@ -122,7 +122,7 @@
 						["study"]]
 	},
 	{	"class" : "devoted",
-		"unitName" : "Luminous Mage",
+		"name" : "Luminous Mage",
 		"descript" : "A quick mage good at moving herself and others around the field. Can surround bases with the birds and flames that she summons.",
 		"health" : 1000,
 		"hp" : 1000,
@@ -147,7 +147,7 @@
 						["study"]]
 	},
 	{	"class" : "devoted",
-		"unitName" : "Torrent Mage",
+		"name" : "Torrent Mage",
 		"descript" : "An adaptable mage, capable of dealing heavy damage or slowing down the battle with the ice she summons. She can also keep foes from moving by imprisoning them in blocks of ice. Especially good at dealing with raging fires.",
 		"health" : 1000,
 		"hp" : 1000,
@@ -172,7 +172,7 @@
 						["study"]]
 	},
 	{	"class" : "devoted",
-		"unitName" : "Bog Mage",
+		"name" : "Bog Mage",
 		"descript" : "A mage commited to slowing down the pace of battle. Not very effective at dealing damage, but capable of keeping multiple enemies from moving, and summoning lots of obstacles to the field.",
 		"health" : 1000,
 		"hp" : 1000,

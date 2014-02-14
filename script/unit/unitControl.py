@@ -15,7 +15,7 @@ def test(cont):
 		UNIT = {'team' : 1}
 		unit = add(UNIT)
 
-def add(unitData, space = [0,0]):
+def add(unitData, space):
 	battlefield = sceneControl.get('battlefield')
 
 	# Add game object
@@ -38,7 +38,7 @@ class Unit(types.KX_GameObject):
 		self.setModel(self.stats['class'])
 
 		# TODO(kgeffen) Add to timeline
-		# logic.globalDict['time'].add(self)
+		logic.globalDict['time'].add(self)
 
 	def setupStats(self, unitData):
 		''' Set stats of unit to given values or defaults if no values given'''
@@ -64,6 +64,13 @@ class Unit(types.KX_GameObject):
 		
 		# Switch objects mesh
 		self.replaceMesh(model)
+
+	def space(self):
+		''' Get the space that unit is in, 2d '''
+		x = round(self.position[0])
+		y = round(self.position[1])
+
+		return [x,y]
 
 	def die(self):
 		''' Self dies '''

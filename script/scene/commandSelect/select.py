@@ -23,11 +23,11 @@ def do():
 
 # Get command selected in commandSelect
 def getSelectedCommand():
-	unit = logic.globalDict['actor']
+	unitD = logic.globalDict['actor'].stats
 	
 	# List of commands displayed on screen
 	# NOTE(kgeffen) Has multiple lists of commands, get the first one
-	commands = unit['commands'][0]
+	commands = unitD['commands'][0]
 	
 	# Assuming that current list of commands is not empty
 	if len(commands) != 0:
@@ -45,11 +45,11 @@ def selectCommand(command):
 	sceneControl.hide('commandSelect')
 
 def commandIsAllowed(command):
-	unit = logic.globalDict['actor']
+	unitD = logic.globalDict['actor'].stats
 	
 	# Not allowed if unit can't afford it (In sp)
 	cost = commandControl.cost(command)
-	if cost > unit['sp']:
+	if cost > unitD['sp']:
 		return False
 	
 	return True

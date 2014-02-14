@@ -16,9 +16,9 @@ def fromUnitActing():
 	logic.globalDict['commandChoices'] = []
 
 	# Modify the actor's stats
-	actor = logic.globalDict['actor']
-	actor.act -= 1
-	consumeSp(actor)
+	actorD = logic.globalDict['actor'].stats
+	actorD['act'] -= 1
+	consumeSp(actorD)
 
 	# Reset extent
 	# NOTE(kgeffen) This must happen after sp consumed because
@@ -41,18 +41,18 @@ def fromEffectResolving():
 	
 	# Ensure all units stats are within acceptable bounds
 	for unit in logic.globalDict['units']:
-		ensureStatsWithinBounds(unit)
+		ensureStatsWithinBounds(unit.stats)
 	
 	# Display the results of the command that just resolved
 	displayCommandResults()
 
 '''Internal (Private) Methods'''
 # Lower unit's sp by cost of command that just resolved
-def consumeSp(unit):
+def consumeSp(unitD):
 	command = logic.globalDict['cursor']
 	cost = commandControl.cost(command)
 	
-	unit['sp'] -= cost
+	unitD['sp'] -= cost
 
 # Remove any units that have hp <= 0
 def killDeadUnits():
@@ -61,7 +61,7 @@ def killDeadUnits():
 	# so that dictionary does not change while being iterated over
 	doomedList = []
 	for unit in logic.globalDict['units']:
-		if unit.hp <= 0:
+		if unit.stats['hp'] <= 0:
 			doomedList.append(unit)
 	
 	for unit in doomedList:
@@ -112,11 +112,11 @@ def displayCommandResults():
 	ground.sendMessage(DISPLAY_COMMAND_RESULTS_MESSAGE)
 
 # Ensure hp/sp are not larger than health/spirit
-def ensureStatsWithinBounds(unit):
-	maxSp = unit.spirit
-	if unit.sp > maxSp:
-		unit.sp = maxSp
+def ensureStatsWithinBounds(unitD):
+	maxSp = unitD['spirit']
+	if unitD['sp'] > maxSp:
+		unitD['sp'] = maxSp
 	
-	maxHp = unit.health
-	if unit.hp > maxHp:
-		unit.hp = maxHp
+	maxHp = unitD['health']
+	if unitD['hp'] > maxHp:
+		unitD['hp'] = maxHp

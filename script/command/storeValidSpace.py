@@ -3,7 +3,7 @@
 # Called by range.py
 from bge import logic
 
-from script import check, unitControl, getPosition
+from script import check, getPosition, common
 
 # Store space if it meets all requirements
 def attempt(actorPosition, targetSpace, rng):
@@ -87,7 +87,7 @@ def attemptGetSpecialSpaces(actorPosition, targetSpace, rng):
 			# Space is invalid
 			return False
 		else:
-			unitInSpace = unitControl.get.inSpace(offsetSpace) != None
+			unitInSpace = common.unitInSpace(offsetSpace) != None
 
 			if unitInSpace:
 				# Space is occupied
@@ -104,7 +104,7 @@ def getEffectedUnits(effectedSpaces):
 	# For each space effected by command, add any units on it to list of effected units
 	for space in effectedSpaces:
 		
-		unit = unitControl.get.inSpace(space)
+		unit = common.unitInSpace(space)
 		if unit is not None:
 			effectedUnits.append(unit)
 	

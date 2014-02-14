@@ -1,5 +1,6 @@
 {	"class" : "soldier",
 	"name" : "Glorious Soldier",
+	"team" : 0,
 	"descript" : ".",
 	"health" : 1000,
 	"hp" : 1000,

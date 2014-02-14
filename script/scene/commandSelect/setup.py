@@ -71,8 +71,8 @@ def costText():
 		cost = commandControl.cost(commands[0])
 		
 		# Get actor's current sp
-		unit = logic.globalDict['actor']
-		currentSp = unit['sp']
+		unitD = logic.globalDict['actor'].stats
+		currentSp = unitD['sp']
 		
 		text = 'Cost: ' + str(cost) + '/' + str(currentSp)
 	
@@ -130,8 +130,8 @@ def extentText():
 	object['Text'] = text
 
 def getCommandsList():
-	unit = logic.globalDict['actor']
-	commandsList = unit['commands']
+	unitD = logic.globalDict['actor'].stats
+	commandsList = unitD['commands']
 	
 	return commandsList
 

@@ -1,7 +1,7 @@
 # Move actor to selected space if move is allowed
 from bge import logic
 
-from script import check, objectControl, marker, unitControl, soundControl
+from script import check, objectControl, marker, soundControl
 from script.cursorSelect import unit as selectUnit
 
 def attempt(position):
@@ -21,7 +21,7 @@ def do(position):
 	# NOTE(kgeffen) Must happen before stats are adjusted (particularly mv)
 	storeMove(unit)
 
-	unitControl.move.toSpace(unit, position)
+	unit.move(position)
 	adjustUnitStats(unit, position)
 	
 	# Select current unit again
@@ -30,8 +30,8 @@ def do(position):
 
 # Store the move that is occuring in globalDict 'moveList'
 def storeMove(unit):
-	start = unit['position']
-	mv = unit['mv']
+	start = unit.stats['position']
+	mv = unit.stats['mv']
 
 	move = {'unit' : unit,
 			'start' : start,
@@ -52,7 +52,7 @@ def moveAllowed(position):
 def adjustUnitStats(unit, position):
 	# Calculate and store the remaining movement for unit this turn
 	dMv = getMovementConsumed(position)
-	unit['mv'] -= dMv
+	unit.stats['mv'] -= dMv
 
 # Return the amount of movement consumed by moving to 'position'
 def getMovementConsumed(position):

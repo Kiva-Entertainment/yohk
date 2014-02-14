@@ -2129,13 +2129,13 @@ class deploy:
 		return 'S_Buff_06.png'
 
 	def determineChoices():
-		ownAlign = logic.globalDict['actor']['align']
+		ownTeam = logic.globalDict['actor'].stats['team']
 
 		choices = logic.globalDict['commandChoices']
-		for unit in logic.globalDict['inactiveUnits']:
-			if unit['align'] == ownAlign:
+		for unitD in logic.globalDict['inactiveUnits']:
+			if unitD['team'] == ownTeam:
 				
-				pair = {'value' : unit,
-						'display' : unit['name']}
+				pair = {'value' : unitD,
+						'display' : unitD['name']}
 				choices.append(pair)
 

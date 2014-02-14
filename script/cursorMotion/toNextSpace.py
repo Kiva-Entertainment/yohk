@@ -3,7 +3,7 @@
 # Ex: To next unit acting this turn if selecting actor
 from bge import logic
 
-from script import check, getPosition, objectControl, commandControl
+from script import check, getPosition, objectControl#, commandControl
 
 def attempt(cont):
 	fKey = cont.sensors['fKey'].positive
@@ -52,7 +52,7 @@ def toNextActor(strict):
 		return
 
 	# Position that cursor will move to
-	position = getPosition.onGround(actors[0]['position'])
+	position = actors[0].position
 	
 	# cursorMoves == True if cursor didn't start at _position_
 	cursorMoved = moveToPosition(position)
@@ -68,7 +68,7 @@ def toNextActor(strict):
 		cycleUntilFirstUnitActs(actors, strict)
 		
 		# This is the position of the first unit in newly cycled list of actors
-		position = getPosition.onGround(actors[0]['position'])
+		position = actors[0].position
 		
 		moveToPosition(position)
 
@@ -88,9 +88,9 @@ def cycleUntilFirstUnitActs(units, strict):
 
 		# Unit is valid if it has remaining actions
 		# If not strict, unit can also be valid if unit has remaining mv
-		valid = units[0]['act'] > 0
+		valid = units[0].stats['act'] > 0
 		if not strict:
-			valid = valid or units[0]['mv'] > 0
+			valid = valid or units[0].stats['mv'] > 0
 
 		# If first unit is valid, return true, otherwise, cycle list and try again
 		# NOTE(kgeffen) For loop ends after each unit checked, and returns False
@@ -154,7 +154,9 @@ def cycleUntilValidTarget(targets):
 	commandName = logic.globalDict['cursor']
 	# If command can only be performed if it targets units
 	# Conversely, if requiresUnits is False, command MUST not target any units
-	requiresUnits = commandControl.hasTag(commandName, 'targets')
+	
+	# TODO(kgeffen) check tag once refactoring done
+	requiresUnits = false# commandControl.hasTag(commandName, 'targets')
 
 	# NOTE(kgeffen) For loop runs up to length times, but since targets list is cycling,
 	# first entry of targets is always the one being considered

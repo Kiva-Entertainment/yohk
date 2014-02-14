@@ -6,7 +6,7 @@ from script import sceneControl, soundControl, marker
 def attempt():
 	actor = logic.globalDict['actor']
 
-	if actor.act > 0:
+	if actor.stats['act'] > 0:
 		do()
 	else:
 		soundControl.play('negative')

@@ -112,21 +112,21 @@ def addObjects(*units):
 		unitData = units[i]
 
 		# Change its position before adding
-		unitData['position'] = logic.globalDict['commandSpecialSpaces'][i]
+		position = logic.globalDict['commandSpecialSpaces'][i]
 
 		# Add game object
-		unitControl.add(unit)
+		unitControl.add(unitData, position)
 
 		# Remove unit from inactive units list, if it's in there
 		inactiveUnits = logic.globalDict['inactiveUnits']
 		for i in range(0, len(inactiveUnits)):
-			if unit == inactiveUnits[i]:
+			if unitData == inactiveUnits[i]:
 				# TODO(kgeffen) In version 0.3, as scaffolding, generic units are created instead of
 				# specific characters. Once specific characters exist, uncomment deletion
 				#del inactiveUnits[i]
 				break
 
-		storeResult.storeText(unitData['position'], 'Poof!')
+		storeResult.storeText(position, 'Poof!')
 
 # Make given unit lose any occurences of the given skill
 def loseCommand(unit, commandName):

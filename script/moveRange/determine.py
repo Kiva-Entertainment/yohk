@@ -3,22 +3,22 @@
 # List stored in globalDict 'validMove'
 from bge import logic
 
-from script import check, unitControl
+from script import check
 
 # NOTE(kgeffen) Since this method starts with lowest dMv and increases,
 # it gets the smallest (lowest dMv) path possible
 # Create a list of all valid moves for selected unit
 def do(unit):
 	# First move is from start, all others are from previous ring
-	start = [{ 'space' : unit['position'],
+	start = [{ 'space' : unit.space(),
 			   'dMv' : 0 }]
 	fromRing = start
 	
 	# final - List of all pairs (valid space/mv consumed)
 	final = start
-	for dMv in range(1, unit['mv'] + 1): # dMv = How much movement is consumed
+	for dMv in range(1, unit.stats['mv'] + 1): # dMv = How much movement is consumed
 		
-		newRing = spread(fromRing, dMv, unit['jump'])
+		newRing = spread(fromRing, dMv, unit.stats['jump'])
 		fromRing = [] # Is repopulated in for loop
 		
 		# spaceWithDmv - a space in the newRing with the format: {'space' : [x,y], 'dMv' : c}
@@ -82,10 +82,9 @@ def spaceValid(space, h1, maxDh):
 		return False
 	
 	# Space invalid if unit is already in it (Can't pass through unit)
-	occupyingUnit = unitControl.get.inSpace(space) 
-	spaceOccupied = occupyingUnit is not None
-	if spaceOccupied:
-		return False
+	for unit in logic.globalDict['units']:
+		if unit.getSpace() == space:
+			return False
 	
 	# Space invalid if height too great
 	if (h2 - h1) > maxDh:
