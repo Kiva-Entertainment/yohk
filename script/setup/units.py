@@ -3,11 +3,13 @@
 from bge import logic
 import json
 
-from script import unitControl
+from script.unit import unitControl
 
 STAGE_DATA_FILENAME = 'stageData.json'
 # TODO(kgeffen) Remove once better idea align has been hashed out further
 ALIGNS = ['solarServants', 'martialLegion']
+
+GENERIC_FILEPATH = logic.expandPath('//script/unit/generic/')
 
 def do():
 	addActiveUnits()
@@ -22,8 +24,22 @@ def addActiveUnits():
 		data = json.load(stageDataFile)
 
 	# Add active units to field
-	for unit in data['activeUnits']:
-		unitControl.object.add(unit)
+	# Each team has list of unit data for units on that team
+	for teamNum in range(len(data['units'])):
+
+		# Go through all units on team with given teamNum
+		for unit in data['units'][teamNum]:
+
+			# Data is in form of dict with
+			# starting space, type of generic
+			genericType = unit['type']
+
+			unitData = None
+			with open(GENERIC_FILEPATH + genericType + '.json') as genericData:
+				unitData = json.load(genericData)
+				unitData['team'] = teamNum
+
+			unitControl.add(unitData, unit['space'])
 
 def addInactiveUnits():
 	for i in [1, 2]:
@@ -33,7 +49,7 @@ def addInactiveUnits():
 		with open(filepath) as partyData:
 			inactiveUnits = json.load(partyData)
 
-			for unit in inactiveUnits:
-				unit['align'] = ALIGNS[i - 1]
-				unit['team'] = i
-				logic.globalDict['inactiveUnits'].append(unit)
+			for unitData in inactiveUnits:
+				unitData['align'] = ALIGNS[i - 1]
+				unitData['team'] = i
+				logic.globalDict['inactiveUnits'].append(unitData)

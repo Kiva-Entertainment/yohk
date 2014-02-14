@@ -11,7 +11,7 @@ from bge import logic
 import math
 import random
 
-from script import unitControl
+from script.unit import unitControl
 from script.command import storeResult
 
 # How random calculations are
@@ -32,7 +32,7 @@ def standardAttack(target, factors):
 	return damage
 
 def regen(unit):
-	dSp = unit['regen']/100 * unit['spirit']
+	dSp = unit.regen/100 * unit.spirit
 	dSp = round(dSp)
 
 	raiseStat(unit, 'sp', dSp)
@@ -63,19 +63,18 @@ def scaleStat(unit, stat, factor):
 
 # Give given unit given trait
 def addTrait(unit, trait):
-	if trait not in unit['traits']:
-		unit['traits'].append(trait)
+	if trait not in unit.traits:
+		unit.traits.append(trait)
 
-		storeResult.storeText(unit['position'], trait)
+		storeResult.storeText(unit.space, trait)
 
 'Movement'
 def move(unit):
 	# First special space
 	position = logic.globalDict['commandSpecialSpaces'][0]
 	
-	unitControl.move.toSpace(unit, position)
-	
-	
+	unit.move(position)
+
 
 'Checks'
 # Determine if command hits
@@ -110,13 +109,13 @@ def coinFlip(times = 1):
 # Objects are added based on special spaces, in order
 def addObjects(*units):
 	for i in range(0, len(units)):
-		unit = units[i]
+		unitData = units[i]
 
 		# Change its position before adding
-		unit['position'] = logic.globalDict['commandSpecialSpaces'][i]
+		unitData['position'] = logic.globalDict['commandSpecialSpaces'][i]
 
 		# Add game object
-		unitControl.object.add(unit)
+		unitControl.add(unit)
 
 		# Remove unit from inactive units list, if it's in there
 		inactiveUnits = logic.globalDict['inactiveUnits']
@@ -127,7 +126,7 @@ def addObjects(*units):
 				#del inactiveUnits[i]
 				break
 
-		storeResult.storeText(unit['position'], 'Poof!')
+		storeResult.storeText(unitData['position'], 'Poof!')
 
 # Make given unit lose any occurences of the given skill
 def loseCommand(unit, commandName):
@@ -135,7 +134,7 @@ def loseCommand(unit, commandName):
 	newCommands = []
 
 	# Units commands are seperated into lists, go through each of those lists
-	for commandList in unit['commands']:
+	for commandList in unit.commands:
 
 		# Change the list to not include the given commandName
 		newList = list(filter((commandName).__ne__, commandList))
@@ -143,13 +142,13 @@ def loseCommand(unit, commandName):
 		if newList != []:
 			newCommands.append(newList)
 
-	unit['commands'] = newCommands
+	unit.commands = newCommands
 
 # Make given unit lose the given trait
 def loseTrait(unit, trait):
-	traitsList = unit['traits']
+	traitsList = unit.traits
 	
 	# Change the list to not include the given commandName
 	traitsList = list(filter((trait).__ne__, traitsList))
 	
-	unit['traits'] = traitsList
+	unit.traits = traitsList

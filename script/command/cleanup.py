@@ -1,7 +1,7 @@
 # Perform any cleanup necessary after command resolves
 from bge import logic
 
-from script import commandControl, objectControl, unitControl
+from script import commandControl, objectControl
 
 # The message sent which causes command results to be displayed
 DISPLAY_COMMAND_RESULTS_MESSAGE = 'displayCommandResults'
@@ -17,7 +17,7 @@ def fromUnitActing():
 
 	# Modify the actor's stats
 	actor = logic.globalDict['actor']
-	actor['act'] -= 1
+	actor.act -= 1
 	consumeSp(actor)
 
 	# Reset extent
@@ -61,26 +61,26 @@ def killDeadUnits():
 	# so that dictionary does not change while being iterated over
 	doomedList = []
 	for unit in logic.globalDict['units']:
-		if unit['hp'] <= 0:
+		if unit.hp <= 0:
 			doomedList.append(unit)
 	
 	for unit in doomedList:
-		killUnit(unit)
+		unit.die()
 
-# TODO(kgeffen) Put this method in unitControl
+# TODO(kgeffen) Remove
 # Delete the units entry from all its locations and delete the game object for unit
-def killUnit(unit):
-	# Delete unit object
-	unitObject = unitControl.object.get(unit)
-	unitObject.endObject()
+# def killUnit(unit):
+# 	# Delete unit object
+# 	unitObject = unitControl.object.get(unit)
+# 	unitObject.endObject()
 
-	# Remove unit from list of units
-	unitList = logic.globalDict['units']
-	unitList = list(filter((unit).__ne__, unitList))
-	logic.globalDict['units'] = unitList
+# 	# Remove unit from list of units
+# 	unitList = logic.globalDict['units']
+# 	unitList = list(filter((unit).__ne__, unitList))
+# 	logic.globalDict['units'] = unitList
 	
-	# Update the time data and display to account for deaths
-	logic.globalDict['time'].remove(unit)
+# 	# Update the time data and display to account for deaths
+# 	logic.globalDict['time'].remove(unit)
 
 # Update the time array to account for units dying
 def updateTime(unit):
@@ -113,10 +113,10 @@ def displayCommandResults():
 
 # Ensure hp/sp are not larger than health/spirit
 def ensureStatsWithinBounds(unit):
-	maxSp = unit['spirit']
-	if unit['sp'] > maxSp:
-		unit['sp'] = maxSp
+	maxSp = unit.spirit
+	if unit.sp > maxSp:
+		unit.sp = maxSp
 	
-	maxHp = unit['health']
-	if unit['hp'] > maxHp:
-		unit['hp'] = maxHp
+	maxHp = unit.health
+	if unit.hp > maxHp:
+		unit.hp = maxHp

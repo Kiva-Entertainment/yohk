@@ -5,7 +5,7 @@
 def rock():
 	return {
 		'model' : 'rock',
-		'name' : 'Rock',
+		'unitName' : 'Rock',
 		'descript' : 'A rock. Immobile and passive, its only purpose is to act as a barrier.',
 		'align' : 'neutral',
 		'team' : 0,
@@ -33,7 +33,7 @@ def rock():
 def bird():
 	return {
 		'model' : 'bird',
-		'name' : 'Bird',
+		'unitName' : 'Bird',
 		'descript' : 'A small bird. Although it cannot attack, it can move to block enemies and enemy bases.',
 		'align' : 'neutral',
 		'team' : 0,
@@ -61,7 +61,7 @@ def bird():
 def flame():
 	return {
 		'model' : 'flame',
-		'name' : 'Flame',
+		'unitName' : 'Flame',
 		'descript' : 'A raging fire. It can burn any adjacent units and eventually spread. Given enough time to spread, these flames become incredibly difficult to deal with.',
 		'align' : 'neutral',
 		'team' : 0,
@@ -89,7 +89,7 @@ def flame():
 def ice():
 	return {
 		'model' : 'ice',
-		'name' : 'Ice',
+		'unitName' : 'Ice',
 		'descript' : 'A frigid ice crystal. It can damage or slow down enemies from far away.',
 		'align' : 'neutral',
 		'team' : 0,
@@ -117,7 +117,7 @@ def ice():
 def squire():
 	return {
 		'model' : 'squire',
-		'name' : 'Squire',
+		'unitName' : 'Squire',
 		'descript' : 'A weak squire. It can attack to take out other weak enemies, or can raise the strength of your allies.',
 		'align' : 'neutral',
 		'team' : 0,
@@ -145,7 +145,7 @@ def squire():
 def mason():
 	return {
 		'model' : 'mason',
-		'name' : 'Mason',
+		'unitName' : 'Mason',
 		'descript' : 'A weak stone mason. Can make and destroy rocks with ease.',
 		'align' : 'neutral',
 		'team' : 0,

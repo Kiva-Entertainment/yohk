@@ -14,26 +14,28 @@ def test(cont):
 	if(cont.sensors[0].positive):
 		UNIT = {'team' : 1}
 		unit = add(UNIT)
-		print(unit.strength)
 
-def add(unitData):
+def add(unitData, space = [0,0]):
 	battlefield = sceneControl.get('battlefield')
 
 	# Add game object
 	obj = battlefield.addObject('unit', 'ground')
 
 	unit = Unit(obj)
-	unit.setup(unitData)
+	unit.setup(unitData, space)
+
+	logic.globalDict['units'].append(unit)
 
 class Unit(types.KX_GameObject):
-	def setup(self, unitData):
+	def setup(self, unitData, space):
 		''' Setup the unit '''
 		self.setupStats(unitData)
 		
-		# Move unit object to correct location
-		self.worldPosition = getPosition.onGround(self.position)
+		# Move unit object to starting location
+		# TODO(kgeffen) Should stats in json store as position, or maybe space
+		self.move(space)
 
-		self.setModel(self.model)
+		self.setModel(self.stats['class'])
 
 		# TODO(kgeffen) Add to timeline
 		# logic.globalDict['time'].add(self)
@@ -41,19 +43,19 @@ class Unit(types.KX_GameObject):
 	def setupStats(self, unitData):
 		''' Set stats of unit to given values or defaults if no values given'''
 		# For each stat in default, if present in unitData, assign from that,
-		# Else, assign default value 
+		# Else, assign default value
+		stats = DEFAULT_UNIT
 		for statType in DEFAULT_UNIT.keys():
 			
-			# Value is default, or gotten from unit data if present
-			value = DEFAULT_UNIT[statType];
+			# Stat of given type is value from unitData if present
 			if statType in unitData:
-				value = unitData[statType]
+				stats[statType] = unitData[statType]
 
-			self.__setattr__(statType, value)
+		self.stats = stats
 
 	def setModel(self, model):
 		''' Switch mesh '''
-		self.model = model
+		self.stats['class'] = model
 
 		# Load mesh into memory only if it isn't already loaded
 		filepath = logic.expandPath('//models/') + model + '.blend'
@@ -62,3 +64,21 @@ class Unit(types.KX_GameObject):
 		
 		# Switch objects mesh
 		self.replaceMesh(model)
+
+	def die(self):
+		''' Self dies '''
+		# Delete unit object
+		self.endObject()
+
+		# Remove unit from list of units
+		# NOTE(kgeffen) Not sure this is necessary
+		unitList = logic.globalDict['units']
+		unitList = list(filter((self).__ne__, unitList))
+		logic.globalDict['units'] = unitList
+		
+		# Update the time data and display to account for deaths
+		logic.globalDict['time'].remove(self)
+	
+	def move(self, space):
+		''' Move self to given space '''
+		self.worldPosition = getPosition.onGround(space)

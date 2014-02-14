@@ -1,5 +1,4 @@
-{	"position" : [0, 0, 0],
-	"model" : "soldier",
+{	"class" : "soldier",
 	"surname" : "Glorious Soldier",
 	"descript" : ".",
 	"health" : 1000,
