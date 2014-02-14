@@ -1,5 +1,5 @@
 {	"class" : "soldier",
-	"surname" : "Glorious Soldier",
+	"name" : "Glorious Soldier",
 	"descript" : ".",
 	"health" : 1000,
 	"hp" : 1000,
