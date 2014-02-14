@@ -15,7 +15,7 @@ def statChange(stat, delta, unit):
 	if round(delta) != 0:
 
 		# Space that result should be displayed
-		space = unit['position']
+		space = unit.position
 
 		# Form the (amount of change) portion of the text
 		deltaText = formDeltaText(delta)

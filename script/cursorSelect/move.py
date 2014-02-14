@@ -1,5 +1,6 @@
 # Move actor to selected space if move is allowed
 from bge import logic
+import copy
 
 from script import check, objectControl, marker, soundControl
 from script.cursorSelect import unit as selectUnit
@@ -30,7 +31,7 @@ def do(position):
 
 # Store the move that is occuring in globalDict 'moveList'
 def storeMove(unit):
-	start = unit.stats['position']
+	start = copy.deepcopy(unit.position)
 	mv = unit.stats['mv']
 
 	move = {'unit' : unit,

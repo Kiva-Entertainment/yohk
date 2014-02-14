@@ -3,7 +3,7 @@
 # List stored in globalDict 'validMove'
 from bge import logic
 
-from script import check
+from script import check, common
 
 # NOTE(kgeffen) Since this method starts with lowest dMv and increases,
 # it gets the smallest (lowest dMv) path possible
@@ -82,9 +82,8 @@ def spaceValid(space, h1, maxDh):
 		return False
 	
 	# Space invalid if unit is already in it (Can't pass through unit)
-	for unit in logic.globalDict['units']:
-		if unit.getSpace() == space:
-			return False
+	if common.unitInSpace(space) != None:
+		return False
 	
 	# Space invalid if height too great
 	if (h2 - h1) > maxDh:

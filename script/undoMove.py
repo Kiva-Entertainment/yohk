@@ -3,7 +3,6 @@
 from bge import logic
 
 from script import soundControl
-from script.unitControl import move
 
 def attempt():
 	endOfLog = len(logic.globalDict['moveLog']) == 0
@@ -17,11 +16,10 @@ def do():
 	oldSpace = lastMove['start']
 	oldMv = lastMove['mv']
 
-	# Move unit
-	move.toSpace(unit, oldSpace)
+	unit.move(oldSpace)
 
 	# Return unit's mv to previous amount
-	unit['mv'] = oldMv
+	unit.stats['mv'] = oldMv
 
 	# Play sound
 	soundControl.play('return')

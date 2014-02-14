@@ -1,6 +1,6 @@
 # TODO(kgeffen) Describe
 from bge import logic, types
-import json
+import json, copy
 
 from script import sceneControl, getPosition
 
@@ -13,7 +13,7 @@ with open(filepath) as dataFile:
 def test(cont):
 	if(cont.sensors[0].positive):
 		UNIT = {'team' : 1}
-		unit = add(UNIT)
+		unit = add(UNIT, [0,0])
 
 def add(unitData, space):
 	battlefield = sceneControl.get('battlefield')
@@ -26,7 +26,15 @@ def add(unitData, space):
 
 	logic.globalDict['units'].append(unit)
 
+	# if(len(logic.globalDict['units']) == 2):
+	#print(logic.globalDict['units'][0].stats['team'])
+		# print(logic.globalDict['units'][0].stats == logic.globalDict['units'][1].stats)
+	# for unit in logic.globalDict['units']:
+
 class Unit(types.KX_GameObject):
+	def __init__(self, old):
+		self.unit_id = len(logic.globalDict['units'])
+
 	def setup(self, unitData, space):
 		''' Setup the unit '''
 		self.setupStats(unitData)
@@ -44,7 +52,7 @@ class Unit(types.KX_GameObject):
 		''' Set stats of unit to given values or defaults if no values given'''
 		# For each stat in default, if present in unitData, assign from that,
 		# Else, assign default value
-		stats = DEFAULT_UNIT
+		stats = copy.deepcopy(DEFAULT_UNIT)
 		for statType in DEFAULT_UNIT.keys():
 			
 			# Stat of given type is value from unitData if present

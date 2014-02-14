@@ -41,19 +41,19 @@ def regen(unit):
 # Raise one of unit's stats by an amount
 def raiseStat(unit, stat, amount):
 	# Don't lower stat to less than 0
-	if -amount > unit[stat]:
-		amount = -unit[stat]
+	if -amount > unit.stats[stat]:
+		amount = -unit.stats[stat]
 
-	unit[stat] += round(amount)
+	unit.stats[stat] += round(amount)
 	
 	storeResult.statChange(stat, amount, unit)
 
 # Multiply a stat by an amount
 def scaleStat(unit, stat, factor):
-	v1 = unit[stat]
+	v1 = unit.stats[stat]
 	v2 = round(v1 * factor)
 	
-	unit[stat] = v2
+	unit.stats[stat] = v2
 	
 	# Calculate and store the change in the affected stat
 	amount = v2 - v1
@@ -64,9 +64,9 @@ def scaleStat(unit, stat, factor):
 # Give given unit given trait
 def addTrait(unit, trait):
 	if trait not in unit.traits:
-		unit.traits.append(trait)
+		unit.stats['traits'].append(trait)
 
-		storeResult.storeText(unit.space, trait)
+		storeResult.storeText(unit.position, trait)
 
 'Movement'
 def move(unit):
@@ -91,7 +91,7 @@ def hitCheck(target, factors):
 	
 	# Store result 'miss'
 	if not hit:
-		space = target['position']
+		space = target.position
 		storeResult.storeText(space, 'miss')
 	
 	return hit
@@ -134,7 +134,7 @@ def loseCommand(unit, commandName):
 	newCommands = []
 
 	# Units commands are seperated into lists, go through each of those lists
-	for commandList in unit.commands:
+	for commandList in unit.stats['commands']:
 
 		# Change the list to not include the given commandName
 		newList = list(filter((commandName).__ne__, commandList))
@@ -146,9 +146,9 @@ def loseCommand(unit, commandName):
 
 # Make given unit lose the given trait
 def loseTrait(unit, trait):
-	traitsList = unit.traits
+	traitsList = unit.stats['traits']
 	
 	# Change the list to not include the given commandName
 	traitsList = list(filter((trait).__ne__, traitsList))
 	
-	unit.traits = traitsList
+	unit.stats['traits'] = traitsList

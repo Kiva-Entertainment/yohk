@@ -3,47 +3,47 @@
 
 'Weapons'
 def spear(actor, target):
-	return {'force' : actor['strength']/2 + actor['focus']/2,
-	 		'resist' : target['toughness'],
-	 		'accuracy' : actor['focus'],
-	 		'evasion' : target['agility']}
+	return {'force' : actor.stats['strength']/2 + actor.stats['focus']/2,
+	 		'resist' : target.stats['toughness'],
+	 		'accuracy' : actor.stats['focus'],
+	 		'evasion' : target.stats['agility']}
 
 def sword(actor, target):
-	return {'force' : actor['strength'],
-	 		'resist' : target['toughness'],
-	 		'accuracy' : actor['focus'],
-	 		'evasion' : target['agility']}
+	return {'force' : actor.stats['strength'],
+	 		'resist' : target.stats['toughness'],
+	 		'accuracy' : actor.stats['focus'],
+	 		'evasion' : target.stats['agility']}
 
 def axe(actor, target):
-	return {'force' : actor['strength'] * 1.2,
-			'resist' : target['toughness'],
-			'accuracy' : actor['focus'] * 0.8,
-			'evasion' : target['agility']}
+	return {'force' : actor.stats['strength'] * 1.2,
+			'resist' : target.stats['toughness'],
+			'accuracy' : actor.stats['focus'] * 0.8,
+			'evasion' : target.stats['agility']}
 
 def dagger(actor, target):
-	return {'force' : actor['agility'] * 0.5 + actor['focus'] * 0.5,
-			'resist' : target['toughness'],
-			'accuracy' : actor['focus'],
-			'evasion' : target['agility']}
+	return {'force' : actor.stats['agility'] * 0.5 + actor.stats['focus'] * 0.5,
+			'resist' : target.stats['toughness'],
+			'accuracy' : actor.stats['focus'],
+			'evasion' : target.stats['agility']}
 
 def bow(actor, target):
-	return {'force' : actor['focus'],
-			'resist' : target['toughness'],
-			'accuracy' : actor['focus'],
-			'evasion' : target['agility']}
+	return {'force' : actor.stats['focus'],
+			'resist' : target.stats['toughness'],
+			'accuracy' : actor.stats['focus'],
+			'evasion' : target.stats['agility']}
 
 'Standard'
 def physical(actor, target):
-	return {'force' : actor['strength'],
-	 		'resist' : target['toughness'],
-	 		'accuracy' : actor['focus'],
-	 		'evasion' : target['agility']}
+	return {'force' : actor.stats['strength'],
+	 		'resist' : target.stats['toughness'],
+	 		'accuracy' : actor.stats['focus'],
+	 		'evasion' : target.stats['agility']}
 
 def magic(actor, target):
-	return {'force' : actor['intelligence'],
-			'resist' : target['willpower'],
-			'accuracy' : actor['focus'],
-			'evasion' : target['agility']}
+	return {'force' : actor.stats['intelligence'],
+			'resist' : target.stats['willpower'],
+			'accuracy' : actor.stats['focus'],
+			'evasion' : target.stats['agility']}
 
 'Other'
 # Command should necessarily miss

@@ -2,7 +2,7 @@
 # Called each tic to describe unit cursor is over, if any
 from bge import logic
 
-from script import dynamicMaterial, objectControl, alignControl, sceneControl
+from script import dynamicMaterial, objectControl, alignControl, sceneControl, common
 
 TEXT_OBJECT_NAME = 'basicInfo_text'
 FACE_OBJECT_NAME = 'basicInfo_face'
@@ -12,11 +12,7 @@ BACKDROP_OBJECT_NAME = 'basicInfo_backdrop'
 def attempt():
 	cursor = objectControl.getFromScene('cursor', 'battlefield')
 
-	describedUnit = None
-	for unit in logic.globalDict['units']:
-		if unit.position == cursor.position:
-			describedUnit = unit
-			break
+	describedUnit = common.unitInSpace(cursor.position)
 	
 	scene = sceneControl.get('basicInfo')
 	if describedUnit is not None:
