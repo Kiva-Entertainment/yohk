@@ -14,6 +14,8 @@ CHOICE_OBJECT_NAME = 'commandSelect_choice'
 EXTENT_OBJECT_NAME = 'commandSelect_extent'
 SCENE_NAME = 'commandSelect'
 
+
+
 # Setup the entire screen in commandSelect
 def screen():
 	listText()
@@ -120,8 +122,8 @@ def extentText():
 
 	text = ''
 	if commandControl.hasTag(command, 'extends'):
-		extent = logic.globalDict['extent']
-		text = 'Extent: ' + str(extent)
+		own = logic.getCurrentController().owner
+		text = 'Extent: ' + str(own['extent'])
 	
 	# Set the text of the object
 	object = objectControl.getFromScene(EXTENT_OBJECT_NAME, SCENE_NAME)

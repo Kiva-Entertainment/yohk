@@ -39,7 +39,7 @@ def commandLists(cont):
 		commandsList.append(commands)
 	
 	# Reset extent
-	logic.globalDict['extent'] = 0
+	cont.owner['extent'] = 0
 	# Reset choices
 	logic.globalDict['commandChoices'] = []
 
@@ -75,7 +75,7 @@ def commands(cont):
 		commands.append(command)
 	
 	# Reset extent
-	logic.globalDict['extent'] = 0
+	cont.owner['extent'] = 0
 	# Reset choices
 	logic.globalDict['commandChoices'] = []
 	
