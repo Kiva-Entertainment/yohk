@@ -1,14 +1,14 @@
 # View the info of the unit that cursor is over currently
 from bge import logic
 
-from script import sceneControl, objectControl, unitControl
+from script import sceneControl, objectControl, common
 
 # Display the unit's info
 def attempt(cont):
 	if cont.sensors['iKey'].positive:
 		# Get unit under cursor, if any
 		cursor = objectControl.getFromScene('cursor', 'battlefield')
-		unit = unitControl.get.inSpace(cursor.worldPosition)
+		unit = common.unitInSpace(cursor.worldPosition)
 
 		if unit is not None:
 			do(unit)

@@ -4,10 +4,9 @@
 # Stats for common objects added to field
 def rock():
 	return {
-		'model' : 'rock',
-		'unitName' : 'Rock',
+		'class' : 'rock',
+		'name' : 'Rock',
 		'descript' : 'A rock. Immobile and passive, its only purpose is to act as a barrier.',
-		'align' : 'neutral',
 		'team' : 0,
 		'health' : 200,
 		'hp' : 200,
@@ -32,10 +31,9 @@ def rock():
 
 def bird():
 	return {
-		'model' : 'bird',
-		'unitName' : 'Bird',
+		'class' : 'bird',
+		'name' : 'Bird',
 		'descript' : 'A small bird. Although it cannot attack, it can move to block enemies and enemy bases.',
-		'align' : 'neutral',
 		'team' : 0,
 		'health' : 100,
 		'hp' : 100,
@@ -60,10 +58,9 @@ def bird():
 
 def flame():
 	return {
-		'model' : 'flame',
-		'unitName' : 'Flame',
+		'class' : 'flame',
+		'name' : 'Flame',
 		'descript' : 'A raging fire. It can burn any adjacent units and eventually spread. Given enough time to spread, these flames become incredibly difficult to deal with.',
-		'align' : 'neutral',
 		'team' : 0,
 		'health' : 150,
 		'hp' : 150,
@@ -88,10 +85,9 @@ def flame():
 
 def ice():
 	return {
-		'model' : 'ice',
-		'unitName' : 'Ice',
+		'class' : 'ice',
+		'name' : 'Ice',
 		'descript' : 'A frigid ice crystal. It can damage or slow down enemies from far away.',
-		'align' : 'neutral',
 		'team' : 0,
 		'health' : 300,
 		'hp' : 300,
@@ -116,10 +112,9 @@ def ice():
 
 def squire():
 	return {
-		'model' : 'squire',
-		'unitName' : 'Squire',
+		'class' : 'squire',
+		'name' : 'Squire',
 		'descript' : 'A weak squire. It can attack to take out other weak enemies, or can raise the strength of your allies.',
-		'align' : 'neutral',
 		'team' : 0,
 		'health' : 300,
 		'hp' : 300,
@@ -144,10 +139,9 @@ def squire():
 
 def mason():
 	return {
-		'model' : 'mason',
-		'unitName' : 'Mason',
+		'class' : 'mason',
+		'name' : 'Mason',
 		'descript' : 'A weak stone mason. Can make and destroy rocks with ease.',
-		'align' : 'neutral',
 		'team' : 0,
 		'health' : 300,
 		'hp' : 300,

@@ -1,3 +1,6 @@
+# TODO(kgeffen) Reimplement minus alignment
+
+
 # Setup the Info scene
 from bge import logic
 

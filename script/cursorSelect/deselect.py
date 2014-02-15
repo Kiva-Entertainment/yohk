@@ -62,4 +62,4 @@ def moveCursorToActor():
 
 	actor = logic.globalDict['actor']
 
-	cursor.worldPosition = getPosition.onGround(actor['position'])
+	cursor.worldPosition = actor.position

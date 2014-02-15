@@ -22,7 +22,7 @@ def do(unit):
 	moveRange.determine.do(unit)
 	moveRange.display.do()
 
-# Return true if unit acts this turn in first group (Turns seperated into groups by alignment)
+# Return true if unit acts this turn in first group (Turns seperated into groups by team)
 def unitActsThisTurn(unit):
 	currentActors = logic.globalDict['time'][0][0]
 	

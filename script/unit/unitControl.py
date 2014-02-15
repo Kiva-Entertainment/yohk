@@ -10,6 +10,7 @@ filepath = logic.expandPath('//script/unit/default.json')
 with open(filepath) as dataFile:
 	DEFAULT_UNIT = json.load(dataFile)
 
+# TODO(kgeffen) Remove once done testing
 def test(cont):
 	if(cont.sensors[0].positive):
 		UNIT = {'team' : 1}
@@ -26,53 +27,46 @@ def add(unitData, space):
 
 	logic.globalDict['units'].append(unit)
 
-	# if(len(logic.globalDict['units']) == 2):
-	#print(logic.globalDict['units'][0].stats['team'])
-		# print(logic.globalDict['units'][0].stats == logic.globalDict['units'][1].stats)
-	# for unit in logic.globalDict['units']:
-
 class Unit(types.KX_GameObject):
-	def __init__(self, old):
-		self.unit_id = len(logic.globalDict['units'])
-
 	def setup(self, unitData, space):
 		''' Setup the unit '''
 		self.setupStats(unitData)
 		
-		# Move unit object to starting location
-		# TODO(kgeffen) Should stats in json store as position, or maybe space
+		# Move Unit to starting location
 		self.move(space)
 
-		self.setModel(self.stats['class'])
+		# Set unit's model based on starting class
+		self.setClass(self.stats['class'])
 
-		# TODO(kgeffen) Add to timeline
+		# Add unit to timeline
 		logic.globalDict['time'].add(self)
 
 	def setupStats(self, unitData):
-		''' Set stats of unit to given values or defaults if no values given'''
-		# For each stat in default, if present in unitData, assign from that,
+		''' Set starting stats of unit to given values or defaults if no values given '''
+		# For each statType in default, if present in unitData, assign from unitData,
 		# Else, assign default value
 		stats = copy.deepcopy(DEFAULT_UNIT)
 		for statType in DEFAULT_UNIT.keys():
 			
-			# Stat of given type is value from unitData if present
+			# Set atat of given type is value from unitData if present
 			if statType in unitData:
 				stats[statType] = unitData[statType]
 
 		self.stats = stats
 
-	def setModel(self, model):
-		''' Switch mesh '''
-		self.stats['class'] = model
+	def setClass(self, newClass):
+		''' Set units class stat and change mesh based on class '''
+		self.stats['class'] = newClass
 
 		# Load mesh into memory only if it isn't already loaded
-		filepath = logic.expandPath('//models/') + model + '.blend'
+		filepath = logic.expandPath('//models/') + newClass + '.blend'
 		if filepath not in logic.LibList():
 			logic.LibLoad(filepath, 'Mesh')
 		
 		# Switch objects mesh
-		self.replaceMesh(model)
+		self.replaceMesh(newClass)
 
+	# TODO(kgeffen) Change to getSpace
 	def space(self):
 		''' Get the space that unit is in, 2d '''
 		x = round(self.position[0])

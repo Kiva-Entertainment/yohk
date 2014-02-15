@@ -1057,7 +1057,7 @@ class livingFlame:
 	def perform(actor):
 		# Make a copy of target and place it
 		spawn = generic.objects.flame()
-		spawn['align'] = actor['align']
+		spawn['team'] = actor.stats['team']
 		
 		generic.command.addObjects(spawn)
 	
@@ -1232,11 +1232,10 @@ class passageBolt:
 class birdcall:
 	def perform(actor):
 		# Make a copy of target and place it
-		unit = generic.objects.bird()
-		unit['align'] = actor['align']
-		unit['team'] = actor['team']
+		spawn = generic.objects.bird()
+		spawn['team'] = actor.stats['team']
 
-		generic.command.addObjects(unit)
+		generic.command.addObjects(spawn)
 	
 	def determineRange():
 		commandRange = generic.rangeFactors.standard()
@@ -1535,8 +1534,7 @@ class crystallineCluster:
 	def perform(actor):
 		# Basic ice object
 		unit = generic.objects.ice()
-		unit['align'] = actor['align']
-		unit['team'] = actor['team']
+		unit.stats['team'] = actor.stats['team']
 		
 		generic.command.addObjects(unit)
 
@@ -1919,8 +1917,7 @@ class wait:
 class enlist:
 	def perform(actor):
 		spawn = generic.objects.squire()
-		spawn['align'] = actor['align']
-		unit['team'] = actor['team']
+		unit['team'] = actor.stats['team']
 		
 		generic.command.addObjects(spawn)
 	
@@ -1949,8 +1946,7 @@ class enlist:
 class commision:
 	def perform(actor):
 		spawn = generic.objects.mason()
-		spawn['align'] = actor['align']
-		unit['team'] = actor['team']
+		unit['team'] = actor.stats['team']
 		
 		generic.command.addObjects(spawn)
 	

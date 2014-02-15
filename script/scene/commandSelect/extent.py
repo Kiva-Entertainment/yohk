@@ -32,7 +32,7 @@ def max(cont):
 
 			# NOTE(kgeffen) Not 'while True' to prevent infinite loop if 'extends' tag wrongly added
 			while own['extent'] < ARBITRARILY_LARGE_NUMBER:
-				if commandControl.cost(command) > logic.globalDict['actor']['sp']:
+				if commandControl.cost(command) > logic.globalDict['actor'].stats['sp']:
 					if own['extent'] != 0:
 						own['extent'] -= 1
 					else:
@@ -47,11 +47,11 @@ def max(cont):
 
 # Get command selected in commandSelect
 def getSelectedCommand():
-	unitD = logic.globalDict['actor'].stats
+	unit = logic.globalDict['actor']
 	
 	# List of commands displayed on screen
 	# NOTE(kgeffen) Has multiple lists of commands, get the first one
-	commands = unitD['commands'][0]
+	commands = unit.stats['commands'][0]
 	
 	# Assuming that current list of commands is not empty
 	if len(commands) != 0:

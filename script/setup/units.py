@@ -6,9 +6,6 @@ import json
 from script.unit import unitControl
 
 STAGE_DATA_FILENAME = 'stageData.json'
-# TODO(kgeffen) Remove once better idea align has been hashed out further
-ALIGNS = ['solarServants', 'martialLegion']
-
 GENERIC_FILEPATH = logic.expandPath('//script/unit/generic/')
 
 def do():
@@ -50,6 +47,5 @@ def addInactiveUnits():
 			inactiveUnits = json.load(partyData)
 
 			for unitData in inactiveUnits:
-				unitData['align'] = ALIGNS[i - 1]
 				unitData['team'] = i
 				logic.globalDict['inactiveUnits'].append(unitData)

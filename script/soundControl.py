@@ -8,6 +8,7 @@ soundObj = objectControl.getFromScene('soundControl', 'persistent')
 
 # The device which plays all sounds
 device = aud.device()
+device.volume = 0.3
 # A dictionary of stored sounds in the form
 # { soundName : soundHandle }
 # NOTE(kgeffen) Handle is buffered

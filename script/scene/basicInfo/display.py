@@ -2,7 +2,7 @@
 # Called each tic to describe unit cursor is over, if any
 from bge import logic
 
-from script import dynamicMaterial, objectControl, alignControl, sceneControl, common
+from script import dynamicMaterial, objectControl, sceneControl, common
 
 TEXT_OBJECT_NAME = 'basicInfo_text'
 FACE_OBJECT_NAME = 'basicInfo_face'
@@ -56,18 +56,22 @@ def faceImage(unit):
 	
 	dynamicMaterial.switchMaterialsImage(path, FACE_OBJECT_NAME)
 
+
+# TODO(kgeffen) Reimplement the following
+
+
 # Display the icon for the selected unit's alignment
-def alignmentIcon(unit):
-	filename = alignControl.icon(unit['align'])
+# def alignmentIcon(unit):
+# 	filename = alignControl.icon(unit['align'])
 
-	path = logic.expandPath('//images/icons/' + filename)
+# 	path = logic.expandPath('//images/icons/' + filename)
 	
-	dynamicMaterial.switchMaterialsImage(path, ALIGN_ICON_OBJECT_NAME)
+# 	dynamicMaterial.switchMaterialsImage(path, ALIGN_ICON_OBJECT_NAME)
 
-# Change the color of the backdrop to match unit's alignment
-def backdropColor(unit):
-	color = alignControl.color(unit['align'])
+# # Change the color of the backdrop to match unit's alignment
+# def backdropColor(unit):
+# 	color = alignControl.color(unit['align'])
 
-	obj = objectControl.getFromScene(BACKDROP_OBJECT_NAME, 'basicInfo')
-	obj.color = color
+# 	obj = objectControl.getFromScene(BACKDROP_OBJECT_NAME, 'basicInfo')
+# 	obj.color = color
 
